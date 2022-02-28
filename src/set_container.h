@@ -17,17 +17,26 @@ class SetContainer {
     typedef size_t size_type;
 
  private:
-    Tree<Key, Traits> tree;
+    Tree<Key, Traits> *tree;
     size_type size;
 
  public:
     // Iterator class
     class iterator {
      private:
-        Node<Key> *node;
+        Node<Key>* node;
+
      public:
-        
-    }
+        iterator() : node(nullptr){};
+        iterator(const iterator& it) : node(it.node){};
+        ~iterator(){};
+        reference operator*() const;
+        iterator& operator++();
+        iterator& operator--();
+        bool operator==(const iterator& rhs) const;
+        bool operator!=(const iterator& rhs) const ;
+        iterator& operator=(const iterator& rhs);
+    };
     // Member functions
     SetContainer();
     SetContainer(const SetContainer& s);
@@ -35,22 +44,22 @@ class SetContainer {
     ~SetContainer();
     operator=(SetContainer&& s);
     // Iterators
-    iterator begin();
-    const_iterator cbegin();
-    iterator end();
-    const_iterator cend();
+    iterator begin() const;
+    const_iterator cbegin() const;
+    iterator end() const;
+    const_iterator cend() const;
     // Capacity
-    bool empty();
-    size_type size();
-    size_type max_size();
+    bool empty() const;
+    size_type size() const;
+    size_type max_size() const;
     // Modifiers
     void clear();
     void erase(iterator pos);
     void swap(SetContainer& other);
     void merge(SetContainer& other);
     // Lookup
-    iterator find(const Key& key);
-    bool contains(const Key& key);
+    iterator find(const Key& key) const;
+    bool contains(const Key& key) const;
 };
 
 }  // namespace s21

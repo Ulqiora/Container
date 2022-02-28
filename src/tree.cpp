@@ -2,7 +2,9 @@
 using namespace s21;
 
 template <class Key, class Traits>
-Tree<Key, Traits>::Tree() : root(nullptr) {}
+Tree<Key, Traits>::Tree(const Tree& t) {
+    prefixBypassCopy(t.root);
+}
 
 template <class Key, class Traits>
 Tree<Key, Traits>::~Tree() {
@@ -92,4 +94,13 @@ void Tree<Key, Traits>::infixBypass(Node<Key>* node) {
     if (node->left) infixBypass(node->left);
     std::cout << node->key << ' ';
     if (node->right) infixBypass(node->right);
+}
+
+template <class Key, class Traits>
+void Tree<Key, Traits>::prefixBypassCopy(Node<Key>* node) {
+    if (node != NULL) {
+        insert(node->key);
+        prefixBypassCopy(node->left);
+        prefixBypassCopy(node->right);
+    }
 }

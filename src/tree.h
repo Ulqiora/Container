@@ -2,7 +2,7 @@
 #define SRC_TREE_H_
 
 #include <functional>
-#include <iostream>
+#include <iostream>  // *** DEBUG
 
 namespace s21 {
 
@@ -19,20 +19,22 @@ class Tree {
     Node<Key> *root;
 
  public:
-    // Constructor
-    Tree();
+    // Constructors & destructor
+    Tree() : root(nullptr) {}
+    Tree(const Tree &t);
     ~Tree();
     // Methods
     void insert(Key key);
     void insertNoCopy(Key key);
-    void display(); // *** DEBUG
-    // Other
+    void display();  // *** DEBUG
+                     // Other
  private:
     Node<Key> *createNode(Key key);
     void insertAfterNode(Node<Key> *node, Key key);
     void insertAfterNode_noCopy(Node<Key> *node, Key key);
     void destroy(Node<Key> *node);
     void infixBypass(Node<Key> *node);  // *** DEBUG
+    void prefixBypassCopy(Node<Key> *node);
 };
 
 }  // namespace s21
