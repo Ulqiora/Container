@@ -135,36 +135,36 @@ void s21_vector<Type>::clear() {
 }
 
 template <typename Type>
-void s21_vector<Type>::push_back(const Type& value){
+void s21_vector<Type>::push_back(const Type& value) {
     if (size >= capacity) doublingCapacity();
     mass_[size] = value;
     size++;
 }
 template <typename Type>
-void s21_vector<Type>::push_back(Type&& value){
+void s21_vector<Type>::push_back(Type&& value) {
     if (size >= capacity) doublingCapacity();
     mass_[size] = value;
     size++;
 }
 
 template <typename Type>
-void s21_vector<Type>::pop_back(){
+void s21_vector<Type>::pop_back() {
     if (size > 0) size--;
 }
 
 template <typename Type>
-void s21_vector<Type>::resize( int count ){
+void s21_vector<Type>::resize(int count) {
     if (size >= count) {
         size = count;
     } else {
-        if(count>capacity){
-            Type* copy=new Type[count]();
+        if (count > capacity) {
+            Type* copy = new Type[count]();
             capacity = count;
             for (int i = 0; i < size; i++) copy[i] = mass_[i];
             delete[] mass_;
-            mass_=copy;
+            mass_ = copy;
         }
-        size=count;
+        size = count;
     }
 }
 
@@ -173,22 +173,22 @@ void s21_vector<Type>::resize(int count, const Type& value) {
     if (size >= count) {
         size = count;
     } else {
-        if(count>capacity){
-            Type* copy=new Type[count](value);
+        if (count > capacity) {
+            Type* copy = new Type[count](value);
             capacity = count;
             for (int i = 0; i < size; i++) copy[i] = mass_[i];
             delete[] mass_;
-            mass_=copy;
+            mass_ = copy;
         }
-        size=count;
+        size = count;
     }
 }
 
 template <typename Type>
-void s21_vector<Type>::swap(s21_vector& other){
-    s21_vector* var=&other;
-    s21_vector* copy=this;
-    this=&other;
-    var=copy;
+void s21_vector<Type>::swap(s21_vector& other) {
+    s21_vector* var = &other;
+    s21_vector* copy = this;
+    this = &other;
+    var = copy;
 }
 //    Другие методы

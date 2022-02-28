@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "bitset": "cpp",
+        "system_error": "cpp",
+        "typeinfo": "cpp",
+        "__locale": "cpp"
+    }
+}
