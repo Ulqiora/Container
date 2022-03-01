@@ -1,7 +1,7 @@
 #ifndef SRC_SET_CONTAINER_H_
 #define SRC_SET_CONTAINER_H_
 
-#include "tree.h"
+#include "tree.tpp"
 
 namespace s21 {
 
@@ -12,13 +12,13 @@ class SetContainer {
     typedef Key value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
-    typedef value_type* iterator;
+    // typedef value_type* iterator;
     typedef const value_type* const_iterator;
     typedef size_t size_type;
 
  private:
-    Tree<Key, Traits> *tree;
-    size_type size;
+    Tree<Key, Traits> *_tree;
+    size_type _size;
 
  public:
     // Iterator class
@@ -42,12 +42,12 @@ class SetContainer {
     SetContainer(const SetContainer& s);
     SetContainer(SetContainer&& s);
     ~SetContainer();
-    operator=(SetContainer&& s);
+    SetContainer& operator=(SetContainer&& s);
     // Iterators
     iterator begin() const;
-    const_iterator cbegin() const;
+    const iterator cbegin() const;
     iterator end() const;
-    const_iterator cend() const;
+    const iterator cend() const;
     // Capacity
     bool empty() const;
     size_type size() const;

@@ -1,10 +1,10 @@
 BD=../build/
 TD=#../tests/
-CFLAGS=-c #-Wall -Wextra -Werror
+CFLAGS=-c# -Wall -Wextra -Werror
 LDFLAGS=#-Wall -Wextra -Werror
 LCOVFLAGS=-fprofile-arcs -ftest-coverage
 GTESTFLAGS=-lgtest
-SRC=tree.cpp
+SRC=main.cpp
 OBJECTS=$(addprefix $(BD),$(SRC:.cpp=.o))
 CC=g++
 CC2=g++
@@ -24,7 +24,7 @@ main: $(BD)main_exe
 	./$(BD)main_exe
 
 ./$(BD)main_exe: $(OBJECTS)
-	$(CC) $^ -o $@
+	$(CC) $(LDFLAGS) $^ -o $@
 
 debug: $(SRC)
 	$(CC) -g $^ -o $(BD)main_exe

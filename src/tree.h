@@ -16,18 +16,19 @@ struct Node {
 template <class Key, class Traits>
 class Tree {
  private:
-    Node<Key> *root;
+    Node<Key> *_root;
 
  public:
     // Constructors & destructor
-    Tree() : root(nullptr) {}
+
+    Tree<Key, Traits>();
     Tree(const Tree &t);
     ~Tree();
     // Methods
     void insert(Key key);
     void insertNoCopy(Key key);
     void display();  // *** DEBUG
-                     // Other
+
  private:
     Node<Key> *createNode(Key key);
     void insertAfterNode(Node<Key> *node, Key key);

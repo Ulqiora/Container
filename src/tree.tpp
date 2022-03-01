@@ -1,18 +1,22 @@
 #include "tree.h"
-using namespace s21;
+
+namespace s21 {
 
 template <class Key, class Traits>
-Tree<Key, Traits>::Tree(const Tree& t) {
-    prefixBypassCopy(t.root);
+Tree<Key, Traits>::Tree() : _root(nullptr) {}
+
+template <class Key, class Traits>
+Tree<Key, Traits>::Tree(const Tree &t) {
+    prefixBypassCopy(t._root);
 }
 
 template <class Key, class Traits>
 Tree<Key, Traits>::~Tree() {
-    destroy(root);
+    destroy(_root);
 }
 
 template <class Key, class Traits>
-void Tree<Key, Traits>::destroy(Node<Key>* node) {
+void Tree<Key, Traits>::destroy(Node<Key> *node) {
     if (node != nullptr) {
         destroy(node->left);
         destroy(node->right);
@@ -21,8 +25,8 @@ void Tree<Key, Traits>::destroy(Node<Key>* node) {
 }
 
 template <class Key, class Traits>
-Node<Key>* Tree<Key, Traits>::createNode(Key key) {
-    Node<Key>* node = new Node<Key>;
+Node<Key> *Tree<Key, Traits>::createNode(Key key) {
+    Node<Key> *node = new Node<Key>;
     node->key = key;
     node->left = nullptr;
     node->right = nullptr;
@@ -31,15 +35,15 @@ Node<Key>* Tree<Key, Traits>::createNode(Key key) {
 
 template <class Key, class Traits>
 void Tree<Key, Traits>::insert(Key key) {
-    if (root) {
-        insertAfterNode(root, key);
+    if (_root) {
+        insertAfterNode(_root, key);
     } else {
-        root = createNode(key);
+        _root = createNode(key);
     }
 }
 
 template <class Key, class Traits>
-void Tree<Key, Traits>::insertAfterNode(Node<Key>* node, Key key) {
+void Tree<Key, Traits>::insertAfterNode(Node<Key> *node, Key key) {
     if (Traits()(key, node->key)) {
         if (node->left) {
             insertAfterNode(node->left, key);
@@ -57,15 +61,15 @@ void Tree<Key, Traits>::insertAfterNode(Node<Key>* node, Key key) {
 
 template <class Key, class Traits>
 void Tree<Key, Traits>::insertNoCopy(Key key) {
-    if (root) {
-        insertAfterNode_noCopy(root, key);
+    if (_root) {
+        insertAfterNode_noCopy(_root, key);
     } else {
-        root = createNode(key);
+        _root = createNode(key);
     }
 }
 
 template <class Key, class Traits>
-void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key>* node, Key key) {
+void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
     if (node->key != key) {
         if (Traits()(node->key, key)) {
             if (node->left) {
@@ -85,22 +89,24 @@ void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key>* node, Key key) {
 
 template <class Key, class Traits>
 void Tree<Key, Traits>::display() {
-    infixBypass(root);
+    infixBypass(_root);
     std::cout << std::endl;
 }
 
 template <class Key, class Traits>
-void Tree<Key, Traits>::infixBypass(Node<Key>* node) {
+void Tree<Key, Traits>::infixBypass(Node<Key> *node) {
     if (node->left) infixBypass(node->left);
     std::cout << node->key << ' ';
     if (node->right) infixBypass(node->right);
 }
 
 template <class Key, class Traits>
-void Tree<Key, Traits>::prefixBypassCopy(Node<Key>* node) {
+void Tree<Key, Traits>::prefixBypassCopy(Node<Key> *node) {
     if (node != NULL) {
         insert(node->key);
         prefixBypassCopy(node->left);
         prefixBypassCopy(node->right);
     }
 }
+
+}  // namespace s21
