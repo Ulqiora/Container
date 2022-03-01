@@ -1,12 +1,9 @@
-#include <vector>
+// #include <vector>
 #include <iostream>
+#include "vector/s21_vector.hpp"
 
 int main() {
-    std::vector<int> f{5,2,3,4};
-    f.resize(7);
-    f.size();
-    for (auto i = f.begin(); i != f.end(); i++) {
-        std::cout << *i << ' ';
-    }
+    vector<int> a(3);
+    
     return 0;
 }
