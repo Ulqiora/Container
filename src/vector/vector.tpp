@@ -11,10 +11,10 @@ void s21::vector<Type_vector>::doublingCapacity() {
 }
 
 template<class Type_vector>
-s21::vector<Type_vector>::vector() : capacity_(1), size_(0), mass_(new value_type[capacity_]) {}
+s21::vector<Type_vector>::vector() : capacity_(1), size_(0), mass_(new value_type[capacity_]()) {}
 
 template<class Type_vector>
-s21::vector<Type_vector>::vector(size_type n) : capacity_(n + 1), size_(n), mass_(new value_type[capacity_]) {}
+s21::vector<Type_vector>::vector(size_type n) : capacity_(n + 1), size_(n), mass_(new value_type[capacity_]()) {}
 
 template<class Type_vector>
 s21::vector<Type_vector>::vector(std::initializer_list<value_type> const& items)
@@ -29,7 +29,7 @@ s21::vector<Type_vector>::vector(std::initializer_list<value_type> const& items)
 template<class Type_vector>
 s21::vector<Type_vector>::vector(const vector& v) {
     if (this != &v) {
-        capacity_ = v.capacity_;
+        capacity_ = v.size_+1;
         size_ = v.size_;
         mass_ = new Type_vector[capacity_]();
         for (int i = 0; i < size_; i++) mass_[i] = v.mass_[i];

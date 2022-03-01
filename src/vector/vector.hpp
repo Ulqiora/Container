@@ -4,14 +4,14 @@
 
 #include "../Sequence_Container.hpp"
 namespace s21 {
-template <class Type>
+template <class Type_vector>
 class vector : public Sequence<Type> {
  public:
-    typedef Type value_type;
-    typedef Type& reference;
-    typedef const Type& const_reference;
-    typedef Type* iterator;
-    typedef const Type* const_iterator;
+    typedef Type_vector value_type;
+    typedef Type_vector& reference;
+    typedef const Type_vector& const_reference;
+    typedef Type_vector* iterator;
+    typedef const Type_vector* const_iterator;
     typedef size_t size_type;
     //    Основные методы взаиможействия
     vector();
@@ -52,7 +52,7 @@ class vector : public Sequence<Type> {
  private:
     size_type size_;
     size_type capacity_;
-    Type* mass_;
+    Type_vector* mass_;
     void doublingCapacity();
 };
 }  // namespace s21

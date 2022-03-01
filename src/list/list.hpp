@@ -1,21 +1,25 @@
 #pragma once
 #include "../Sequence_Container.hpp"
 #include <initializer_list>
-template <class Type>
-class list : public Sequence<Type> {
-   private:
-    size_type size_;
-    iterator head_;
-    iterator tail_;
-   public:\
+// #include <list>
+namespace s21 {
+template <class Type_list>
+class list : public Sequence<Type_list> {
+ public:
+    typedef Type_list value_type;
+    typedef Type_list& reference;
+    typedef const Type_list& const_reference;
+    typedef Type_list* iterator;
+    typedef const Type_list* const_iterator;
+    typedef size_t size_type;
     //    Основные методы взаиможействия
     list();
     list(size_type n);
     list(std::initializer_list<value_type> const& items);
-    list(const list &v);
-    list(list &&v);
+    list(const list& v);
+    list(list&& v);
     ~list();
-    operator=(list &&v);
+    operator=(list&& v);
     //    Методы для доступа к элементам класса
     const_reference front();
     const_reference back();
@@ -40,4 +44,11 @@ class list : public Sequence<Type> {
     void reverse();
     void unique();
     void sort();
+
+ private:
+    size_type size_;
+    value_type value;
+    iterator right_;
+    iterator left_;
 };
+}  // namespace s21
