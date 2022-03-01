@@ -13,6 +13,7 @@ Tree<Key, Traits>::Tree(const Tree &t) {
 template <class Key, class Traits>
 Tree<Key, Traits>::~Tree() {
     destroy(_root);
+    _root = nullptr;
 }
 
 template <class Key, class Traits>
@@ -71,7 +72,7 @@ void Tree<Key, Traits>::insertNoCopy(Key key) {
 template <class Key, class Traits>
 void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
     if (node->key != key) {
-        if (Traits()(node->key, key)) {
+        if (Traits()(key, node->key)) {
             if (node->left) {
                 insertAfterNode_noCopy(node->left, key);
             } else {
@@ -89,15 +90,15 @@ void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
 
 template <class Key, class Traits>
 void Tree<Key, Traits>::display() {
-    infixBypass(_root);
+    infixBypassOut(_root);
     std::cout << std::endl;
 }
 
 template <class Key, class Traits>
-void Tree<Key, Traits>::infixBypass(Node<Key> *node) {
-    if (node->left) infixBypass(node->left);
+void Tree<Key, Traits>::infixBypassOut(Node<Key> *node) {
+    if (node->left) infixBypassOut(node->left);
     std::cout << node->key << ' ';
-    if (node->right) infixBypass(node->right);
+    if (node->right) infixBypassOut(node->right);
 }
 
 template <class Key, class Traits>
@@ -108,5 +109,27 @@ void Tree<Key, Traits>::prefixBypassCopy(Node<Key> *node) {
         prefixBypassCopy(node->right);
     }
 }
+
+template <class Key, class Traits>
+Key *Tree<Key, Traits>::getByIndex(int pos) {
+    return infixBypassGet(_root, pos);
+}
+
+template <class Key, class Traits>
+Key *Tree<Key, Traits>::infixBypassGet(Node<Key> *node, int pos) {
+    if (node->left) {
+        Key *pnode = infixBypassGet(node->left, pos);
+        if (pnode) return pnode;
+    }
+    if (pos == 0) return &node->key;    
+    pos--;
+    if (node->right) {
+        Key *pnode = infixBypassGet(node->right, pos);
+        if (pnode) return pnode;
+    }
+    return nullptr;
+}
+
+// ПРОШИТЬ ДЕРЕВО
 
 }  // namespace s21

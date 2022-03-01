@@ -16,7 +16,7 @@ class SetContainer {
     typedef const value_type* const_iterator;
     typedef size_t size_type;
 
- private:
+ public:    // *** should be protected
     Tree<Key, Traits> *_tree;
     size_type _size;
 
@@ -24,12 +24,12 @@ class SetContainer {
     // Iterator class
     class iterator {
      private:
-        Node<Key>* node;
+        Node<Key>* _node;
 
      public:
-        iterator() : node(nullptr){};
-        iterator(const iterator& it) : node(it.node){};
-        ~iterator(){};
+        iterator();
+        iterator(const iterator& it);
+        ~iterator();
         reference operator*() const;
         iterator& operator++();
         iterator& operator--();
@@ -42,7 +42,7 @@ class SetContainer {
     SetContainer(const SetContainer& s);
     SetContainer(SetContainer&& s);
     ~SetContainer();
-    SetContainer& operator=(SetContainer&& s);
+    SetContainer<Key, Traits>& operator=(const SetContainer& s);
     // Iterators
     iterator begin() const;
     const iterator cbegin() const;
