@@ -19,7 +19,7 @@ Tree<Key, Traits>::~Tree() {
 template <class Key, class Traits>
 void Tree<Key, Traits>::destroy(Node<Key> *node) {
     if (node != nullptr) {
-        destroy(node->left);
+        if (!node->leftThread) destroy(node->left);
         if (!node->rightThread) destroy(node->right);
         delete node;
     }
@@ -31,6 +31,7 @@ Node<Key> *Tree<Key, Traits>::createNode(Key key) {
     node->key = key;
     node->left = nullptr;
     node->right = nullptr;
+    node->leftThread = true;
     node->rightThread = true;
     return node;
 }
@@ -47,11 +48,14 @@ void Tree<Key, Traits>::insert(Key key) {
 template <class Key, class Traits>
 void Tree<Key, Traits>::insertAfterNode(Node<Key> *node, Key key) {
     if (Traits()(key, node->key)) {
-        if (node->left) {
+        if (node->left && !node->leftThread) {
             insertAfterNode(node->left, key);
         } else {
+            Node<Key> *mem = node->left;
             node->left = createNode(key);
             node->left->right = node;
+            node->leftThread = false;
+            node->left->left = mem;
         }
     } else {
         if (node->right && !node->rightThread) {
@@ -59,6 +63,7 @@ void Tree<Key, Traits>::insertAfterNode(Node<Key> *node, Key key) {
         } else {
             Node<Key> *mem = node->right;
             node->right = createNode(key);
+            node->right->left = node;
             node->rightThread = false;
             node->right->right = mem;
         }
@@ -96,7 +101,18 @@ void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
 template <class Key, class Traits>
 Node<Key> *Tree<Key, Traits>::leftMost(Node<Key> *node) {
     if (node == nullptr) return nullptr;
-    while (node->left != nullptr) node = node->left;
+    while (node->left != nullptr && !node->leftThread) {
+        node = node->left;
+    }
+    return node;
+}
+
+template <class Key, class Traits>
+Node<Key> *Tree<Key, Traits>::rightMost(Node<Key> *node) {
+    if (node == nullptr) return nullptr;
+    while (node->right != nullptr && !node->rightThread) {
+        node = node->right;
+    }
     return node;
 }
 
@@ -111,6 +127,16 @@ void Tree<Key, Traits>::display() {
             node = leftMost(node->right);
         }
     }
+
+    // Node<Key> *node = rightMost(_root);
+    // while (node != nullptr) {
+    //     std::cout << node->key << ' ';
+    //     if (node->leftThread) {
+    //         node = node->left;
+    //     } else {
+    //         node = rightMost(node->left);
+    //     }
+    // }
 
     std::cout << std::endl;
 }
