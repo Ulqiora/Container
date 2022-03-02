@@ -31,6 +31,7 @@ Node<Key> *Tree<Key, Traits>::createNode(Key key) {
     node->key = key;
     node->left = nullptr;
     node->right = nullptr;
+    node->parent = nullptr;
     node->leftThread = true;
     node->rightThread = true;
     return node;
@@ -56,6 +57,7 @@ void Tree<Key, Traits>::insertAfterNode(Node<Key> *node, Key key) {
             node->left->right = node;
             node->leftThread = false;
             node->left->left = mem;
+            node->left->parent = node;
         }
     } else {
         if (node->right && !node->rightThread) {
@@ -66,6 +68,7 @@ void Tree<Key, Traits>::insertAfterNode(Node<Key> *node, Key key) {
             node->right->left = node;
             node->rightThread = false;
             node->right->right = mem;
+            node->right->parent = node;
         }
     }
 }
@@ -91,6 +94,7 @@ void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
                 node->left->right = node;
                 node->leftThread = false;
                 node->left->left = mem;
+                node->left->parent = node;
             }
         } else {
             if (node->right && !node->rightThread) {
@@ -101,6 +105,7 @@ void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
                 node->right->left = node;
                 node->rightThread = false;
                 node->right->right = mem;
+                node->right->parent = node;
             }
         }
     } else {
@@ -150,6 +155,11 @@ void Tree<Key, Traits>::display() {
 
     std::cout << std::endl;
 }
+
+// template<class Key, class Traits>
+// void Tree<Key, Traits>::erase(Node<Key> *node) {
+    
+// }
 
 template <class Key, class Traits>
 void Tree<Key, Traits>::prefixBypassCopy(Node<Key> *node) {

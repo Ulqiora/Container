@@ -11,6 +11,7 @@ struct Node {
     Key key;
     Node<Key> *left;
     Node<Key> *right;
+    Node<Key> *parent;
     bool leftThread, rightThread;
 };
 
@@ -28,6 +29,7 @@ class Tree {
     void insert(Key key);
     void insertNoCopy(Key key);
     void display();  // *** DEBUG
+    void erase(Node<Key> *node);
 
  private:
     Node<Key> *createNode(Key key);

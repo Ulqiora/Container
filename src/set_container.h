@@ -22,20 +22,20 @@ class SetContainer {
 
  public:
     // Iterator class
-    class iterator {
+    class iterator_sc {
      private:
         Node<Key>* _node;
 
      public:
-        iterator();
-        iterator(const iterator& it);
-        ~iterator();
+        iterator_sc();
+        iterator_sc(const iterator_sc& it);
+        ~iterator_sc();
         reference operator*() const;
-        iterator& operator++();
-        iterator& operator--();
-        bool operator==(const iterator& rhs) const;
-        bool operator!=(const iterator& rhs) const ;
-        iterator& operator=(const iterator& rhs);
+        iterator_sc& operator++();
+        iterator_sc& operator--();
+        bool operator==(const iterator_sc& rhs) const;
+        bool operator!=(const iterator_sc& rhs) const ;
+        iterator_sc& operator=(const iterator_sc& rhs);
     };
     // Member functions
     SetContainer();
@@ -44,21 +44,21 @@ class SetContainer {
     ~SetContainer();
     SetContainer<Key, Traits>& operator=(const SetContainer& s);
     // Iterators
-    iterator begin() const;
-    const iterator cbegin() const;
-    iterator end() const;
-    const iterator cend() const;
+    iterator_sc begin() const;
+    const iterator_sc cbegin() const;
+    iterator_sc end() const;
+    const iterator_sc cend() const;
     // Capacity
     bool empty() const;
     size_type size() const;
     size_type max_size() const;
     // Modifiers
     void clear();
-    void erase(iterator pos);
+    void erase(iterator_sc pos);
     void swap(SetContainer& other);
     void merge(SetContainer& other);
     // Lookup
-    iterator find(const Key& key) const;
+    iterator_sc find(const Key& key) const;
     bool contains(const Key& key) const;
 };
 

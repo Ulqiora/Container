@@ -32,6 +32,7 @@ SetContainer<Key, Traits>::~SetContainer() {
     delete _tree;
 }
 
+/*
 template <class Key, class Traits>
 SetContainer<Key, Traits>::iterator::iterator() : _node(nullptr) {}
 
@@ -50,5 +51,6 @@ template <class Key, class Traits>
 typename SetContainer<Key, Traits>::iterator& SetContainer<Key, Traits>::iterator::operator++() {
 
 }
+*/
 
 }  // namespace s21
