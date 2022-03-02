@@ -17,7 +17,7 @@ struct Node {
 
 template <class Key, class Traits>
 class Tree {
- private:
+ public:    // *** should be private
     Node<Key> *_root;
 
  public:

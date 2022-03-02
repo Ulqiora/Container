@@ -156,10 +156,81 @@ void Tree<Key, Traits>::display() {
     std::cout << std::endl;
 }
 
-// template<class Key, class Traits>
-// void Tree<Key, Traits>::erase(Node<Key> *node) {
-    
-// }
+template <class Key, class Traits>
+void Tree<Key, Traits>::erase(Node<Key> *node) {
+    // If node doesn't has any childs
+    if (node->leftThread && node->rightThread) {
+        // If node is _root
+        if (node->parent == nullptr) {
+            _root = nullptr;
+            // If node is left child
+        } else if (node == node->parent->left) {
+            node->parent->left = node->left;
+            node->parent->leftThread = true;
+            // If node is right child
+        } else {
+            node->parent->right = node->right;
+            node->parent->rightThread = true;
+        }
+        delete node;
+        // If node has only left child
+    } else if (!node->leftThread && node->rightThread) {
+        Node<Key> *pred = rightMost(node->left);
+        // If node is _root
+        if (node->parent == nullptr) {
+            pred->right = nullptr;
+            _root = node->left;
+            // If node is left child
+        } else if (node == node->parent->left) {
+            pred->right = node->right;
+            node->parent->left = node->left;
+            // If node is right child
+        } else {
+            pred->right = node->right;
+            node->parent->right = node->left;
+        }
+        node->left->parent = node->parent;
+        delete node;
+        // If node has only right child
+    } else if (node->leftThread && !node->rightThread) {
+        Node<Key> *succ = leftMost(node->right);
+        // If node is _root
+        if (node->parent == nullptr) {
+            succ->left = nullptr;
+            _root = node->right;
+            // If node is left child
+        } else if (node == node->parent->left) {
+            succ->left = node->left;
+            node->parent->left = node->right;
+            // If node is right child
+        } else {
+            succ->left = node->left;
+            node->parent->right = node->right;
+        }
+        node->right->parent = node->parent;
+        delete node;
+        // If node has both childs
+    } else {
+        Node<Key> *pred = rightMost(node->left);
+        Node<Key> *succ = leftMost(node->right);
+        pred->right = succ;
+        succ->left = node->left;
+        succ->leftThread = false;
+        succ->right = node->right;
+        succ->rightThread = false;
+        succ->parent->leftThread = true;
+        node->left->parent = succ;
+        node->right->parent = succ;
+        // If node is _root
+        if (node->parent == nullptr) {
+            succ->parent = nullptr;
+            _root = succ;
+        } else {
+            succ->parent = node->parent;
+        }
+        delete node;
+    }
+}
 
 template <class Key, class Traits>
 void Tree<Key, Traits>::prefixBypassCopy(Node<Key> *node) {

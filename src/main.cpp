@@ -15,6 +15,8 @@ int main() {
     t.insert(2);
     t.insert(13);
 
+    t.erase(t._root);
+
     t.display();
 
     return 0;
