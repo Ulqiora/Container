@@ -2,10 +2,9 @@
 #include <initializer_list>
 #include <iostream>
 
-#include "../Sequence_Container.hpp"
 namespace s21 {
 template <class Type_vector>
-class vector : public Sequence<Type> {
+class vector {
  public:
     typedef Type_vector value_type;
     typedef Type_vector& reference;
