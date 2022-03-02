@@ -20,7 +20,6 @@ class Tree {
 
  public:
     // Constructors & destructor
-
     Tree<Key, Traits>();
     Tree(const Tree &t);
     ~Tree();
@@ -28,7 +27,6 @@ class Tree {
     void insert(Key key);
     void insertNoCopy(Key key);
     void display();  // *** DEBUG
-    Key *getByIndex(int pos);
 
  private:
     Node<Key> *createNode(Key key);
@@ -37,7 +35,6 @@ class Tree {
     void destroy(Node<Key> *node);
     void infixBypassOut(Node<Key> *node);  // *** DEBUG
     void prefixBypassCopy(Node<Key> *node);
-    Key *infixBypassGet(Node<Key> *node, int pos);
 };
 
 }  // namespace s21

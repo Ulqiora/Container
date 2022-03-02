@@ -110,26 +110,6 @@ void Tree<Key, Traits>::prefixBypassCopy(Node<Key> *node) {
     }
 }
 
-template <class Key, class Traits>
-Key *Tree<Key, Traits>::getByIndex(int pos) {
-    return infixBypassGet(_root, pos);
-}
-
-template <class Key, class Traits>
-Key *Tree<Key, Traits>::infixBypassGet(Node<Key> *node, int pos) {
-    if (node->left) {
-        Key *pnode = infixBypassGet(node->left, pos);
-        if (pnode) return pnode;
-    }
-    if (pos == 0) return &node->key;    
-    pos--;
-    if (node->right) {
-        Key *pnode = infixBypassGet(node->right, pos);
-        if (pnode) return pnode;
-    }
-    return nullptr;
-}
-
 // ПРОШИТЬ ДЕРЕВО
 
 }  // namespace s21
