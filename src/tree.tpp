@@ -83,18 +83,28 @@ template <class Key, class Traits>
 void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
     if (node->key != key) {
         if (Traits()(key, node->key)) {
-            if (node->left) {
+            if (node->left && !node->leftThread) {
                 insertAfterNode_noCopy(node->left, key);
             } else {
+                Node<Key> *mem = node->left;
                 node->left = createNode(key);
+                node->left->right = node;
+                node->leftThread = false;
+                node->left->left = mem;
             }
         } else {
-            if (node->right) {
+            if (node->right && !node->rightThread) {
                 insertAfterNode_noCopy(node->right, key);
             } else {
+                Node<Key> *mem = node->right;
                 node->right = createNode(key);
+                node->right->left = node;
+                node->rightThread = false;
+                node->right->right = mem;
             }
         }
+    } else {
+        throw std::invalid_argument("The element already present in container!");
     }
 }
 
