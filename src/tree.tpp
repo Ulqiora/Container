@@ -20,7 +20,7 @@ template <class Key, class Traits>
 void Tree<Key, Traits>::destroy(Node<Key> *node) {
     if (node != nullptr) {
         destroy(node->left);
-        destroy(node->right);
+        if (!node->rightThread) destroy(node->right);
         delete node;
     }
 }
@@ -31,6 +31,7 @@ Node<Key> *Tree<Key, Traits>::createNode(Key key) {
     node->key = key;
     node->left = nullptr;
     node->right = nullptr;
+    node->rightThread = true;
     return node;
 }
 
@@ -50,12 +51,16 @@ void Tree<Key, Traits>::insertAfterNode(Node<Key> *node, Key key) {
             insertAfterNode(node->left, key);
         } else {
             node->left = createNode(key);
+            node->left->right = node;
         }
     } else {
-        if (node->right) {
+        if (node->right && !node->rightThread) {
             insertAfterNode(node->right, key);
         } else {
+            Node<Key> *mem = node->right;
             node->right = createNode(key);
+            node->rightThread = false;
+            node->right->right = mem;
         }
     }
 }
@@ -89,16 +94,25 @@ void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
 }
 
 template <class Key, class Traits>
-void Tree<Key, Traits>::display() {
-    infixBypassOut(_root);
-    std::cout << std::endl;
+Node<Key> *Tree<Key, Traits>::leftMost(Node<Key> *node) {
+    if (node == nullptr) return nullptr;
+    while (node->left != nullptr) node = node->left;
+    return node;
 }
 
 template <class Key, class Traits>
-void Tree<Key, Traits>::infixBypassOut(Node<Key> *node) {
-    if (node->left) infixBypassOut(node->left);
-    std::cout << node->key << ' ';
-    if (node->right) infixBypassOut(node->right);
+void Tree<Key, Traits>::display() {
+    Node<Key> *node = leftMost(_root);
+    while (node != nullptr) {
+        std::cout << node->key << ' ';
+        if (node->rightThread) {
+            node = node->right;
+        } else {
+            node = leftMost(node->right);
+        }
+    }
+
+    std::cout << std::endl;
 }
 
 template <class Key, class Traits>
@@ -109,7 +123,5 @@ void Tree<Key, Traits>::prefixBypassCopy(Node<Key> *node) {
         prefixBypassCopy(node->right);
     }
 }
-
-// ПРОШИТЬ ДЕРЕВО
 
 }  // namespace s21

@@ -18,7 +18,7 @@ else
 endif
 
 # all: clean s21_matrix_oop.a
-all: main
+all: clean main
 
 main: $(BD)main_exe
 	./$(BD)main_exe

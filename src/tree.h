@@ -8,9 +8,10 @@ namespace s21 {
 
 template <class Key>
 struct Node {
-    Key key;
-    Node<Key> *left;
-    Node<Key> *right;
+    Key key;            // value
+    Node<Key> *left;    // left child
+    Node<Key> *right;   // right child
+    bool rightThread;   // is right child a thread?
 };
 
 template <class Key, class Traits>
@@ -33,7 +34,7 @@ class Tree {
     void insertAfterNode(Node<Key> *node, Key key);
     void insertAfterNode_noCopy(Node<Key> *node, Key key);
     void destroy(Node<Key> *node);
-    void infixBypassOut(Node<Key> *node);  // *** DEBUG
+    Node<Key> *leftMost(Node<Key> *node);
     void prefixBypassCopy(Node<Key> *node);
 };
 
