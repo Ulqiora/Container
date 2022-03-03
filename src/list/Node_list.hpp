@@ -11,6 +11,8 @@ class Node_list {
         prev = prev_new;
         data = new Type_node(data_add);
     }
-    ~Node_list();
+    ~Node_list(){
+        delete data;
+    }
 };
 }  // namespace s21
