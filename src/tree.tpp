@@ -49,7 +49,7 @@ void Tree<Key, Traits>::insert(Key key) {
 template <class Key, class Traits>
 void Tree<Key, Traits>::insertAfterNode(Node<Key> *node, Key key) {
     if (Traits()(key, node->key)) {
-        if (node->left && !node->leftThread) {
+        if (!node->leftThread) {
             insertAfterNode(node->left, key);
         } else {
             Node<Key> *mem = node->left;
@@ -60,7 +60,7 @@ void Tree<Key, Traits>::insertAfterNode(Node<Key> *node, Key key) {
             node->left->parent = node;
         }
     } else {
-        if (node->right && !node->rightThread) {
+        if (!node->rightThread) {
             insertAfterNode(node->right, key);
         } else {
             Node<Key> *mem = node->right;
@@ -86,7 +86,7 @@ template <class Key, class Traits>
 void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
     if (node->key != key) {
         if (Traits()(key, node->key)) {
-            if (node->left && !node->leftThread) {
+            if (!node->leftThread) {
                 insertAfterNode_noCopy(node->left, key);
             } else {
                 Node<Key> *mem = node->left;
@@ -97,7 +97,7 @@ void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
                 node->left->parent = node;
             }
         } else {
-            if (node->right && !node->rightThread) {
+            if (!node->rightThread) {
                 insertAfterNode_noCopy(node->right, key);
             } else {
                 Node<Key> *mem = node->right;
@@ -155,7 +155,7 @@ void nodeOut(Node<Key> *node) {
     } else {
         std::cout << std::setw(4) << "null";
     }
-        std::cout << "\t| parent: "; 
+    std::cout << "\t| parent: ";
     if (node->parent) {
         std::cout << std::setw(4) << node->parent->key;
     } else {

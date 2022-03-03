@@ -2,8 +2,8 @@
 #define SRC_TREE_H_
 
 #include <functional>
+#include <iomanip>   // *** DEBUG
 #include <iostream>  // *** DEBUG
-#include <iomanip>  // *** DEBUG
 
 namespace s21 {
 
@@ -18,7 +18,7 @@ struct Node {
 
 template <class Key, class Traits>
 class Tree {
- public:    // *** should be private
+ private:
     Node<Key> *_root;
 
  public:
