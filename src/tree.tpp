@@ -113,8 +113,8 @@ void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
     }
 }
 
-template <class Key, class Traits>
-Node<Key> *Tree<Key, Traits>::leftMost(Node<Key> *node) {
+template <class Key>
+Node<Key> *leftMost(Node<Key> *node) {
     if (node == nullptr) return nullptr;
     while (node->left != nullptr && !node->leftThread) {
         node = node->left;
@@ -122,13 +122,23 @@ Node<Key> *Tree<Key, Traits>::leftMost(Node<Key> *node) {
     return node;
 }
 
-template <class Key, class Traits>
-Node<Key> *Tree<Key, Traits>::rightMost(Node<Key> *node) {
+template <class Key>
+Node<Key> *rightMost(Node<Key> *node) {
     if (node == nullptr) return nullptr;
     while (node->right != nullptr && !node->rightThread) {
         node = node->right;
     }
     return node;
+}
+
+template<class Key, class Traits>
+Node<Key>* Tree<Key, Traits>::begin() {
+    return leftMost(_root);
+}
+
+template<class Key, class Traits>
+Node<Key>* Tree<Key, Traits>::end() {
+    return rightMost(_root);
 }
 
 // *** DEBUG
@@ -176,17 +186,6 @@ void Tree<Key, Traits>::display() {
             node = leftMost(node->right);
         }
     }
-    /*
-    Node<Key> *node = rightMost(_root);
-    while (node != nullptr) {
-        std::cout << node->key << ' ';
-        if (node->leftThread) {
-            node = node->left;
-        } else {
-            node = rightMost(node->left);
-        }
-    }
-    */
 }
 
 // VERY massive function for overwriting tree structure caused by deleting a node

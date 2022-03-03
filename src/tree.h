@@ -31,16 +31,22 @@ class Tree {
     void insertNoCopy(Key key);
     void display();  // *** DEBUG
     void erase(Node<Key> *node);
+    Node<Key> *begin();
+    Node<Key> *end();
 
  private:
     Node<Key> *createNode(Key key);
     void insertAfterNode(Node<Key> *node, Key key);
     void insertAfterNode_noCopy(Node<Key> *node, Key key);
     void destroy(Node<Key> *node);
-    Node<Key> *leftMost(Node<Key> *node);
-    Node<Key> *rightMost(Node<Key> *node);
     void prefixBypassCopy(Node<Key> *node);
 };
+
+template <class Key>
+Node<Key> *leftMost(Node<Key> *node);
+
+template <class Key>
+Node<Key> *rightMost(Node<Key> *node);
 
 }  // namespace s21
 

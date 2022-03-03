@@ -1,13 +1,15 @@
 #ifndef SRC_SET_H_
 #define SRC_SET_H_
 
-#include "set_container.h"
+#include "set_container.tpp"
 
 namespace s21 {
 
 template <class Key, class Traits>
 class set : public SetContainer {
  public:
+    class iterator : public iterator_sc {};
+    class const_iterator : public const_iterator_sc {};
     // Member Functions
     set() : SetContainer<Key, Traits>();
     set(std::initializer_list<value_type> const& items);
