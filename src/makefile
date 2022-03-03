@@ -14,8 +14,8 @@ main: $(BD)main_exe
 ./$(BD)main_exe: $(BD)main.o
 	$(CC) $^ -o $@
 
-debug: s21_matrix_oop.cpp
-	$(CC) -g $^ -o $(BD)main_exe
+debug: main.cpp
+	$(CC) -g $^ -o $(BD)debug
 
 ./$(BD)%.o: %.cpp
 	$(CC) $(CFLAGS) $< -o $@

@@ -4,19 +4,22 @@
 namespace s21 {
 template <class Type_iterator_list>
 class iterator_list {
-   public:
-    typename Node_list<Type_iterator_list>* iter;
-    iterator(Node_list<Type_iterator_list>* v) {}
-    Type_iterator_list& operator*() { return this->iter->data; }
+    typename s21::Node_list<Type_iterator_list>* iter;
+ public:
+    iterator_list(Node_list<Type_iterator_list>* v) { iter = v; }
+    Type_iterator_list& operator*() { return *(iter->data); }
     iterator_list operator++() {
-        this = this->iter->next;
+        Node_list<Type_iterator_list>* nxt=this->iter->next;
+        iter = nxt;
         return (*this);
     }
     iterator_list operator--() {
-        this = this->iter->prev;
+        Node_list<Type_iterator_list>* pr=this->iter->prev;
+        this = pr;
         return (*this);
     }
-    bool operator!=(iterator_list& v) { return (this) != (&v); }
-    bool operator==(iterator_list& v) { return (this) == (&v); }
+    s21::Node_list<Type_iterator_list>* get() { return iter; }
+    bool operator!=(const iterator_list<Type_iterator_list>& v) { return (this->iter) != (v.iter); }
+    bool operator==(const iterator_list<Type_iterator_list>& v) { return (this->iter) == (v.iter); }
 };
 }  // namespace s21

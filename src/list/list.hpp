@@ -14,6 +14,7 @@ class list {
     typedef const Type_list& const_reference;
     typedef size_t size_type;
     typedef iterator_list<Type_list> iterator;
+    typedef const iterator_list<Type_list> const_iterator;
     //    Основные методы взаиможействия
     list();
     list(size_type n);
@@ -24,10 +25,10 @@ class list {
     list& operator=(list&& v);
     //    Методы для доступа к элементам класса
     const_reference front();
-    const_reference back() {}
+    const_reference back();
     //    методы для итерирования
-    iterator begincbegin() {}
-    iterator endcend() {}
+    iterator begincbegin();
+    iterator endcend();
     //    Методы для определения наполнености контейнера
     bool empty();
     size_type size();
