@@ -5,17 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "g++-11 - Сборка и отладка активного файла",
-            "type": "cppdbg",
+            "type": "lldb",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "name": "Debug",
+            "program": "${workspaceFolder}/src/debug",
             "args": [],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb",
-            "preLaunchTask": "C/C++: g++-11 сборка активного файла"
+            "cwd": "${workspaceFolder}"
         }
     ]
 }

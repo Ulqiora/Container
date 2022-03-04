@@ -15,29 +15,22 @@ list<Type_list>::list(size_type n) : size_(n) {
 }
 
 template <class Type_list>
-list<Type_list>::list(std::initializer_list<Type_list> const& items) : size_(items.size()) {
-    head_ = new Node_list<Type_list>(nullptr, nullptr, *(items.begin()));
-    Node_list<Type_list>* current = head_;
+list<Type_list>::list(const std::initializer_list<Type_list>& items) : size_(0) {
+    head_ = new Node_list<Type_list>(nullptr, nullptr);
     for (auto i = items.begin(); i != items.end(); ++i) {
-        if (i != items.begin()) {
-            current->next = new Node_list<Type_list>(nullptr, current, *i);
-            current = current->next;
-        }
+        push_back(*i);
     }
-    current->next = new Node_list<Type_list>(nullptr, current);
+    // current->next = new Node_list<Type_list>(nullptr, current);
 }
 
 template <class Type_list>
-list<Type_list>::list(const list<Type_list>& v) : size_(v.size_){
-    head_ = new Node_list<Type_list>(nullptr, nullptr, *(v.begincbegin()));
-    Node_list<Type_list>* current_this = head_;
-    for (auto i = v.begincbegin(); i != v.endcend(); ++i) {
-        if (i != v.begincbegin()) {
-            current_this = new Node_list<Type_list>(nullptr, current_this, i->data);
-            current_this = current_this->next;
-        }
+list<Type_list>::list(list<Type_list> const& v) : size_(0) {
+    head_=new Node_list<Type_list>(nullptr,nullptr);
+    Node_list<Type_list>* current=v.head_;
+    for (size_type i = 0; i != v.size_; ++i) {
+        push_back(*(current->data));
+        current=current->next;
     }
-    current_this = new Node_list<Type_list>(nullptr, current_this);
 }
 
 template <class Type_list>
@@ -60,10 +53,10 @@ list<Type_list>::~list() {
 template <class Type_list>
 typename s21::list<Type_list>& list<Type_list>::operator=(list&& v) {
     clear();
-    head_ = new Node_list<Type_list>(nullptr, nullptr, *(v.begincbegin()));
+    head_ = new Node_list<Type_list>(nullptr, nullptr, *(v.begin()));
     Node_list<Type_list>* current_this = head_;
-    for (auto i = v.begincbegin(); i != v.endcend(); ++i) {
-        if (i != v.begincbegin()) {
+    for (auto i = v.begin(); i != v.end(); ++i) {
+        if (i != v.begin()) {
             current_this->next = new Node_list<Type_list>(nullptr, current_this, i->data);
             current_this = current_this->next;
         }
@@ -79,7 +72,7 @@ typename s21::list<Type_list>::const_reference list<Type_list>::front() {
 
 template <class Type_list>
 typename s21::list<Type_list>::const_reference list<Type_list>::back() {
-    if (head_ == nullptr) throw std::out_of_range("size of list equal 0");
+    if (head_ == nullptr) throw std::out_of_range("size of list 0");
     Node_list<Type_list>* current = head_;
     if (current->next != nullptr) {
         while (current->next->next != nullptr) {
@@ -90,14 +83,14 @@ typename s21::list<Type_list>::const_reference list<Type_list>::back() {
 }
 
 template <class Type_list>
-typename list<Type_list>::iterator list<Type_list>::begincbegin() {
+typename list<Type_list>::iterator list<Type_list>::begin() {
     list<Type_list>::iterator i(head_);
     return i;
 }
 
 template <class Type_list>
-typename list<Type_list>::iterator list<Type_list>::endcend() {
-    Node_list<Type_list>* current=head_;
+typename list<Type_list>::iterator list<Type_list>::end() {
+    Node_list<Type_list>* current = head_;
     if (current != nullptr) {
         while (current->next != nullptr) current = current->next;
     }
@@ -150,12 +143,32 @@ typename list<Type_list>::iterator list<Type_list>::insert(iterator pos, const_r
 }
 
 template <class Type_list>
+void list<Type_list>::erase(iterator pos) {
+    if (pos == begin()) {
+        delete[] head_->data;
+        head_ = head_->next;
+        head_->prev = nullptr;
+        --size_;
+    } else if (pos != nullptr && pos != end()) {
+        for (iterator i = begin(); i != end(); ++i) {
+            if (i == pos) {
+                Node_list<Type_list>* del = i.get();
+                del->prev->next = del->next;
+                del->next->prev = del->prev;
+                break;
+            }
+        }
+        --size_;
+    }
+}
+
+template <class Type_list>
 void list<Type_list>::push_back(const_reference value) {
     Node_list<Type_list>* current = head_;
     while (current->next != nullptr) {
         current = current->next;
     }
-    current->data=value;
+    *(current->data) = value;
     current->next = new Node_list<Type_list>(nullptr, current);
     ++size_;
 }
@@ -169,7 +182,7 @@ void list<Type_list>::pop_back() {
         }
         delete[] current->data;
         current = current->prev;
-        current->next=nullptr;
+        current->next = nullptr;
         --size_;
     }
 }
@@ -198,7 +211,9 @@ void list<Type_list>::swap(list& other) {
 }
 
 template <class Type_list>
-void list<Type_list>::merge(list& other) {}
+void list<Type_list>::merge(list& other) {
+
+}
 
 template <class Type_list>
 void list<Type_list>::splice(const_iterator pos, list& other) {}
@@ -220,14 +235,13 @@ void list<Type_list>::reverse() {
 
 template <class Type_list>
 void list<Type_list>::unique() {
-    if (head_ != nullptr) {
+    if (size_ > 1) {
         Node_list<Type_list>* current = head_;
         while (current->next != nullptr) {
             if (*(current->data) == *(current->next->data)) {
-                Node_list<Type_list>* swap = current;
-                current->next = current->next->next;
-                current->next->prev = current;
-                delete swap;
+                iterator del(current);
+                current = current->next;
+                erase(del);
             } else {
                 current = current->next;
             }
@@ -236,5 +250,19 @@ void list<Type_list>::unique() {
 }
 
 template <class Type_list>
-void list<Type_list>::sort() {}
+void list<Type_list>::sort() {
+    if (size_ > 1) {
+        for (iterator i = begin(); i != end(); ++i) {
+            Node_list<Type_list>* first = i.get();
+            for (iterator j = i; j != end(); ++j) {
+                Node_list<Type_list>* second = j.get();
+                if (*(second->data) < *(first->data)) {
+                    Type_list swap = *(second->data);
+                    *(second->data) = *(first->data);
+                    *(first->data) = swap;
+                }
+            }
+        }
+    }
+}
 }  // namespace s21

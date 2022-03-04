@@ -5,24 +5,24 @@
 #include <list>
 
 int main() {
-    std::list<int> a{1,2,3,4};
-    s21::list<int> b{1,2,2,3};
-    // std::cout << *a.insert(a.begin(),5)<<std::endl;
-    // b.push_back(3);
-    s21::list<int>::iterator it=b.begincbegin();
-    ++it;
-    b.insert(it,8);
-    b.push_back(9);
-    b.push_front(10);
-    // std::cout << b.front() << "\n";
-    // std::cout << b.back() << "\n";
-    // std::cout << (int)b.size() << "\n";
-    // std::cout << (int)b.empty() << "\n";
-    // b.unique();
-    std::cout<<"list:";
-    for (auto i = b.begincbegin(); i != b.endcend(); ++i) {
-        std::cout << *i <<"|";    
+    s21::list<int> a{1,2,3,4,5};
+    s21::list<int> b(a);
+    // a.push_back(8);
+    // s21::list<int> a(b);
+    // auto it=a.begin();
+    // it++;
+    // a.insert(a.begin(),-6);
+    // std::cout<<"When using unique\n";
+    for (auto i = b.begin(); i != b.end(); ++i) {
+        // std::cout<<*i<<std::endl;
+
+        s21::Node_list<int>* val = i.get();
+        if (i != b.begin()) {
+            std::cout << *(val->prev->data) << "<---" << *i << "--->" << *(val->next->data) << "\n";
+        } else {
+            std::cout << "     " <<*i << "--->" << *(val->next->data) << "\n";
+        }
     }
-    std::cout<<"\nsize="<<b.size()<<"|";
+    std::cout<<"size="<<b.size()<<"|";
     return 0;
 }

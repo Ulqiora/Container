@@ -18,8 +18,8 @@ class list {
     //    Основные методы взаиможействия
     list();
     list(size_type n);
-    list(std::initializer_list<value_type> const& items);
-    list(const list& v);
+    list(const std::initializer_list<value_type>& items);
+    list(list const& v);
     list(list&& v);
     ~list();
     list& operator=(list&& v);
@@ -27,8 +27,8 @@ class list {
     const_reference front();
     const_reference back();
     //    методы для итерирования
-    iterator begincbegin();
-    iterator endcend();
+    iterator begin();
+    iterator end();
     //    Методы для определения наполнености контейнера
     bool empty();
     size_type size();
