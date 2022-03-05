@@ -24,8 +24,8 @@ debug: main.cpp
 test: $(BD)main_test_exe
 	./$^
 
-./$(BD)main_test_exe: s21_container.a $(BD)main_test.o
-	$(CC) $(LDFLAGS) $^ -o $@ $(GTESTFLAGS) -ls21_matrix_oop -I./ -L./
+./$(BD)main_test_exe: $(BD)main_test.o
+	$(CC) $(LDFLAGS) $^ -o $@ $(GTESTFLAGS) -I./ -L./
 
 clean:
 	rm -rf ./$(BD)*.o ./$(BD)*_exe ./$(BD)*.dSYM
