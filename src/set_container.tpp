@@ -3,15 +3,13 @@
 namespace s21 {
 
 template <class Key, class Traits>
-SetContainer<Key, Traits>::SetContainer() {
+SetContainer<Key, Traits>::SetContainer() : _size(0) {
     _tree = new Tree<Key, Traits>;
-    _size = 0;
 }
 
 template <class Key, class Traits>
-SetContainer<Key, Traits>::SetContainer(const SetContainer& s) {
+SetContainer<Key, Traits>::SetContainer(const SetContainer& s) : _size(s._size) {
     _tree = new Tree<Key, Traits>(*s._tree);
-    _size = s._size;
 }
 
 template <class Key, class Traits>
@@ -29,7 +27,10 @@ SetContainer<Key, Traits>& SetContainer<Key, Traits>::operator=(const SetContain
 
 template <class Key, class Traits>
 SetContainer<Key, Traits>::~SetContainer() {
-    delete _tree;
+    if (_tree) {
+        delete _tree;
+        _tree = nullptr;
+    }
 }
 
 // ITERATOR
@@ -194,6 +195,59 @@ typename SetContainer<Key, Traits>::iterator_sc SetContainer<Key, Traits>::end()
 template <class Key, class Traits>
 typename SetContainer<Key, Traits>::const_iterator_sc SetContainer<Key, Traits>::cend() const {
     return const_iterator_sc(_tree->end());
+}
+
+// Capacity
+
+template <class Key, class Traits>
+bool SetContainer<Key, Traits>::empty() const {
+    return _tree->empty();
+}
+
+template <class Key, class Traits>
+typename SetContainer<Key, Traits>::size_type SetContainer<Key, Traits>::size() const {
+    return _size;
+}
+
+// Modifiers
+
+template <class Key, class Traits>
+void SetContainer<Key, Traits>::clear() {
+    _tree->clear();
+}
+
+template <class Key, class Traits>
+void SetContainer<Key, Traits>::erase(iterator_sc pos) {
+    _tree->erase(pos._node);
+}
+
+template <class Key, class Traits>
+void SetContainer<Key, Traits>::swap(SetContainer& other) {
+    SetContainer<Key, Traits> buf = *this;
+    *this = other;
+    other = buf;
+}
+
+// Lookup
+
+template <class Key, class Traits>
+typename SetContainer<Key, Traits>::iterator_sc SetContainer<Key, Traits>::find(const Key& key) const {
+    Node<Key> *node = _tree->find(key);
+    iterator_sc it;
+    if (node) {
+        it = iterator_sc(node);
+    } else {
+        it = end();
+    }
+    return it;
+}
+
+template<class Key, class Traits>
+bool SetContainer<Key, Traits>::contains(const Key& key) const {
+    if (_tree->find(key) == nullptr) {
+        return false;
+    }
+    return true;
 }
 
 }  // namespace s21

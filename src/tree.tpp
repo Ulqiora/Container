@@ -10,7 +10,9 @@ Tree<Key, Traits>::Tree() {
 template <class Key, class Traits>
 Tree<Key, Traits>::Tree(const Tree &t) {
     initialize();
-    prefixBypassCopy(t._root);
+    if (!t.empty()) {
+        prefixBypassCopy(t._root);
+    }
 }
 
 template <class Key, class Traits>
@@ -60,6 +62,7 @@ template <class Key, class Traits>
 void Tree<Key, Traits>::insert(Key key) {
     if (_root != _end) {
         insertAfterNode(_root, key);
+        _end->left = rightMost(_root);
     } else {
         _root = createNode(key);
         appendEndToNode(_root);
@@ -97,6 +100,7 @@ template <class Key, class Traits>
 void Tree<Key, Traits>::insertNoCopy(Key key) {
     if (_root) {
         insertAfterNode_noCopy(_root, key);
+        _end->left = rightMost(_root);
     } else {
         _root = createNode(key);
         appendEndToNode(_root);
@@ -153,12 +157,12 @@ Node<Key> *rightMost(Node<Key> *node) {
 }
 
 template <class Key, class Traits>
-Node<Key> *Tree<Key, Traits>::begin() {
+Node<Key> *Tree<Key, Traits>::begin() const {
     return leftMost(_root);
 }
 
 template <class Key, class Traits>
-Node<Key> *Tree<Key, Traits>::end() {
+Node<Key> *Tree<Key, Traits>::end() const {
     return _end;
 }
 
@@ -174,14 +178,22 @@ void Tree<Key, Traits>::nodeOut(Node<Key> *node) {
     } else {
         std::cout << " <--- ";
     }
-    std::cout << std::setw(2) << node->key;
+    if (node != _end) {
+        std::cout << std::setw(3) << node->key;
+    } else {
+        std::cout << "end";
+    }
     if (node->rightThread) {
         std::cout << " ***> ";
     } else {
         std::cout << " ---> ";
     }
     if (node->right != _end) {
-        std::cout << std::setw(4) << node->right->key;
+        if (node->right) {
+            std::cout << std::setw(4) << node->right->key;
+        } else {
+            std::cout << "null";
+        }
     } else {
         std::cout << std::setw(4) << " end";
     }
@@ -205,12 +217,13 @@ void Tree<Key, Traits>::display() {
             node = leftMost(node->right);
         }
     }
+    nodeOut(node);
 }
 
 // VERY massive function for overwriting tree structure caused by deleting a node
 template <class Key, class Traits>
 void Tree<Key, Traits>::erase(Node<Key> *node) {
-    if (node == nullptr) {
+    if (node == _end) {
         throw std::invalid_argument("Nothing to be deleted!");
     }
     // If node doesn't has any childs
@@ -226,6 +239,7 @@ void Tree<Key, Traits>::erase(Node<Key> *node) {
         } else {
             node->parent->right = node->right;
             node->parent->rightThread = true;
+            if (node->right == _end) _end->left = node->parent;
         }
         // If node has only left child
     } else if (!node->leftThread && node->rightThread) {
@@ -242,6 +256,7 @@ void Tree<Key, Traits>::erase(Node<Key> *node) {
         } else {
             pred->right = node->right;
             node->parent->right = node->left;
+            if (node->right == _end) _end->left = node->parent;
         }
         node->left->parent = node->parent;
         // If node has only right child
@@ -298,6 +313,50 @@ void Tree<Key, Traits>::prefixBypassCopy(Node<Key> *node) {
     insert(node->key);
     if (!node->leftThread) prefixBypassCopy(node->left);
     if (!node->rightThread) prefixBypassCopy(node->right);
+}
+
+template <class Key, class Traits>
+bool Tree<Key, Traits>::empty() const {
+    if (_root == _end) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+template <class Key, class Traits>
+void Tree<Key, Traits>::clear() {
+    if (_root != _end) destroy(_root);
+    _root = _end;
+}
+
+template <class Key, class Traits>
+void Tree<Key, Traits>::merge(Tree &other) {
+    if (!other.empty()) {
+        prefixBypassCopy(other._root);
+    }
+}
+
+template <class Key, class Traits>
+Node<Key> *Tree<Key, Traits>::find(const Key &key) const {
+    if (empty()) return nullptr;
+    Node<Key> *node = _root;
+    while (node->key != key) {
+        if (Traits()(key, node->key)) {
+            if (!node->leftThread) {
+                node = node->left;
+            } else {
+                return nullptr;
+            }
+        } else {
+            if (!node->rightThread) {
+                node = node->right;
+            } else {
+                return nullptr;
+            }
+        }
+    }
+    return node;
 }
 
 }  // namespace s21

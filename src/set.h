@@ -21,7 +21,6 @@ class set : public SetContainer {
     std::pair<iterator, bool> insert(const value_type& value);
     std::pair<iterator, bool> insert(const Key& key, const T& obj);
     std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);
-    void swap(set& other);
     void merge(set& other);
 };
 

@@ -27,19 +27,24 @@ class Tree {
     Tree<Key, Traits>();
     Tree(const Tree &t);
     ~Tree();
-    // Methods
+    // Modifiers
     void insert(Key key);
     void insertNoCopy(Key key);
-    void display();  // *** DEBUG
     void erase(Node<Key> *node);
-    Node<Key> *begin();
-    Node<Key> *end();
+    void destroy(Node<Key> *node);
+    void clear();
+    void merge(Tree &other);
+    // Lookup
+    void display();  // *** DEBUG
+    Node<Key> *begin() const;
+    Node<Key> *end() const;
+    bool empty() const;
+    Node<Key> *find(const Key &key) const;
 
  private:
     Node<Key> *createNode(Key key);
     void insertAfterNode(Node<Key> *node, Key key);
     void insertAfterNode_noCopy(Node<Key> *node, Key key);
-    void destroy(Node<Key> *node);
     void prefixBypassCopy(Node<Key> *node);
     void nodeOut(Node<Key> *node);  // *** DEBUG
     inline void appendEndToNode(Node<Key> *node);

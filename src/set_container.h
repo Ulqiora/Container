@@ -23,10 +23,9 @@ class SetContainer {
 
  public:
     class iterator_sc {
-     private:
+     public:
         Node<Key>* _node;
 
-     public:
         iterator_sc();
         iterator_sc(Node<Key>* node);
         iterator_sc(const iterator_sc& it);
@@ -39,10 +38,9 @@ class SetContainer {
         bool operator!=(const iterator_sc& it) const;
     };
     class const_iterator_sc {
-     private:
+     public:
         Node<Key>* _node;
 
-     public:
         const_iterator_sc();
         const_iterator_sc(Node<Key>* node);
         const_iterator_sc(const const_iterator_sc& it);
@@ -68,12 +66,11 @@ class SetContainer {
     // Capacity
     bool empty() const;
     size_type size() const;
-    size_type max_size() const;
+    size_type max_size() const;  // *** ???
     // Modifiers
     void clear();
     void erase(iterator_sc pos);
     void swap(SetContainer& other);
-    void merge(SetContainer& other);
     // Lookup
     iterator_sc find(const Key& key) const;
     bool contains(const Key& key) const;
