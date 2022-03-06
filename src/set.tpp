@@ -29,4 +29,11 @@ std::pair<typename set<Key, Traits>::iterator, bool> set<Key, Traits>::insert(co
     return std::pair<iterator, bool>(iterator(p.first), p.second);
 }
 
+template<class Key, class Traits>
+void set<Key, Traits>::merge(set& other) {
+    for (iterator it = other.begin(); it != other.end(); ++it) {
+        insert(*it);
+    }
+}
+
 }  // namespace s21
