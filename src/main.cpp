@@ -1,11 +1,8 @@
-// #include <vector>
 #include <iostream>
-// #include "vector/vector.tpp"
-#include "list/list.tpp"
-#include <list>
-#include <gtest/gtest.h>
+#include <queue>
 
 int main(){
-    std::pair<int,float> f{1,1.3};
-    
+    std::queue<int> a;
+    a.push(3);
+    std::cout<<a.back()<<std::endl;
 }
