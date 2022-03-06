@@ -6,21 +6,25 @@
 namespace s21 {
 
 template <class Key, class Traits>
-class set : public SetContainer {
+class set : public SetContainer<Key, Traits> {
  public:
-    class iterator : public iterator_sc {};
-    class const_iterator : public const_iterator_sc {};
+    // Type definitions
+    typedef Key key_type;
+    typedef Key value_type;
+    typedef value_type& reference;
+    typedef const value_type& const_reference;
+    typedef typename SetContainer<Key, Traits>::iterator_sc iterator;
+    typedef typename SetContainer<Key, Traits>::const_iterator_sc const_iterator;
+    typedef size_t size_type;
     // Member Functions
-    set() : SetContainer<Key, Traits>();
-    set(std::initializer_list<value_type> const& items);
-    set(const set& s) : SetContainer<Key, Traits>(s);
-    set(set&& s) : SetContainer<Key, Traits>(s);
-    ~set() : ~SetContainer<Key, Traits>();
-    operator=(set&& s);
+    set();
+    set(std::initializer_list<value_type> const& items);  // *** ???
+    set(const set& s);
+    set(set&& s);
+    ~set();
+    set<Key, Traits>& operator=(const set& s);
     // Modifiers
     std::pair<iterator, bool> insert(const value_type& value);
-    std::pair<iterator, bool> insert(const Key& key, const T& obj);
-    std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);
     void merge(set& other);
 };
 
