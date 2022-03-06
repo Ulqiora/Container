@@ -20,6 +20,7 @@ template <class Key, class Traits>
 class Tree {
  private:
     Node<Key> *_root;
+    Node<Key> *_end;
 
  public:
     // Constructors & destructor
@@ -40,6 +41,9 @@ class Tree {
     void insertAfterNode_noCopy(Node<Key> *node, Key key);
     void destroy(Node<Key> *node);
     void prefixBypassCopy(Node<Key> *node);
+    void nodeOut(Node<Key> *node);  // *** DEBUG
+    inline void appendEndToNode(Node<Key> *node);
+    inline void initialize();
 };
 
 template <class Key>

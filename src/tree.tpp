@@ -3,26 +3,39 @@
 namespace s21 {
 
 template <class Key, class Traits>
-Tree<Key, Traits>::Tree() : _root(nullptr) {}
+Tree<Key, Traits>::Tree() {
+    initialize();
+}
 
 template <class Key, class Traits>
 Tree<Key, Traits>::Tree(const Tree &t) {
+    initialize();
     prefixBypassCopy(t._root);
 }
 
 template <class Key, class Traits>
 Tree<Key, Traits>::~Tree() {
-    destroy(_root);
-    _root = nullptr;
+    if (_root) {
+        if (_root != _end) destroy(_root);
+        delete _end;
+        _root = nullptr;
+    }
+}
+
+template <class Key, class Traits>
+inline void Tree<Key, Traits>::initialize() {
+    _end = new Node<Key>;
+    _end->leftThread = true;
+    _end->rightThread = true;
+    _end->right = nullptr;
+    _root = _end;
 }
 
 template <class Key, class Traits>
 void Tree<Key, Traits>::destroy(Node<Key> *node) {
-    if (node != nullptr) {
-        if (!node->leftThread) destroy(node->left);
-        if (!node->rightThread) destroy(node->right);
-        delete node;
-    }
+    if (!node->leftThread) destroy(node->left);
+    if (!node->rightThread) destroy(node->right);
+    delete node;
 }
 
 template <class Key, class Traits>
@@ -38,11 +51,18 @@ Node<Key> *Tree<Key, Traits>::createNode(Key key) {
 }
 
 template <class Key, class Traits>
+inline void Tree<Key, Traits>::appendEndToNode(Node<Key> *node) {
+    node->right = _end;
+    _end->left = node;
+}
+
+template <class Key, class Traits>
 void Tree<Key, Traits>::insert(Key key) {
-    if (_root) {
+    if (_root != _end) {
         insertAfterNode(_root, key);
     } else {
         _root = createNode(key);
+        appendEndToNode(_root);
     }
 }
 
@@ -79,6 +99,7 @@ void Tree<Key, Traits>::insertNoCopy(Key key) {
         insertAfterNode_noCopy(_root, key);
     } else {
         _root = createNode(key);
+        appendEndToNode(_root);
     }
 }
 
@@ -116,7 +137,7 @@ void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
 template <class Key>
 Node<Key> *leftMost(Node<Key> *node) {
     if (node == nullptr) return nullptr;
-    while (node->left != nullptr && !node->leftThread) {
+    while (!node->leftThread) {
         node = node->left;
     }
     return node;
@@ -125,25 +146,24 @@ Node<Key> *leftMost(Node<Key> *node) {
 template <class Key>
 Node<Key> *rightMost(Node<Key> *node) {
     if (node == nullptr) return nullptr;
-    while (node->right != nullptr && !node->rightThread) {
+    while (!node->rightThread) {
         node = node->right;
     }
     return node;
 }
 
-template<class Key, class Traits>
-Node<Key>* Tree<Key, Traits>::begin() {
+template <class Key, class Traits>
+Node<Key> *Tree<Key, Traits>::begin() {
     return leftMost(_root);
 }
 
-template<class Key, class Traits>
-Node<Key>* Tree<Key, Traits>::end() {
-    return rightMost(_root);
+template <class Key, class Traits>
+Node<Key> *Tree<Key, Traits>::end() {
+    return _end;
 }
 
-// *** DEBUG
-template <class Key>
-void nodeOut(Node<Key> *node) {
+template <class Key, class Traits>
+void Tree<Key, Traits>::nodeOut(Node<Key> *node) {
     if (node->left) {
         std::cout << std::setw(4) << node->left->key;
     } else {
@@ -160,10 +180,10 @@ void nodeOut(Node<Key> *node) {
     } else {
         std::cout << " ---> ";
     }
-    if (node->right) {
+    if (node->right != _end) {
         std::cout << std::setw(4) << node->right->key;
     } else {
-        std::cout << std::setw(4) << "null";
+        std::cout << std::setw(4) << " end";
     }
     std::cout << "\t| parent: ";
     if (node->parent) {
@@ -176,9 +196,8 @@ void nodeOut(Node<Key> *node) {
 
 template <class Key, class Traits>
 void Tree<Key, Traits>::display() {
-    Node<Key> *node = leftMost(_root);
-    while (node != nullptr) {
-        // std::cout << node->key << ' ';
+    Node<Key> *node = begin();
+    while (node != _end) {
         nodeOut(node);
         if (node->rightThread) {
             node = node->right;
@@ -198,7 +217,7 @@ void Tree<Key, Traits>::erase(Node<Key> *node) {
     if (node->leftThread && node->rightThread) {
         // If node is _root
         if (node->parent == nullptr) {
-            _root = nullptr;
+            _root = _end;
             // If node is left child
         } else if (node == node->parent->left) {
             node->parent->left = node->left;
@@ -276,11 +295,9 @@ void Tree<Key, Traits>::erase(Node<Key> *node) {
 
 template <class Key, class Traits>
 void Tree<Key, Traits>::prefixBypassCopy(Node<Key> *node) {
-    if (node != NULL) {
-        insert(node->key);
-        prefixBypassCopy(node->left);
-        prefixBypassCopy(node->right);
-    }
+    insert(node->key);
+    if (!node->leftThread) prefixBypassCopy(node->left);
+    if (!node->rightThread) prefixBypassCopy(node->right);
 }
 
 }  // namespace s21

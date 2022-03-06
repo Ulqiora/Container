@@ -79,9 +79,7 @@ typename SetContainer<Key, Traits>::iterator_sc& SetContainer<Key, Traits>::iter
 template <class Key, class Traits>
 typename SetContainer<Key, Traits>::iterator_sc& SetContainer<Key, Traits>::iterator_sc::operator--() {
     if (_node == nullptr) {
-        Node<Key>* root = _node;
-        while (root->parent != nullptr) root = root->parent;
-        _node = rightMost(root);
+        throw std::out_of_range("Iterator is out of container bounds!");
     }
     if (_node->leftThread) {
         _node = _node->left;
@@ -154,9 +152,7 @@ template <class Key, class Traits>
 typename SetContainer<Key, Traits>::const_iterator_sc&
 SetContainer<Key, Traits>::const_iterator_sc::operator--() {
     if (_node == nullptr) {
-        Node<Key>* root = _node;
-        while (root->parent != nullptr) root = root->parent;
-        _node = rightMost(root);
+        throw std::out_of_range("Iterator is out of container bounds!");
     }
     if (_node->leftThread) {
         _node = _node->left;
@@ -192,12 +188,12 @@ typename SetContainer<Key, Traits>::const_iterator_sc SetContainer<Key, Traits>:
 
 template <class Key, class Traits>
 typename SetContainer<Key, Traits>::iterator_sc SetContainer<Key, Traits>::end() const {
-    return iterator_sc();
+    return iterator_sc(_tree->end());
 }
 
 template <class Key, class Traits>
 typename SetContainer<Key, Traits>::const_iterator_sc SetContainer<Key, Traits>::cend() const {
-    return const_iterator_sc();
+    return const_iterator_sc(_tree->end());
 }
 
 }  // namespace s21
