@@ -59,83 +59,60 @@ inline void Tree<Key, Traits>::appendEndToNode(Node<Key> *node) {
 }
 
 template <class Key, class Traits>
-void Tree<Key, Traits>::insert(Key key) {
-    if (_root != _end) {
-        insertAfterNode(_root, key);
+std::pair<Node<Key> *, bool> Tree<Key, Traits>::insert(Key key, bool allowCopy) {
+    std::pair<Node<Key> *, bool> ret;
+    if (!empty()) {
+        Node<Key> *node = _root;
+        bool isInserted = false;
+        while (!isInserted) {
+            if (Traits()(key, node->key)) {
+                if (node->leftThread) {
+                    appendToLeft(node, key);
+                    isInserted = true;
+                }
+                node = node->left;
+            } else if (allowCopy || key != node->key) {
+                if (node->rightThread) {
+                    appendToRight(node, key);
+                    isInserted = true;
+                }
+                node = node->right;
+            } else {
+                break;
+            }
+        }
         _end->left = rightMost(_root);
+        // pair fill
+        ret.first = node;
+        ret.second = isInserted;
     } else {
         _root = createNode(key);
         appendEndToNode(_root);
+        // pair fill
+        ret.first = _root;
+        ret.second = true;
     }
+    return ret;
 }
 
 template <class Key, class Traits>
-void Tree<Key, Traits>::insertAfterNode(Node<Key> *node, Key key) {
-    if (Traits()(key, node->key)) {
-        if (!node->leftThread) {
-            insertAfterNode(node->left, key);
-        } else {
-            Node<Key> *mem = node->left;
-            node->left = createNode(key);
-            node->left->right = node;
-            node->leftThread = false;
-            node->left->left = mem;
-            node->left->parent = node;
-        }
-    } else {
-        if (!node->rightThread) {
-            insertAfterNode(node->right, key);
-        } else {
-            Node<Key> *mem = node->right;
-            node->right = createNode(key);
-            node->right->left = node;
-            node->rightThread = false;
-            node->right->right = mem;
-            node->right->parent = node;
-        }
-    }
+inline void Tree<Key, Traits>::appendToLeft(Node<Key> *node, Key key) {
+    Node<Key> *mem = node->left;
+    node->left = createNode(key);
+    node->left->right = node;
+    node->leftThread = false;
+    node->left->left = mem;
+    node->left->parent = node;
 }
 
 template <class Key, class Traits>
-void Tree<Key, Traits>::insertNoCopy(Key key) {
-    if (_root) {
-        insertAfterNode_noCopy(_root, key);
-        _end->left = rightMost(_root);
-    } else {
-        _root = createNode(key);
-        appendEndToNode(_root);
-    }
-}
-
-template <class Key, class Traits>
-void Tree<Key, Traits>::insertAfterNode_noCopy(Node<Key> *node, Key key) {
-    if (node->key != key) {
-        if (Traits()(key, node->key)) {
-            if (!node->leftThread) {
-                insertAfterNode_noCopy(node->left, key);
-            } else {
-                Node<Key> *mem = node->left;
-                node->left = createNode(key);
-                node->left->right = node;
-                node->leftThread = false;
-                node->left->left = mem;
-                node->left->parent = node;
-            }
-        } else {
-            if (!node->rightThread) {
-                insertAfterNode_noCopy(node->right, key);
-            } else {
-                Node<Key> *mem = node->right;
-                node->right = createNode(key);
-                node->right->left = node;
-                node->rightThread = false;
-                node->right->right = mem;
-                node->right->parent = node;
-            }
-        }
-    } else {
-        throw std::invalid_argument("The element already present in container!");
-    }
+inline void Tree<Key, Traits>::appendToRight(Node<Key> *node, Key key) {
+    Node<Key> *mem = node->right;
+    node->right = createNode(key);
+    node->right->left = node;
+    node->rightThread = false;
+    node->right->right = mem;
+    node->right->parent = node;
 }
 
 template <class Key>
@@ -317,11 +294,7 @@ void Tree<Key, Traits>::prefixBypassCopy(Node<Key> *node) {
 
 template <class Key, class Traits>
 bool Tree<Key, Traits>::empty() const {
-    if (_root == _end) {
-        return true;
-    } else {
-        return false;
-    }
+    return (_root == _end);
 }
 
 template <class Key, class Traits>

@@ -19,6 +19,14 @@ int main() {
     s1.insert(13);
     s1.insert(9);
 
+    std::pair<s21::set<int, std::less<int>>::iterator, bool> p;
+    p = s1.insert(40);
+
+    std::cout.setf(std::ios::boolalpha);
+    std::cout << *p.first << " -> " << p.second << std::endl;
+
+    s1._tree->display();
+
     // s21::SetContainer<int, std::less<int>> sc2;
 
     // sc2._tree->insert(0);

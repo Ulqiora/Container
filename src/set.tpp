@@ -25,7 +25,8 @@ set<Key, Traits>& set<Key, Traits>::operator=(const set& s) {
 
 template <class Key, class Traits>
 std::pair<typename set<Key, Traits>::iterator, bool> set<Key, Traits>::insert(const value_type& value) {
-    SetContainer<Key, Traits>::_tree->insert(value);
+    std::pair<Node<Key>*, bool> p = SetContainer<Key, Traits>::_tree->insert(value, false);
+    return std::pair<iterator, bool>(iterator(p.first), p.second);
 }
 
 }  // namespace s21

@@ -28,8 +28,7 @@ class Tree {
     Tree(const Tree &t);
     ~Tree();
     // Modifiers
-    void insert(Key key);
-    void insertNoCopy(Key key);
+    std::pair<Node<Key>*, bool> insert(Key key, bool allowCopy);
     void erase(Node<Key> *node);
     void destroy(Node<Key> *node);
     void clear();
@@ -43,11 +42,11 @@ class Tree {
 
  private:
     Node<Key> *createNode(Key key);
-    void insertAfterNode(Node<Key> *node, Key key);
-    void insertAfterNode_noCopy(Node<Key> *node, Key key);
     void prefixBypassCopy(Node<Key> *node);
     void nodeOut(Node<Key> *node);  // *** DEBUG
     inline void appendEndToNode(Node<Key> *node);
+    inline void appendToLeft(Node<Key> *node, Key key);
+    inline void appendToRight(Node<Key> *node, Key key);
     inline void initialize();
 };
 
