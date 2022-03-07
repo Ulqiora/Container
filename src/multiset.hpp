@@ -30,6 +30,9 @@ class multiset : public SetContainer<Key, Traits> {
     void merge(multiset& other);
     // Lookup
     size_type count(const Key& key);
+    iterator lower_bound(const Key& key);
+    iterator upper_bound(const Key& key);
+    std::pair<iterator, iterator> equal_range(const Key& key);
 };
 
 }  // namespace s21

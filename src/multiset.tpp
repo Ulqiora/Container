@@ -64,4 +64,28 @@ typename multiset<Key, Traits>::size_type multiset<Key, Traits>::count(const Key
     return cnt;
 }
 
+template <class Key, class Traits>
+typename multiset<Key, Traits>::iterator multiset<Key, Traits>::lower_bound(const Key& key) {
+    iterator it = SetContainer<Key, Traits>::begin();
+    while (it != SetContainer<Key, Traits>::end() && *it < key) {
+        ++it;
+    }
+    return it;
+}
+
+template <class Key, class Traits>
+typename multiset<Key, Traits>::iterator multiset<Key, Traits>::upper_bound(const Key& key) {
+    iterator it = SetContainer<Key, Traits>::begin();
+    while (it != SetContainer<Key, Traits>::end() && *it <= key) {
+        ++it;
+    }
+    return it;
+}
+
+template <class Key, class Traits>
+std::pair<typename multiset<Key, Traits>::iterator, typename multiset<Key, Traits>::iterator>
+multiset<Key, Traits>::equal_range(const Key& key) {
+    return std::pair<iterator, iterator>(lower_bound(key), upper_bound(key));
+}
+
 }  // namespace s21

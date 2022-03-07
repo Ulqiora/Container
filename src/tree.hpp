@@ -16,7 +16,7 @@ struct Node {
     bool leftThread, rightThread;
 };
 
-template <class Key, class Traits = std::less<Key> >
+template <class Key, class Traits>
 class Tree {
  private:
     Node<Key> *_root;
