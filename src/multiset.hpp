@@ -7,7 +7,7 @@
 
 namespace s21 {
 
-template <class Key, class Traits>
+template <class Key, class Traits = std::less<Key> >
 class multiset : public SetContainer<Key, Traits> {
  public:
     // Type definitions
@@ -29,7 +29,7 @@ class multiset : public SetContainer<Key, Traits> {
     iterator insert(const value_type& value);
     void merge(multiset& other);
     // Lookup
-    
+    size_type count(const Key& key);
 };
 
 }  // namespace s21

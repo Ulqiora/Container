@@ -8,7 +8,8 @@ template <class Key, class Traits>
 multiset<Key, Traits>::multiset() : SetContainer<Key, Traits>() {}
 
 template <class Key, class Traits>
-multiset<Key, Traits>::multiset(std::initializer_list<value_type> const& items) : SetContainer<Key, Traits>() {
+multiset<Key, Traits>::multiset(std::initializer_list<value_type> const& items)
+    : SetContainer<Key, Traits>() {
     typename std::initializer_list<value_type>::const_iterator it;
     for (it = items.begin(); it != items.end(); ++it) {
         insert(*it);
@@ -44,6 +45,23 @@ void multiset<Key, Traits>::merge(multiset& other) {
     for (iterator it = other.begin(); it != other.end(); ++it) {
         insert(*it);
     }
+}
+
+// Lookup
+
+template <class Key, class Traits>
+typename multiset<Key, Traits>::size_type multiset<Key, Traits>::count(const Key& key) {
+    size_type cnt = 0;
+    Node<Key>* node = SetContainer<Key, Traits>::_tree->find(key);
+    while (node != nullptr) {
+        cnt++;
+        if (!node->rightThread) {
+            node = SetContainer<Key, Traits>::_tree->findFrom(key, node->right);
+        } else {
+            break;
+        }
+    }
+    return cnt;
 }
 
 }  // namespace s21

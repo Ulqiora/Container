@@ -313,7 +313,11 @@ void Tree<Key, Traits>::merge(Tree &other) {
 template <class Key, class Traits>
 Node<Key> *Tree<Key, Traits>::find(const Key &key) const {
     if (empty()) return nullptr;
-    Node<Key> *node = _root;
+    return findFrom(key, _root);
+}
+
+template <class Key, class Traits>
+Node<Key> *Tree<Key, Traits>::findFrom(const Key &key, Node<Key> *node) const {
     while (node->key != key) {
         if (Traits()(key, node->key)) {
             if (!node->leftThread) {

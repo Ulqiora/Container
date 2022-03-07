@@ -16,7 +16,7 @@ struct Node {
     bool leftThread, rightThread;
 };
 
-template <class Key, class Traits>
+template <class Key, class Traits = std::less<Key> >
 class Tree {
  private:
     Node<Key> *_root;
@@ -28,7 +28,7 @@ class Tree {
     Tree(const Tree &t);
     ~Tree();
     // Modifiers
-    std::pair<Node<Key>*, bool> insert(Key key, bool allowCopy);
+    std::pair<Node<Key> *, bool> insert(Key key, bool allowCopy);
     void erase(Node<Key> *node);
     void destroy(Node<Key> *node);
     void clear();
@@ -39,6 +39,7 @@ class Tree {
     Node<Key> *end() const;
     bool empty() const;
     Node<Key> *find(const Key &key) const;
+    Node<Key> *findFrom(const Key &key, Node<Key> *node) const;
 
  private:
     Node<Key> *createNode(Key key);

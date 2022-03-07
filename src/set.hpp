@@ -7,7 +7,7 @@
 
 namespace s21 {
 
-template <class Key, class Traits>
+template <class Key, class Traits = std::less<Key> >
 class set : public SetContainer<Key, Traits> {
  public:
     // Type definitions
