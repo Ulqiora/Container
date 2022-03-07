@@ -1,8 +1,11 @@
 #include <iostream>
 #include <queue>
+#include <stack>
 
 int main(){
-    std::queue<int> a;
+    std::stack<int> a;
     a.push(3);
-    std::cout<<a.back()<<std::endl;
+    std::cout << a.size() << std::endl;
+    a.pop();
+    std::cout << a.size() << std::endl;
 }

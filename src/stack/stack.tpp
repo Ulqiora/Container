@@ -15,11 +15,21 @@ stack<Type_stack>::stack(size_type n) : size_(n) {
 
 template <class Type_stack>
 stack<Type_stack>::stack(std::initializer_list<value_type> const &items) : size_(0), head_(nullptr) {
+    for (auto &i = items.end(); i != items.begin(), --i) push(*i);
 }
 
 template <class Type_stack>
 stack<Type_stack>::stack(const stack &q) : size_(0), head_(nullptr) {
-    
+    stack<Type_stack> a;
+    Node<Type_stack>* current=q.head_;
+    while(current!=nullptr) {
+        a.push(current->value_);
+        current=current->next_;
+    }
+    while(a.head_!=nullptr){
+        push(a.head_->value_);
+        a.pop();
+    }
 }
 
 template <class Type_stack>
