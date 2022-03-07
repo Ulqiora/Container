@@ -14,7 +14,7 @@ class SetContainer {
     typedef const value_type& const_reference;
     typedef size_t size_type;
 
- protected:  // *** should be protected
+ protected:
     Tree<Key, Traits>* _tree;
     size_type _size;
 
@@ -71,6 +71,7 @@ class SetContainer {
     // Lookup
     iterator_sc find(const Key& key) const;
     bool contains(const Key& key) const;
+    void treeDisplay(); // *** DEBUG
 };
 
 }  // namespace s21

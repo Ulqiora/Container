@@ -251,4 +251,10 @@ bool SetContainer<Key, Traits>::contains(const Key& key) const {
     return true;
 }
 
+// *** DEBUG
+template<class Key, class Traits>
+void SetContainer<Key, Traits>::treeDisplay() {
+    _tree->display();
+}
+
 }  // namespace s21

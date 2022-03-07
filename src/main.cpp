@@ -10,7 +10,7 @@ int main() {
     // std::cout.setf(std::ios::boolalpha);
     // std::cout << *p.first << " -> " << p.second << std::endl;
 
-    // s1._tree->display();
+    s1.treeDisplay();
 
     // s21::set<int, std::less<int>> s2;
 
