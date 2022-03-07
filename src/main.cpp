@@ -5,19 +5,7 @@
 
 // using namespace s21;
 int main() {
-    s21::set<int, std::less<int>> s1 = {8, 10, 3, 14, 1};
-
-    // s1.insert(8);
-    // s1.insert(10);
-    // s1.insert(3);
-    // s1.insert(14);
-    // s1.insert(1);
-    // s1.insert(6);
-    // s1.insert(7);
-    // s1.insert(4);
-    // s1.insert(2);
-    // s1.insert(13);
-    // s1.insert(9);
+    s21::set<int, std::less<int>> s1 = {8, 10, 3, 14, 1, 6, 7, 4, 2, 13, 9, 8};
 
     // std::cout.setf(std::ios::boolalpha);
     // std::cout << *p.first << " -> " << p.second << std::endl;
@@ -39,5 +27,6 @@ int main() {
         // *it = 5;
         std::cout << *it << ' ';
     }
-    // std::cout << *it << ' ';
+    std::cout << std::endl;
+    std::cout << s1.size();
 }

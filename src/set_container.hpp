@@ -9,15 +9,12 @@ template <class Key, class Traits>
 class SetContainer {
  public:
     // Type definitions
-    typedef Key key_type;
     typedef Key value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
-    // typedef value_type* iterator_sc;
-    // typedef const value_type* const_iterator_sc;
     typedef size_t size_type;
 
- public:  // *** should be protected
+ protected:  // *** should be protected
     Tree<Key, Traits>* _tree;
     size_type _size;
 

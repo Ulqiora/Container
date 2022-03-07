@@ -219,6 +219,7 @@ void SetContainer<Key, Traits>::clear() {
 template <class Key, class Traits>
 void SetContainer<Key, Traits>::erase(iterator_sc pos) {
     _tree->erase(pos._node);
+    _size--;
 }
 
 template <class Key, class Traits>
