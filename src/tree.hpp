@@ -1,5 +1,5 @@
-#ifndef SRC_TREE_H_
-#define SRC_TREE_H_
+#ifndef SRC_TREE_HPP_
+#define SRC_TREE_HPP_
 
 #include <functional>
 #include <iomanip>   // *** DEBUG
@@ -58,4 +58,4 @@ Node<Key> *rightMost(Node<Key> *node);
 
 }  // namespace s21
 
-#endif  // SRC_TREE_H_
+#endif  // SRC_TREE_HPP_

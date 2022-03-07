@@ -287,7 +287,7 @@ void Tree<Key, Traits>::erase(Node<Key> *node) {
 
 template <class Key, class Traits>
 void Tree<Key, Traits>::prefixBypassCopy(Node<Key> *node) {
-    insert(node->key);
+    insert(node->key, true);
     if (!node->leftThread) prefixBypassCopy(node->left);
     if (!node->rightThread) prefixBypassCopy(node->right);
 }

@@ -1,5 +1,7 @@
-#ifndef SRC_SET_H_
-#define SRC_SET_H_
+#ifndef SRC_SET_HPP_
+#define SRC_SET_HPP_
+
+#include <initializer_list>
 
 #include "set_container.tpp"
 
@@ -18,7 +20,7 @@ class set : public SetContainer<Key, Traits> {
     typedef size_t size_type;
     // Member Functions
     set();
-    set(std::initializer_list<value_type> const& items);  // *** ???
+    set(std::initializer_list<value_type> const& items);
     set(const set& s);
     set(set&& s);
     ~set();
@@ -30,4 +32,4 @@ class set : public SetContainer<Key, Traits> {
 
 }  // namespace s21
 
-#endif  // SRC_SET_H_
+#endif  // SRC_SET_HPP_

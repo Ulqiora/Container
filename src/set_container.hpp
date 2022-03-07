@@ -1,5 +1,5 @@
-#ifndef SRC_SET_CONTAINER_H_
-#define SRC_SET_CONTAINER_H_
+#ifndef SRC_SET_CONTAINER_HPP_
+#define SRC_SET_CONTAINER_HPP_
 
 #include "tree.tpp"
 
@@ -37,7 +37,7 @@ class SetContainer {
         bool operator==(const iterator_sc& it) const;
         bool operator!=(const iterator_sc& it) const;
     };
-    class const_iterator_sc {
+    class const_iterator_sc {  // *** NEED INHERITANCE!
      public:
         Node<Key>* _node;
 
@@ -78,4 +78,4 @@ class SetContainer {
 
 }  // namespace s21
 
-#endif  // SRC_SET_CONTAINER_H_
+#endif  // SRC_SET_CONTAINER_HPP_
