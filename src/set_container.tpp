@@ -102,77 +102,56 @@ bool SetContainer<Key, Traits>::iterator_sc::operator!=(const iterator_sc& it) c
     return false;
 }
 
-// CONST ITERATOR
+// CONST ITERATOR - child
 
 template <class Key, class Traits>
-SetContainer<Key, Traits>::const_iterator_sc::const_iterator_sc() : _node(nullptr) {}
+SetContainer<Key, Traits>::const_iterator_sc::const_iterator_sc() : iterator_sc() {}
 
 template <class Key, class Traits>
-SetContainer<Key, Traits>::const_iterator_sc::const_iterator_sc(Node<Key>* node) : _node(node) {}
+SetContainer<Key, Traits>::const_iterator_sc::const_iterator_sc(Node<Key>* node) : iterator_sc(node) {}
 
 template <class Key, class Traits>
 SetContainer<Key, Traits>::const_iterator_sc::const_iterator_sc(const const_iterator_sc& it)
-    : _node(it._node) {}
+    : iterator_sc(it) {}
 
 template <class Key, class Traits>
-SetContainer<Key, Traits>::const_iterator_sc::~const_iterator_sc() {
-    _node = nullptr;
-}
+SetContainer<Key, Traits>::const_iterator_sc::~const_iterator_sc() {}
 
 template <class Key, class Traits>
 typename SetContainer<Key, Traits>::const_iterator_sc&
 SetContainer<Key, Traits>::const_iterator_sc::operator=(const const_iterator_sc& it) {
-    _node = it._node;
+    iterator_sc::operator=(it);
     return *this;
 }
 
 template <class Key, class Traits>
 typename SetContainer<Key, Traits>::const_reference
 SetContainer<Key, Traits>::const_iterator_sc::operator*() {
-    if (_node == nullptr) {
-        throw std::invalid_argument("Iterator you try to dereference points at nullptr!");
-    }
-    return _node->key;
+    return iterator_sc::operator*();
 }
 
 template <class Key, class Traits>
 typename SetContainer<Key, Traits>::const_iterator_sc&
 SetContainer<Key, Traits>::const_iterator_sc::operator++() {
-    if (_node == nullptr) {
-        throw std::out_of_range("Iterator is out of container bounds!");
-    }
-    if (_node->rightThread) {
-        _node = _node->right;
-    } else {
-        _node = leftMost(_node->right);
-    }
+    iterator_sc::operator++();
     return *this;
 }
 
 template <class Key, class Traits>
 typename SetContainer<Key, Traits>::const_iterator_sc&
 SetContainer<Key, Traits>::const_iterator_sc::operator--() {
-    if (_node == nullptr) {
-        throw std::out_of_range("Iterator is out of container bounds!");
-    }
-    if (_node->leftThread) {
-        _node = _node->left;
-    } else {
-        _node = rightMost(_node->left);
-    }
+    iterator_sc::operator--();
     return *this;
 }
 
 template <class Key, class Traits>
 bool SetContainer<Key, Traits>::const_iterator_sc::operator==(const const_iterator_sc& it) const {
-    if (_node == it._node) return true;
-    return false;
+    return iterator_sc::operator==(it);
 }
 
 template <class Key, class Traits>
 bool SetContainer<Key, Traits>::const_iterator_sc::operator!=(const const_iterator_sc& it) const {
-    if (_node != it._node) return true;
-    return false;
+    return iterator_sc::operator!=(it);
 }
 
 // METHODS

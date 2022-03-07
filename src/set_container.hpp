@@ -36,10 +36,8 @@ class SetContainer {
         bool operator==(const iterator_sc& it) const;
         bool operator!=(const iterator_sc& it) const;
     };
-    class const_iterator_sc {  // *** NEED INHERITANCE!
+    class const_iterator_sc : public iterator_sc {
      public:
-        Node<Key>* _node;
-
         const_iterator_sc();
         const_iterator_sc(Node<Key>* node);
         const_iterator_sc(const const_iterator_sc& it);
@@ -73,7 +71,7 @@ class SetContainer {
     // Lookup
     iterator_sc find(const Key& key) const;
     bool contains(const Key& key) const;
-    void treeDisplay(); // *** DEBUG
+    void treeDisplay();  // *** DEBUG
 };
 
 }  // namespace s21

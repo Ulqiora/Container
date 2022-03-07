@@ -25,14 +25,11 @@ int main() {
 
     // s1.merge(s2);
 
-    // set<int, std::less<int>>::iterator it;
+    set<int, std::less<int>>::iterator it;
 
-    // for (it = s1.begin(); it != s1.end(); ++it) {
-    //     // *it = 5;
-    //     std::cout << *it << ' ';
-    // }
-
+    for (it = s1.begin(); it != s1.end(); ++it) {
+        // *it = 5;
+        std::cout << *it << ' ';
+    }
     std::cout << std::endl;
-    std::cout << s1.max_size() << std::endl;
-    // std::cout << static_cast<size_t>(pow(2, sizeof(void *) * 8) / sizeof(long double) - 1) << std::endl;
 }
