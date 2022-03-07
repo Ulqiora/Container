@@ -27,7 +27,7 @@ class stack {
 
     void push(const_reference value);
     void pop();
-    void swap(stack& other);
+    void swap(stack& other)noexcept;
 
    private:
     Node<Type_stack>* head_;

@@ -15,18 +15,18 @@ stack<Type_stack>::stack(size_type n) : size_(n) {
 
 template <class Type_stack>
 stack<Type_stack>::stack(std::initializer_list<value_type> const &items) : size_(0), head_(nullptr) {
-    for (auto &i = items.end(); i != items.begin(), --i) push(*i);
+    for (auto i = items.begin(); i != items.end(); ++i) push(*i);
 }
 
 template <class Type_stack>
 stack<Type_stack>::stack(const stack &q) : size_(0), head_(nullptr) {
     stack<Type_stack> a;
-    Node<Type_stack>* current=q.head_;
-    while(current!=nullptr) {
+    Node<Type_stack> *current = q.head_;
+    while (current != nullptr) {
         a.push(current->value_);
-        current=current->next_;
+        current = current->next_;
     }
-    while(a.head_!=nullptr){
+    while (a.head_ != nullptr) {
         push(a.head_->value_);
         a.pop();
     }
@@ -45,6 +45,7 @@ stack<Type_stack>::~stack() {
 template <class Type_stack>
 typename s21::stack<Type_stack>::reference stack<Type_stack>::operator=(stack &&q) {
     (head_ = q.head_, size_ = q.size_, q.head_ = nullptr, q.size_ = 0);
+    return *this;
 }
 
 template <class Type_stack>
@@ -73,7 +74,7 @@ typename s21::stack<Type_stack>::size_type stack<Type_stack>::size() {
 
 template <class Type_stack>
 void stack<Type_stack>::push(const_reference value) {
-    if (size == 0) {
+    if (size_ == 0) {
         head_ = new Node<Type_stack>(nullptr, value);
     } else {
         Node<Type_stack> *current = new Node<Type_stack>(head_, value);;
@@ -84,7 +85,7 @@ void stack<Type_stack>::push(const_reference value) {
 
 template <class Type_stack>
 void stack<Type_stack>::pop() {
-    if (size > 0) {
+    if (size_ > 0) {
         Node<Type_stack> *current = head_;
         head_ = head_->next_;
         delete current;
@@ -97,6 +98,6 @@ void stack<Type_stack>::swap(stack &other) noexcept {
     Node<Type_stack> *swap_hade = other.head_;
     size_type swap_size = other.size_;
     (other.head_ = head_, head_ = swap_hade);
-    (other.size_ = size_, size_ = swap_hade);
+    (other.size_ = size_, size_ = swap_size);
 }
 }  // namespace s21

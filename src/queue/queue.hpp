@@ -27,7 +27,7 @@ class queue {
 
     void push(const_reference value);
     void pop();
-    void swap(queue& other);
+    void swap(queue& other)noexcept;
 
    private:
     Node<Type_queue>* head_;

@@ -70,19 +70,19 @@ typename s21::queue<Type_queue>::size_type queue<Type_queue>::size() {
 
 template <class Type_queue>
 void queue<Type_queue>::push(const_reference value) {
-    if (size == 0) {
+    if (size_ == 0) {
         head_ = new Node<Type_queue>(nullptr, value);
     } else {
         Node<Type_queue> *current = head_;
         while (current->next_ != nullptr) current = current->next_;
-        current->next_ = new new Node<Type_queue>(nullptr, value);
+        current->next_ = new Node<Type_queue>(nullptr, value);
     }
     ++size_;
 }
 
 template <class Type_queue>
 void queue<Type_queue>::pop() {
-    if (size > 0) {
+    if (size_ > 0) {
         Node<Type_queue> *current = head_;
         head_ = head_->next_;
         delete current;

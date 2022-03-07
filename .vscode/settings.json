@@ -83,6 +83,14 @@
         "ranges": "cpp",
         "stop_token": "cpp",
         "xiosbase": "cpp",
-        "xlocnum": "cpp"
+        "xlocnum": "cpp",
+        "__tree": "cpp",
+        "any": "cpp",
+        "iomanip": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "stack": "cpp",
+        "variant": "cpp",
+        "cinttypes": "cpp"
     }
 }

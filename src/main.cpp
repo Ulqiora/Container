@@ -1,11 +1,9 @@
 #include <iostream>
+// #include <stack>
 #include <queue>
-#include <stack>
+#include "queue/queue.tpp"
 
 int main(){
-    std::stack<int> a;
-    a.push(3);
-    std::cout << a.size() << std::endl;
+    std::queue<int> a;
     a.pop();
-    std::cout << a.size() << std::endl;
 }
