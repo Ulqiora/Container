@@ -36,28 +36,28 @@ SetContainer<Key, Traits>::~SetContainer() {
 // ITERATOR
 
 template <class Key, class Traits>
-SetContainer<Key, Traits>::iterator_sc::iterator_sc() : _node(nullptr) {}
+SetContainer<Key, Traits>::iterator::iterator() : _node(nullptr) {}
 
 template <class Key, class Traits>
-SetContainer<Key, Traits>::iterator_sc::iterator_sc(Node<Key>* node) : _node(node) {}
+SetContainer<Key, Traits>::iterator::iterator(Node<Key>* node) : _node(node) {}
 
 template <class Key, class Traits>
-SetContainer<Key, Traits>::iterator_sc::iterator_sc(const iterator_sc& it) : _node(it._node) {}
+SetContainer<Key, Traits>::iterator::iterator(const iterator& it) : _node(it._node) {}
 
 template <class Key, class Traits>
-SetContainer<Key, Traits>::iterator_sc::~iterator_sc() {
+SetContainer<Key, Traits>::iterator::~iterator() {
     _node = nullptr;
 }
 
 template <class Key, class Traits>
-typename SetContainer<Key, Traits>::iterator_sc& SetContainer<Key, Traits>::iterator_sc::operator=(
-    const iterator_sc& it) {
+typename SetContainer<Key, Traits>::iterator& SetContainer<Key, Traits>::iterator::operator=(
+    const iterator& it) {
     _node = it._node;
     return *this;
 }
 
 template <class Key, class Traits>
-typename SetContainer<Key, Traits>::reference SetContainer<Key, Traits>::iterator_sc::operator*() {
+typename SetContainer<Key, Traits>::const_reference SetContainer<Key, Traits>::iterator::operator*() {
     if (_node == nullptr) {
         throw std::invalid_argument("Iterator you try to dereference points at nullptr!");
     }
@@ -65,7 +65,7 @@ typename SetContainer<Key, Traits>::reference SetContainer<Key, Traits>::iterato
 }
 
 template <class Key, class Traits>
-typename SetContainer<Key, Traits>::iterator_sc& SetContainer<Key, Traits>::iterator_sc::operator++() {
+typename SetContainer<Key, Traits>::iterator& SetContainer<Key, Traits>::iterator::operator++() {
     if (_node == nullptr) {
         throw std::out_of_range("Iterator is out of container bounds!");
     }
@@ -78,7 +78,7 @@ typename SetContainer<Key, Traits>::iterator_sc& SetContainer<Key, Traits>::iter
 }
 
 template <class Key, class Traits>
-typename SetContainer<Key, Traits>::iterator_sc& SetContainer<Key, Traits>::iterator_sc::operator--() {
+typename SetContainer<Key, Traits>::iterator& SetContainer<Key, Traits>::iterator::operator--() {
     if (_node == nullptr) {
         throw std::out_of_range("Iterator is out of container bounds!");
     }
@@ -91,89 +91,37 @@ typename SetContainer<Key, Traits>::iterator_sc& SetContainer<Key, Traits>::iter
 }
 
 template <class Key, class Traits>
-bool SetContainer<Key, Traits>::iterator_sc::operator==(const iterator_sc& it) const {
+bool SetContainer<Key, Traits>::iterator::operator==(const iterator& it) const {
     if (_node == it._node) return true;
     return false;
 }
 
 template <class Key, class Traits>
-bool SetContainer<Key, Traits>::iterator_sc::operator!=(const iterator_sc& it) const {
+bool SetContainer<Key, Traits>::iterator::operator!=(const iterator& it) const {
     if (_node != it._node) return true;
     return false;
-}
-
-// CONST ITERATOR - child
-
-template <class Key, class Traits>
-SetContainer<Key, Traits>::const_iterator_sc::const_iterator_sc() : iterator_sc() {}
-
-template <class Key, class Traits>
-SetContainer<Key, Traits>::const_iterator_sc::const_iterator_sc(Node<Key>* node) : iterator_sc(node) {}
-
-template <class Key, class Traits>
-SetContainer<Key, Traits>::const_iterator_sc::const_iterator_sc(const const_iterator_sc& it)
-    : iterator_sc(it) {}
-
-template <class Key, class Traits>
-SetContainer<Key, Traits>::const_iterator_sc::~const_iterator_sc() {}
-
-template <class Key, class Traits>
-typename SetContainer<Key, Traits>::const_iterator_sc&
-SetContainer<Key, Traits>::const_iterator_sc::operator=(const const_iterator_sc& it) {
-    iterator_sc::operator=(it);
-    return *this;
-}
-
-template <class Key, class Traits>
-typename SetContainer<Key, Traits>::const_reference
-SetContainer<Key, Traits>::const_iterator_sc::operator*() {
-    return iterator_sc::operator*();
-}
-
-template <class Key, class Traits>
-typename SetContainer<Key, Traits>::const_iterator_sc&
-SetContainer<Key, Traits>::const_iterator_sc::operator++() {
-    iterator_sc::operator++();
-    return *this;
-}
-
-template <class Key, class Traits>
-typename SetContainer<Key, Traits>::const_iterator_sc&
-SetContainer<Key, Traits>::const_iterator_sc::operator--() {
-    iterator_sc::operator--();
-    return *this;
-}
-
-template <class Key, class Traits>
-bool SetContainer<Key, Traits>::const_iterator_sc::operator==(const const_iterator_sc& it) const {
-    return iterator_sc::operator==(it);
-}
-
-template <class Key, class Traits>
-bool SetContainer<Key, Traits>::const_iterator_sc::operator!=(const const_iterator_sc& it) const {
-    return iterator_sc::operator!=(it);
 }
 
 // METHODS
 
 template <class Key, class Traits>
-typename SetContainer<Key, Traits>::iterator_sc SetContainer<Key, Traits>::begin() const {
-    return iterator_sc(_tree->begin());
+typename SetContainer<Key, Traits>::iterator SetContainer<Key, Traits>::begin() const {
+    return iterator(_tree->begin());
 }
 
 template <class Key, class Traits>
-typename SetContainer<Key, Traits>::const_iterator_sc SetContainer<Key, Traits>::cbegin() const {
-    return const_iterator_sc(_tree->begin());
+typename SetContainer<Key, Traits>::const_iterator SetContainer<Key, Traits>::cbegin() const {
+    return const_iterator(_tree->begin());
 }
 
 template <class Key, class Traits>
-typename SetContainer<Key, Traits>::iterator_sc SetContainer<Key, Traits>::end() const {
-    return iterator_sc(_tree->end());
+typename SetContainer<Key, Traits>::iterator SetContainer<Key, Traits>::end() const {
+    return iterator(_tree->end());
 }
 
 template <class Key, class Traits>
-typename SetContainer<Key, Traits>::const_iterator_sc SetContainer<Key, Traits>::cend() const {
-    return const_iterator_sc(_tree->end());
+typename SetContainer<Key, Traits>::const_iterator SetContainer<Key, Traits>::cend() const {
+    return const_iterator(_tree->end());
 }
 
 // Capacity
@@ -202,7 +150,7 @@ void SetContainer<Key, Traits>::clear() {
 }
 
 template <class Key, class Traits>
-void SetContainer<Key, Traits>::erase(iterator_sc pos) {
+void SetContainer<Key, Traits>::erase(iterator pos) {
     _tree->erase(pos._node);
     _size--;
 }
@@ -217,11 +165,11 @@ void SetContainer<Key, Traits>::swap(SetContainer& other) {
 // Lookup
 
 template <class Key, class Traits>
-typename SetContainer<Key, Traits>::iterator_sc SetContainer<Key, Traits>::find(const Key& key) const {
+typename SetContainer<Key, Traits>::iterator SetContainer<Key, Traits>::find(const Key& key) const {
     Node<Key>* node = _tree->find(key);
-    iterator_sc it;
+    iterator it;
     if (node) {
-        it = iterator_sc(node);
+        it = iterator(node);
     } else {
         it = end();
     }

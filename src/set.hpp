@@ -15,8 +15,8 @@ class set : public SetContainer<Key, Traits> {
     typedef Key value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
-    typedef typename SetContainer<Key, Traits>::iterator_sc iterator;
-    typedef typename SetContainer<Key, Traits>::const_iterator_sc const_iterator;
+    typedef typename SetContainer<Key, Traits>::iterator iterator;
+    typedef typename SetContainer<Key, Traits>::const_iterator const_iterator;
     typedef size_t size_type;
     // Member Functions
     set();

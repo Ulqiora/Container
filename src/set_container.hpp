@@ -7,7 +7,7 @@
 
 namespace s21 {
 
-template <class Key, class Traits>
+template <class Key, class Traits = std::less<Key> >
 class SetContainer {
  public:
     // Type definitions
@@ -15,40 +15,28 @@ class SetContainer {
     typedef value_type& reference;
     typedef const value_type& const_reference;
     typedef size_t size_type;
+    class iterator {
+     public:
+        Node<Key>* _node;
+
+        iterator();
+        iterator(Node<Key>* node);
+        iterator(const iterator& it);
+        ~iterator();
+        iterator& operator=(const iterator& it);
+        const_reference operator*();
+        iterator& operator++();
+        iterator& operator--();
+        bool operator==(const iterator& it) const;
+        bool operator!=(const iterator& it) const;
+    };
+    typedef iterator const_iterator;
 
  protected:
     Tree<Key, Traits>* _tree;
     size_type _size;
 
  public:
-    class iterator_sc {
-     public:
-        Node<Key>* _node;
-
-        iterator_sc();
-        iterator_sc(Node<Key>* node);
-        iterator_sc(const iterator_sc& it);
-        ~iterator_sc();
-        iterator_sc& operator=(const iterator_sc& it);
-        reference operator*();
-        iterator_sc& operator++();
-        iterator_sc& operator--();
-        bool operator==(const iterator_sc& it) const;
-        bool operator!=(const iterator_sc& it) const;
-    };
-    class const_iterator_sc : public iterator_sc {
-     public:
-        const_iterator_sc();
-        const_iterator_sc(Node<Key>* node);
-        const_iterator_sc(const const_iterator_sc& it);
-        ~const_iterator_sc();
-        const_iterator_sc& operator=(const const_iterator_sc& it);
-        const_reference operator*();
-        const_iterator_sc& operator++();
-        const_iterator_sc& operator--();
-        bool operator==(const const_iterator_sc& it) const;
-        bool operator!=(const const_iterator_sc& it) const;
-    };
     // Member functions
     SetContainer();
     SetContainer(const SetContainer& s);
@@ -56,20 +44,20 @@ class SetContainer {
     ~SetContainer();
     SetContainer<Key, Traits>& operator=(const SetContainer& s);
     // Iterators
-    iterator_sc begin() const;
-    const_iterator_sc cbegin() const;
-    iterator_sc end() const;
-    const_iterator_sc cend() const;
+    iterator begin() const;
+    const_iterator cbegin() const;
+    iterator end() const;
+    const_iterator cend() const;
     // Capacity
     bool empty() const;
     size_type size() const;
     size_type max_size() const;
     // Modifiers
     void clear();
-    void erase(iterator_sc pos);
+    void erase(iterator pos);
     void swap(SetContainer& other);
     // Lookup
-    iterator_sc find(const Key& key) const;
+    iterator find(const Key& key) const;
     bool contains(const Key& key) const;
     void treeDisplay();  // *** DEBUG
 };
