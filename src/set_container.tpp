@@ -209,6 +209,12 @@ typename SetContainer<Key, Traits>::size_type SetContainer<Key, Traits>::size() 
     return _size;
 }
 
+template <class Key, class Traits>
+typename SetContainer<Key, Traits>::size_type SetContainer<Key, Traits>::max_size() const {
+    return static_cast<size_t>(
+        pow(2, sizeof(void*) * 8) / (sizeof(Key) + 3 * sizeof(Node<Key>*) + 2 * sizeof(bool)) - 1);
+}
+
 // Modifiers
 
 template <class Key, class Traits>
@@ -233,7 +239,7 @@ void SetContainer<Key, Traits>::swap(SetContainer& other) {
 
 template <class Key, class Traits>
 typename SetContainer<Key, Traits>::iterator_sc SetContainer<Key, Traits>::find(const Key& key) const {
-    Node<Key> *node = _tree->find(key);
+    Node<Key>* node = _tree->find(key);
     iterator_sc it;
     if (node) {
         it = iterator_sc(node);
@@ -243,7 +249,7 @@ typename SetContainer<Key, Traits>::iterator_sc SetContainer<Key, Traits>::find(
     return it;
 }
 
-template<class Key, class Traits>
+template <class Key, class Traits>
 bool SetContainer<Key, Traits>::contains(const Key& key) const {
     if (_tree->find(key) == nullptr) {
         return false;
@@ -252,7 +258,7 @@ bool SetContainer<Key, Traits>::contains(const Key& key) const {
 }
 
 // *** DEBUG
-template<class Key, class Traits>
+template <class Key, class Traits>
 void SetContainer<Key, Traits>::treeDisplay() {
     _tree->display();
 }

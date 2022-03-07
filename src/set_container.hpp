@@ -1,6 +1,8 @@
 #ifndef SRC_SET_CONTAINER_HPP_
 #define SRC_SET_CONTAINER_HPP_
 
+#include <cmath>
+
 #include "tree.tpp"
 
 namespace s21 {
@@ -63,7 +65,7 @@ class SetContainer {
     // Capacity
     bool empty() const;
     size_type size() const;
-    size_type max_size() const;  // *** ???
+    size_type max_size() const;
     // Modifiers
     void clear();
     void erase(iterator_sc pos);
