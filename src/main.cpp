@@ -1,4 +1,4 @@
-#include "set.tpp"
+#include "multiset.tpp"
 
 // #include <cmath>
 // #include <iostream>
@@ -9,7 +9,7 @@ int main() {
     using namespace s21;
     // using namespace std;
 
-    set<int, std::less<int>> s1 = {8, 10, 3, 14, 1, 6, 7, 4, 2, 13, 9, 8};
+    multiset<int, std::less<int>> s1 = {8, 10, 3, 14, 1, 6, 7, 4, 2, 13, 9, 8};
 
     // std::cout.setf(std::ios::boolalpha);
     // std::cout << *p.first << " -> " << p.second << std::endl;
@@ -25,7 +25,7 @@ int main() {
 
     // s1.merge(s2);
 
-    set<int, std::less<int>>::iterator it;
+    multiset<int, std::less<int>>::iterator it;
 
     for (it = s1.begin(); it != s1.end(); ++it) {
         // *it = 5;
