@@ -21,10 +21,13 @@ queue<Type_queue>::queue(std::initializer_list<value_type> const &items) : size_
 template <class Type_queue>
 queue<Type_queue>::queue(const queue &q) : size_(0), head_(nullptr) {
     if (q.head_ != nullptr) {
-        head_ = new Node<Type_queue>(nullptr, q.head_->value_);
+        push(q.head_->value_);
         if (q.head_->next_ != nullptr) {
-            Node<Type_queue> *current = q.head_->next_;
-            while (current != nullptr) push(current->value_);
+            Node<Type_queue> *current = (q.head_)->next_;
+            while (current != nullptr) {
+                push(current->value_);
+                current = current->next_;
+            }
         }
     }
 }
@@ -95,6 +98,6 @@ void queue<Type_queue>::swap(queue &other) noexcept {
     Node<Type_queue> *swap_hade = other.head_;
     size_type swap_size = other.size_;
     (other.head_ = head_, head_ = swap_hade);
-    (other.size_ = size_, size_ = swap_hade);
+    (other.size_ = size_, size_ = swap_size);
 }
 }  // namespace s21

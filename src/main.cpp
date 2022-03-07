@@ -6,4 +6,5 @@
 int main(){
     std::queue<int> a;
     a.pop();
+    
 }

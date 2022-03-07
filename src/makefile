@@ -2,7 +2,7 @@ BD=#../build/
 TD=#../tests/
 CFLAGS=-c #-Wall -Wextra -Werror
 LDFLAGS=#-Wall -Wextra -Werror
-GTESTFLAGS=-lgtest -lpthread
+GTESTFLAGS=-lgtest -lpthread -lm
 OBJECTS= main.cpp
 CC=g++
 
