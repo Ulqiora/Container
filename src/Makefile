@@ -9,14 +9,6 @@ TESTS=test_multiset.cpp
 OBJECTS=$(addprefix $(BD),$(SRC:.cpp=.o))
 OBJ_TESTS=$(addprefix $(BD),$(TESTS:.cpp=.o))
 CC=g++
-OS:=$(shell uname -s)
-
-ifeq ($(OS), Darwin)
-	CC2+= -D OS_MAC
-else
-	CC2+= -D OS_LINUX
-	CHECKFLAGS+= -lrt -lpthread -lm
-endif
 
 all: clean test
 # all: clean main

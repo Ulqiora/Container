@@ -1,5 +1,5 @@
-#ifndef SRC_SET_CONTAINER_HPP_
-#define SRC_SET_CONTAINER_HPP_
+#ifndef SRC_SORTED_CONTAINER_HPP_
+#define SRC_SORTED_CONTAINER_HPP_
 
 #include <cmath>
 
@@ -8,7 +8,7 @@
 namespace s21 {
 
 template <class Key, class Traits>
-class SetContainer {
+class SortedContainer {
  public:
     // Type definitions
     typedef Key value_type;
@@ -38,11 +38,11 @@ class SetContainer {
 
  public:
     // Member functions
-    SetContainer();
-    SetContainer(const SetContainer& s);
-    SetContainer(SetContainer&& s);
-    ~SetContainer();
-    SetContainer<Key, Traits>& operator=(const SetContainer& s);
+    SortedContainer();
+    SortedContainer(const SortedContainer& s);
+    SortedContainer(SortedContainer&& s);
+    ~SortedContainer();
+    SortedContainer<Key, Traits>& operator=(const SortedContainer& s);
     // Iterators
     iterator begin() const;
     const_iterator cbegin() const;
@@ -55,7 +55,7 @@ class SetContainer {
     // Modifiers
     void clear();
     void erase(iterator pos);
-    void swap(SetContainer& other);
+    void swap(SortedContainer& other);
     // Lookup
     iterator find(const Key& key) const;
     bool contains(const Key& key) const;
@@ -64,4 +64,4 @@ class SetContainer {
 
 }  // namespace s21
 
-#endif  // SRC_SET_CONTAINER_HPP_
+#endif  // SRC_SORTED_CONTAINER_HPP_

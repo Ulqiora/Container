@@ -5,11 +5,11 @@ namespace s21 {
 // Constructors, destructor and operator=
 
 template <class Key, class Traits>
-multiset<Key, Traits>::multiset() : SetContainer<Key, Traits>() {}
+multiset<Key, Traits>::multiset() : SortedContainer<Key, Traits>() {}
 
 template <class Key, class Traits>
 multiset<Key, Traits>::multiset(std::initializer_list<value_type> const& items)
-    : SetContainer<Key, Traits>() {
+    : SortedContainer<Key, Traits>() {
     typename std::initializer_list<value_type>::const_iterator it;
     for (it = items.begin(); it != items.end(); ++it) {
         insert(*it);
@@ -17,17 +17,17 @@ multiset<Key, Traits>::multiset(std::initializer_list<value_type> const& items)
 }
 
 template <class Key, class Traits>
-multiset<Key, Traits>::multiset(const multiset& s) : SetContainer<Key, Traits>(s) {}
+multiset<Key, Traits>::multiset(const multiset& s) : SortedContainer<Key, Traits>(s) {}
 
 template <class Key, class Traits>
-multiset<Key, Traits>::multiset(multiset&& s) : SetContainer<Key, Traits>(std::move(s)) {}
+multiset<Key, Traits>::multiset(multiset&& s) : SortedContainer<Key, Traits>(std::move(s)) {}
 
 template <class Key, class Traits>
 multiset<Key, Traits>::~multiset() {}
 
 template <class Key, class Traits>
 multiset<Key, Traits>& multiset<Key, Traits>::operator=(const multiset& s) {
-    SetContainer<Key, Traits>::operator=(s);
+    SortedContainer<Key, Traits>::operator=(s);
     return *this;
 }
 
@@ -35,8 +35,8 @@ multiset<Key, Traits>& multiset<Key, Traits>::operator=(const multiset& s) {
 
 template <class Key, class Traits>
 typename multiset<Key, Traits>::iterator multiset<Key, Traits>::insert(const value_type& value) {
-    std::pair<Node<Key>*, bool> p = SetContainer<Key, Traits>::_tree->insert(value, true);
-    SetContainer<Key, Traits>::_size++;
+    std::pair<Node<Key>*, bool> p = SortedContainer<Key, Traits>::_tree->insert(value, true);
+    SortedContainer<Key, Traits>::_size++;
     return iterator(p.first);
 }
 
@@ -52,11 +52,11 @@ void multiset<Key, Traits>::merge(multiset& other) {
 template <class Key, class Traits>
 typename multiset<Key, Traits>::size_type multiset<Key, Traits>::count(const Key& key) {
     size_type cnt = 0;
-    Node<Key>* node = SetContainer<Key, Traits>::_tree->find(key);
+    Node<Key>* node = SortedContainer<Key, Traits>::_tree->find(key);
     while (node != nullptr) {
         cnt++;
         if (!node->rightThread) {
-            node = SetContainer<Key, Traits>::_tree->findFrom(key, node->right);
+            node = SortedContainer<Key, Traits>::_tree->findFrom(key, node->right);
         } else {
             break;
         }
@@ -66,8 +66,8 @@ typename multiset<Key, Traits>::size_type multiset<Key, Traits>::count(const Key
 
 template <class Key, class Traits>
 typename multiset<Key, Traits>::iterator multiset<Key, Traits>::lower_bound(const Key& key) {
-    iterator it = SetContainer<Key, Traits>::begin();
-    while (it != SetContainer<Key, Traits>::end() && *it < key) {
+    iterator it = SortedContainer<Key, Traits>::begin();
+    while (it != SortedContainer<Key, Traits>::end() && *it < key) {
         ++it;
     }
     return it;
@@ -75,8 +75,8 @@ typename multiset<Key, Traits>::iterator multiset<Key, Traits>::lower_bound(cons
 
 template <class Key, class Traits>
 typename multiset<Key, Traits>::iterator multiset<Key, Traits>::upper_bound(const Key& key) {
-    iterator it = SetContainer<Key, Traits>::begin();
-    while (it != SetContainer<Key, Traits>::end() && *it <= key) {
+    iterator it = SortedContainer<Key, Traits>::begin();
+    while (it != SortedContainer<Key, Traits>::end() && *it <= key) {
         ++it;
     }
     return it;

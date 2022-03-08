@@ -8,8 +8,8 @@
 #define MULTISET_INIT {8, 10, 3, 14, 1, 6, 7, 4, 2, 13, 9, 7};
 
 template <class Key, class Traits>
-bool isSetEqual(const std::multiset<Key, Traits>& std_mset,
-                const s21::multiset<Key, Traits>& s21_mset) {
+bool isMultisetEqual(const std::multiset<Key, Traits>& std_mset,
+                     const s21::multiset<Key, Traits>& s21_mset) {
     // Sizes check
     if (std_mset.size() != s21_mset.size()) return false;
     typename std::multiset<Key, Traits>::iterator std_it = std_mset.begin();
@@ -43,31 +43,31 @@ bool isSetEqual(const std::multiset<Key, Traits>& std_mset,
 TEST(constructors_suit, default_constructor) {
     s21::multiset<int> s21_mset;
     std::multiset<int> std_mset;
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(constructors_suit, init_constructor_1) {
     s21::multiset<int> s21_mset = MULTISET_INIT;
     std::multiset<int> std_mset = MULTISET_INIT;
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(constructors_suit, init_constructor_2) {
     s21::multiset<int> s21_mset = {1};
     std::multiset<int> std_mset = {1};
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(constructors_suit, init_constructor_3) {
     s21::multiset<std::string> s21_mset = {"Jack", "Scooby", "Rose", "Doo", "Rachel", "Dick"};
     std::multiset<std::string> std_mset = {"Jack", "Scooby", "Rose", "Doo", "Rachel", "Dick"};
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(constructors_suit, init_constructor_4) {
     s21::multiset<int> s21_mset = {};
     std::multiset<int> std_mset = {};
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(constructors_suit, copy_constructor_1) {
@@ -75,7 +75,7 @@ TEST(constructors_suit, copy_constructor_1) {
     s21::multiset<int> s21_mset2 = s21_mset1;
     std::multiset<int> std_mset1 = MULTISET_INIT;
     std::multiset<int> std_mset2 = std_mset1;
-    ASSERT_TRUE(isSetEqual(std_mset2, s21_mset2));
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
 TEST(constructors_suit, copy_constructor_2) {
@@ -83,7 +83,7 @@ TEST(constructors_suit, copy_constructor_2) {
     s21::multiset<int> s21_mset2 = s21_mset1;
     std::multiset<int> std_mset1 = {1};
     std::multiset<int> std_mset2 = std_mset1;
-    ASSERT_TRUE(isSetEqual(std_mset2, s21_mset2));
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
 TEST(constructors_suit, copy_constructor_3) {
@@ -91,7 +91,7 @@ TEST(constructors_suit, copy_constructor_3) {
     s21::multiset<int> s21_mset2 = s21_mset1;
     std::multiset<int> std_mset1;
     std::multiset<int> std_mset2 = std_mset1;
-    ASSERT_TRUE(isSetEqual(std_mset2, s21_mset2));
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
 TEST(constructors_suit, move_constructor_1) {
@@ -99,7 +99,7 @@ TEST(constructors_suit, move_constructor_1) {
     s21::multiset<long int> s21_mset2 = std::move(s21_mset1);
     std::multiset<long int> std_mset1 = MULTISET_INIT;
     std::multiset<long int> std_mset2 = std::move(std_mset1);
-    ASSERT_TRUE(isSetEqual(std_mset2, s21_mset2));
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
 TEST(constructors_suit, move_constructor_2) {
@@ -107,7 +107,7 @@ TEST(constructors_suit, move_constructor_2) {
     s21::multiset<long int> s21_mset2 = std::move(s21_mset1);
     std::multiset<long int> std_mset1 = {1};
     std::multiset<long int> std_mset2 = std::move(std_mset1);
-    ASSERT_TRUE(isSetEqual(std_mset2, s21_mset2));
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
 TEST(constructors_suit, move_constructor_3) {
@@ -115,7 +115,7 @@ TEST(constructors_suit, move_constructor_3) {
     s21::multiset<long int> s21_mset2 = std::move(s21_mset1);
     std::multiset<long int> std_mset1;
     std::multiset<long int> std_mset2 = std::move(std_mset1);
-    ASSERT_TRUE(isSetEqual(std_mset2, s21_mset2));
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
 TEST(constructors_suit, operator_assign_1) {
@@ -125,7 +125,7 @@ TEST(constructors_suit, operator_assign_1) {
     std::multiset<double> std_mset1 = MULTISET_INIT;
     std::multiset<double> std_mset2 = {1, 2, 3};
     std_mset2 = std_mset1;
-    ASSERT_TRUE(isSetEqual(std_mset2, s21_mset2));
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
 TEST(constructors_suit, operator_assign_2) {
@@ -135,7 +135,7 @@ TEST(constructors_suit, operator_assign_2) {
     std::multiset<double> std_mset1 = {1};
     std::multiset<double> std_mset2 = {1, 2, 3};
     std_mset2 = std_mset1;
-    ASSERT_TRUE(isSetEqual(std_mset2, s21_mset2));
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
 TEST(constructors_suit, operator_assign_3) {
@@ -145,7 +145,7 @@ TEST(constructors_suit, operator_assign_3) {
     std::multiset<double> std_mset1;
     std::multiset<double> std_mset2 = {1, 2, 3};
     std_mset2 = std_mset1;
-    ASSERT_TRUE(isSetEqual(std_mset2, s21_mset2));
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
 TEST(constructors_suit, operator_assign_4) {
@@ -153,7 +153,7 @@ TEST(constructors_suit, operator_assign_4) {
     s21_mset = s21_mset;
     std::multiset<double> std_mset = MULTISET_INIT;
     std_mset = std_mset;
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 // ITERATORS
 
@@ -289,7 +289,7 @@ TEST(modifiers_suit, clear_1) {
     s21_mset.clear();
     std::multiset<int> std_mset = MULTISET_INIT;
     std_mset.clear();
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(modifiers_suit, clear_2) {
@@ -297,7 +297,7 @@ TEST(modifiers_suit, clear_2) {
     s21_mset.clear();
     std::multiset<int> std_mset = {42};
     std_mset.clear();
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(modifiers_suit, clear_3) {
@@ -305,7 +305,7 @@ TEST(modifiers_suit, clear_3) {
     s21_mset.clear();
     std::multiset<int> std_mset;
     std_mset.clear();
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(modifiers_suit, insert) {
@@ -319,7 +319,7 @@ TEST(modifiers_suit, insert) {
     std_mset.insert(42);
     std_mset.insert(100);
     std_mset.insert(4);
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(modifiers_suit, erase_1) {
@@ -331,7 +331,7 @@ TEST(modifiers_suit, erase_1) {
     std_mset.erase(std_mset.find(3));
     std_mset.erase(std_mset.find(10));
     std_mset.erase(std_mset.find(8));
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(modifiers_suit, erase_2) {
@@ -343,7 +343,7 @@ TEST(modifiers_suit, erase_2) {
     std_mset.erase(std_mset.find(1));
     std_mset.erase(std_mset.find(6));
     std_mset.erase(std_mset.find(8));
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(modifiers_suit, erase_3) {
@@ -355,7 +355,7 @@ TEST(modifiers_suit, erase_3) {
     std_mset.erase(std_mset.find(10));
     std_mset.erase(std_mset.find(14));
     std_mset.erase(std_mset.find(8));
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(modifiers_suit, erase_4) {
@@ -367,7 +367,7 @@ TEST(modifiers_suit, erase_4) {
     std_mset.erase(std_mset.find(3));
     std_mset.erase(std_mset.find(10));
     std_mset.erase(std_mset.find(8));
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(modifiers_suit, erase_5) {
@@ -375,7 +375,7 @@ TEST(modifiers_suit, erase_5) {
     s21_mset.erase(s21_mset.find(42));
     std::multiset<int> std_mset = {42};
     std_mset.erase(std_mset.find(42));
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
 TEST(modifiers_suit, swap_1) {
@@ -385,8 +385,8 @@ TEST(modifiers_suit, swap_1) {
     std::multiset<int> std_mset1 = MULTISET_INIT;
     std::multiset<int> std_mset2 = {1, 2, 3};
     std_mset1.swap(std_mset2);
-    ASSERT_TRUE(isSetEqual(std_mset1, s21_mset1));
-    ASSERT_TRUE(isSetEqual(std_mset2, s21_mset2));
+    ASSERT_TRUE(isMultisetEqual(std_mset1, s21_mset1));
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
 TEST(modifiers_suit, swap_2) {
@@ -396,8 +396,8 @@ TEST(modifiers_suit, swap_2) {
     std::multiset<int> std_mset1 = MULTISET_INIT;
     std::multiset<int> std_mset2;
     std_mset1.swap(std_mset2);
-    ASSERT_TRUE(isSetEqual(std_mset1, s21_mset1));
-    ASSERT_TRUE(isSetEqual(std_mset2, s21_mset2));
+    ASSERT_TRUE(isMultisetEqual(std_mset1, s21_mset1));
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
 TEST(modifiers_suit, swap_3) {
@@ -407,8 +407,8 @@ TEST(modifiers_suit, swap_3) {
     std::multiset<int> std_mset1;
     std::multiset<int> std_mset2;
     std_mset1.swap(std_mset2);
-    ASSERT_TRUE(isSetEqual(std_mset1, s21_mset1));
-    ASSERT_TRUE(isSetEqual(std_mset2, s21_mset2));
+    ASSERT_TRUE(isMultisetEqual(std_mset1, s21_mset1));
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
 TEST(modifiers_suit, merge_1) {
@@ -421,7 +421,7 @@ TEST(modifiers_suit, merge_1) {
     std_mset.insert(20);
     std_mset.insert(0);
     std_mset.insert(10);
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset1));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset1));
 }
 
 TEST(modifiers_suit, merge_2) {
@@ -429,7 +429,7 @@ TEST(modifiers_suit, merge_2) {
     s21::multiset<int> s21_mset2;
     s21_mset1.merge(s21_mset2);
     std::multiset<int> std_mset = MULTISET_INIT;
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset1));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset1));
 }
 
 TEST(modifiers_suit, merge_3) {
@@ -437,7 +437,7 @@ TEST(modifiers_suit, merge_3) {
     s21::multiset<int> s21_mset2 = MULTISET_INIT;
     s21_mset1.merge(s21_mset2);
     std::multiset<int> std_mset = MULTISET_INIT;
-    ASSERT_TRUE(isSetEqual(std_mset, s21_mset1));
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset1));
 }
 
 // LOOKUP
