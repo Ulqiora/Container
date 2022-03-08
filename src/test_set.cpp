@@ -69,6 +69,12 @@ TEST(constructors_suit, init_constructor_4) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
+TEST(constructors_suit, init_constructor_5) {
+    s21::set<int, std::greater<int>> s21_set SET_INIT;
+    std::set<int, std::greater<int>> std_set SET_INIT;
+    ASSERT_TRUE(isSetEqual(std_set, s21_set));
+}
+
 TEST(constructors_suit, copy_constructor_1) {
     s21::set<int> s21_set1 = SET_INIT;
     s21::set<int> s21_set2 = s21_set1;

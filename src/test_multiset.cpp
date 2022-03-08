@@ -70,6 +70,12 @@ TEST(constructors_suit, init_constructor_4) {
     ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
 
+TEST(constructors_suit, init_constructor_5) {
+    s21::multiset<int, std::greater<int>> s21_mset MULTISET_INIT;
+    std::multiset<int, std::greater<int>> std_mset MULTISET_INIT;
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
+}
+
 TEST(constructors_suit, copy_constructor_1) {
     s21::multiset<int> s21_mset1 = MULTISET_INIT;
     s21::multiset<int> s21_mset2 = s21_mset1;
