@@ -5,7 +5,7 @@ LDFLAGS=#-Wall -Wextra -Werror
 LCOVFLAGS=-fprofile-arcs -ftest-coverage
 GTESTFLAGS=-lgtest
 SRC=main.cpp
-TESTS=test_set.cpp
+TESTS=test_multiset.cpp
 OBJECTS=$(addprefix $(BD),$(SRC:.cpp=.o))
 OBJ_TESTS=$(addprefix $(BD),$(TESTS:.cpp=.o))
 CC=g++
