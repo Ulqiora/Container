@@ -7,7 +7,6 @@ GTESTFLAGS=-lgtest
 SRC=main.cpp
 OBJECTS=$(addprefix $(BD),$(SRC:.cpp=.o))
 CC=g++
-CC2=g++
 OS:=$(shell uname -s)
 
 ifeq ($(OS), Darwin)
@@ -17,8 +16,8 @@ else
 	CHECKFLAGS+= -lrt -lpthread -lm
 endif
 
-# all: clean s21_matrix_oop.a
-all: clean main
+all: clean test
+# all: clean main
 
 main: $(BD)main_exe
 	./$(BD)main_exe
@@ -26,8 +25,8 @@ main: $(BD)main_exe
 ./$(BD)main_exe: $(OBJECTS)
 	$(CC) $(LDFLAGS) $^ -o $@
 
-debug: $(SRC)
-	$(CC) -g $^ -o $(BD)main_exe
+debug: test_set.cpp
+	$(CC) -g $(LDFLAGS) $^ -o $(BD)main_exe $(GTESTFLAGS) -I./ -L./
 
 s21_matrix_oop.a: $(OBJECTS)
 	ar rcs s21_matrix_oop.a $^
@@ -41,15 +40,14 @@ s21_matrix_oop.a: $(OBJECTS)
 test: $(BD)main_test_exe
 	./$^
 
-./$(BD)main_test_exe: s21_matrix_oop.a $(BD)main_test.o
-	$(CC2) $(LDFLAGS) $^ -o $@ $(GTESTFLAGS) -ls21_matrix_oop -I./ -L./
+./$(BD)main_test_exe: $(BD)test_set.o
+	$(CC) $(LDFLAGS) $^ -o $@ $(GTESTFLAGS) -I./ -L./
 
 #### GCOV #####
-gcov_report: $(BD)main_test.o
-	$(CC) $(CFLAGS) $(LCOVFLAGS) s21_matrix_oop.cpp -o $(BD)s21_matrix_oop.o
-	$(CC) $(LDFLAGS) $(LCOVFLAGS) $(BD)s21_matrix_oop.o $(BD)main_test.o -o $(BD)main_gcov_exe $(GTESTFLAGS)
+gcov_report: $(SRC)
+	$(CC) $(LDFLAGS) $(LCOVFLAGS) $^ -o $(BD)main_gcov_exe $(GTESTFLAGS)
 	./$(BD)main_gcov_exe
-	# mv *.gcda *.gcno ./$(BD)
+	mv *.gcda *.gcno ./$(BD)
 	lcov -t "gcov_report" -o $(BD)gcov_report.info -c -d ./$(BD)
 	genhtml -o $(BD)report $(BD)gcov_report.info
 	open $(BD)report/index.html
@@ -69,4 +67,4 @@ cpplint:
 	rm -f CPPLINT.cfg
 
 leaks:
-	leaks --atExit -- ./$(BD)main_exe
+	leaks --atExit -- ./$(BD)main_test_exe

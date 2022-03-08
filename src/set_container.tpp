@@ -147,6 +147,7 @@ typename SetContainer<Key, Traits>::size_type SetContainer<Key, Traits>::max_siz
 template <class Key, class Traits>
 void SetContainer<Key, Traits>::clear() {
     _tree->clear();
+    _size = 0;
 }
 
 template <class Key, class Traits>

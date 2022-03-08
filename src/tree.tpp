@@ -223,7 +223,8 @@ void Tree<Key, Traits>::erase(Node<Key> *node) {
         Node<Key> *pred = rightMost(node->left);
         // If node is _root
         if (node->parent == nullptr) {
-            pred->right = nullptr;
+            pred->right = _end;
+            _end->left = pred;
             _root = node->left;
             // If node is left child
         } else if (node == node->parent->left) {
