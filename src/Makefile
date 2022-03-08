@@ -5,7 +5,9 @@ LDFLAGS=#-Wall -Wextra -Werror
 LCOVFLAGS=-fprofile-arcs -ftest-coverage
 GTESTFLAGS=-lgtest
 SRC=main.cpp
+TESTS=test_set.cpp
 OBJECTS=$(addprefix $(BD),$(SRC:.cpp=.o))
+OBJ_TESTS=$(addprefix $(BD),$(TESTS:.cpp=.o))
 CC=g++
 OS:=$(shell uname -s)
 
@@ -40,7 +42,7 @@ s21_matrix_oop.a: $(OBJECTS)
 test: $(BD)main_test_exe
 	./$^
 
-./$(BD)main_test_exe: $(BD)test_set.o
+./$(BD)main_test_exe: $(OBJ_TESTS)
 	$(CC) $(LDFLAGS) $^ -o $@ $(GTESTFLAGS) -I./ -L./
 
 #### GCOV #####

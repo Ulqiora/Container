@@ -147,6 +147,13 @@ TEST(constructors_suit, operator_assign_3) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
+TEST(constructors_suit, operator_assign_4) {
+    s21::set<double> s21_set = SET_INIT;
+    s21_set = s21_set;
+    std::set<double> std_set = SET_INIT;
+    std_set = std_set;
+    ASSERT_TRUE(isSetEqual(std_set, s21_set));
+}
 // ITERATORS
 
 TEST(iterators_suit, begin_1) {

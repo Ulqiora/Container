@@ -19,9 +19,11 @@ SetContainer<Key, Traits>::SetContainer(SetContainer&& s) : _tree(s._tree), _siz
 
 template <class Key, class Traits>
 SetContainer<Key, Traits>& SetContainer<Key, Traits>::operator=(const SetContainer& s) {
-    delete _tree;
-    _tree = new Tree<Key, Traits>(*s._tree);
-    _size = s._size;
+    if (this != &s) {
+        delete _tree;
+        _tree = new Tree<Key, Traits>(*s._tree);
+        _size = s._size;
+    }
     return *this;
 }
 
