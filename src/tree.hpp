@@ -43,7 +43,7 @@ class Tree {
     bool empty() const;
     Node<Key> *find(const Key &key) const;
     Node<Key> *findFrom(const Key &key, Node<Key> *node) const;
-    bool containsPair(const Key &key) const;
+    Node<Key> *findPair(const Key &key) const;
 
  private:
     void prefixBypassCopy(Node<Key> *node);

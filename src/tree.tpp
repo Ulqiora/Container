@@ -370,26 +370,26 @@ Node<Key> *Tree<Key, Traits>::findFrom(const Key &key, Node<Key> *node) const {
     return node;
 }
 
-template<class Key, class Traits>
-bool Tree<Key, Traits>::containsPair(const Key &key) const {
-    if (empty()) return false;
+template <class Key, class Traits>
+Node<Key> *Tree<Key, Traits>::findPair(const Key &key) const {
+    if (empty()) return nullptr;
     Node<Key> *node = _root;
     while (node->key.first != key.first) {
         if (Traits()(key.first, node->key.first)) {
             if (!node->leftThread) {
                 node = node->left;
             } else {
-                return false;
+                return nullptr;
             }
         } else {
             if (!node->rightThread) {
                 node = node->right;
             } else {
-                return false;
+                return nullptr;
             }
         }
     }
-    return true;
+    return node;
 }
 
 }  // namespace s21

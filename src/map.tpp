@@ -32,13 +32,26 @@ map<Key, T, Traits>& map<Key, T, Traits>::operator=(const map& s) {
 }
 
 // Element access
-/*
-template <class Key, class T, class Traits>
-T& map<Key, T, Traits>::at(const Key& key) {}
 
 template <class Key, class T, class Traits>
-T& map<Key, T, Traits>::operator[](const Key& key) {}
-*/
+T& map<Key, T, Traits>::at(const Key& key) {
+    std::pair<Key, T> p;
+    p.first = key;
+    Node<value_type>* node = SortedContainer<value_type, Traits>::_tree->findPair(p);
+    if (!node) {
+        throw std::out_of_range("There is no such element in map!");
+    }
+    return node->key.second;
+}
+
+template <class Key, class T, class Traits>
+T& map<Key, T, Traits>::operator[](const Key& key) {
+    std::pair<Key, T> p;
+    p.first = key;
+    std::pair<iterator, bool> ret = insert(p);
+    return ret.first._node->key.second;
+}
+
 // Modifiers
 
 template <class Key, class T, class Traits>
@@ -77,7 +90,11 @@ template <class Key, class T, class Traits>
 bool map<Key, T, Traits>::contains(const Key& key) {
     std::pair<Key, T> p;
     p.first = key;
-    return SortedContainer<value_type, Traits>::_tree->containsPair(p);
+    Node<value_type>* node = SortedContainer<value_type, Traits>::_tree->findPair(p);
+    if (!node) {
+        return false;
+    }
+    return true;
 }
 
 }  // namespace s21
