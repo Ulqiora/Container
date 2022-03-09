@@ -1,13 +1,13 @@
 #pragma once
 #include <initializer_list>
 
-#include "../Node.hpp"
+#include "../singly_list.hpp"
 namespace s21 {
-    template<class Type_stack>
-class stack {
+    template<class Type>
+class stack : public single_linked_list<Type>{
    public:
     typedef size_t size_type;
-    typedef Type_stack value_type;
+    typedef Type value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
 
@@ -18,19 +18,6 @@ class stack {
     stack(stack&& q);
     ~stack();
     reference operator=(stack&& q);
-
-    const_reference front();
-    const_reference back();
-
-    bool empty();
-    size_type size();
-
     void push(const_reference value);
-    void pop();
-    void swap(stack& other)noexcept;
-
-   private:
-    Node<Type_stack>* head_;
-    size_type size_;
 };
 }  // namespace s21

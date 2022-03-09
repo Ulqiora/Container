@@ -1,13 +1,14 @@
 #pragma once
 #include <initializer_list>
 #include <iostream>
-#include "../Node.hpp"
+#include "../singly_list.hpp"
+
 namespace s21 {
-template <class Type_queue>
-class queue {
+template <class Type>
+class queue : public single_linked_list<Type>{
    public:
     typedef size_t size_type;
-    typedef Type_queue value_type;
+    typedef Type value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
 
@@ -18,19 +19,6 @@ class queue {
     queue(queue&& q);
     ~queue();
     reference operator=(queue&& q);
-
-    const_reference front();
-    const_reference back();
-
-    bool empty();
-    size_type size();
-
     void push(const_reference value);
-    void pop();
-    void swap(queue& other)noexcept;
-
-   private:
-    Node<Type_queue>* head_;
-    size_type size_;
 };
 }  // namespace s21

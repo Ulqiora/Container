@@ -21,8 +21,8 @@ debug: main.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
 #### TEST #####
-test: $(BD)main_test_exe
-	./$^
+test: clean $(BD)main_test_exe
+	./$(BD)main_test_exe
 
 ./$(BD)main_test_exe: $(BD)main_test.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(GTESTFLAGS) -I./ -L./
