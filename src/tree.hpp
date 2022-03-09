@@ -5,6 +5,8 @@
 #include <iomanip>   // *** DEBUG
 #include <iostream>  // *** DEBUG
 
+#include "pair.tpp"
+
 namespace s21 {
 
 template <class Key>
@@ -26,12 +28,11 @@ class Tree {
 
  public:
     // Constructors & destructor
-    Tree<Key, Traits>();
+    Tree();
     Tree(const Tree &t);
     ~Tree();
     // Modifiers
     std::pair<Node<Key> *, bool> insert(Key key, bool allowCopy);
-    std::pair<Node<Key> *, bool> insertPair(Key p, bool allowCopy);
     void erase(Node<Key> *node);
     void destroy(Node<Key> *node);
     void clear();
@@ -43,7 +44,6 @@ class Tree {
     bool empty() const;
     Node<Key> *find(const Key &key) const;
     Node<Key> *findFrom(const Key &key, Node<Key> *node) const;
-    Node<Key> *findPair(const Key &key) const;
 
  private:
     void prefixBypassCopy(Node<Key> *node);

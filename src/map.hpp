@@ -7,13 +7,13 @@
 
 namespace s21 {
 
-template <class Key, class T, class Traits = std::less<Key> >
-class map : public SortedContainer<std::pair<const Key, T>, Traits> {
+template <class Key, class T, class Traits = std::less<s21::pair<const Key, T>>>
+class map : public SortedContainer<s21::pair<const Key, T>, Traits> {
  public:
     // Type definitions
     typedef Key key_type;
     typedef T mapped_type;
-    typedef std::pair<const key_type, mapped_type> value_type;
+    typedef s21::pair<const key_type, mapped_type> value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
     typedef typename SortedContainer<value_type, Traits>::iterator iterator;

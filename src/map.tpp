@@ -35,9 +35,8 @@ map<Key, T, Traits>& map<Key, T, Traits>::operator=(const map& s) {
 
 template <class Key, class T, class Traits>
 T& map<Key, T, Traits>::at(const Key& key) {
-    std::pair<Key, T> p;
-    p.first = key;
-    Node<value_type>* node = SortedContainer<value_type, Traits>::_tree->findPair(p);
+    value_type p(key, T());
+    Node<value_type>* node = SortedContainer<value_type, Traits>::_tree->find(p);
     if (!node) {
         throw std::out_of_range("There is no such element in map!");
     }
@@ -46,8 +45,7 @@ T& map<Key, T, Traits>::at(const Key& key) {
 
 template <class Key, class T, class Traits>
 T& map<Key, T, Traits>::operator[](const Key& key) {
-    std::pair<Key, T> p;
-    p.first = key;
+    value_type p(key, T());
     std::pair<iterator, bool> ret = insert(p);
     return ret.first._node->key.second;
 }
@@ -58,7 +56,7 @@ template <class Key, class T, class Traits>
 std::pair<typename map<Key, T, Traits>::iterator, bool> map<Key, T, Traits>::insert(
     const value_type& value) {
     std::pair<Node<value_type>*, bool> p =
-        SortedContainer<value_type, Traits>::_tree->insertPair(value, false);
+        SortedContainer<value_type, Traits>::_tree->insert(value, false);
     if (p.second) SortedContainer<value_type, Traits>::_size++;
     return std::pair<iterator, bool>(iterator(p.first), p.second);
 }
@@ -66,7 +64,7 @@ std::pair<typename map<Key, T, Traits>::iterator, bool> map<Key, T, Traits>::ins
 template <class Key, class T, class Traits>
 std::pair<typename map<Key, T, Traits>::iterator, bool> map<Key, T, Traits>::insert(const Key& key,
                                                                                     const T& obj) {
-    std::pair<Key, T> value(key, obj);
+    value_type value(key, obj);
     return insert(value);
 }
 
@@ -91,9 +89,8 @@ void map<Key, T, Traits>::merge(map& other) {
 
 template <class Key, class T, class Traits>
 bool map<Key, T, Traits>::contains(const Key& key) {
-    std::pair<Key, T> p;
-    p.first = key;
-    Node<value_type>* node = SortedContainer<value_type, Traits>::_tree->findPair(p);
+    value_type p(key, T());
+    Node<value_type>* node = SortedContainer<value_type, Traits>::_tree->find(p);
     if (!node) {
         return false;
     }

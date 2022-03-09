@@ -88,43 +88,6 @@ std::pair<Node<Key> *, bool> Tree<Key, Traits>::insert(Key key, bool allowCopy) 
 }
 
 template <class Key, class Traits>
-std::pair<Node<Key> *, bool> Tree<Key, Traits>::insertPair(Key p, bool allowCopy) {
-    std::pair<Node<Key> *, bool> ret;
-    if (!empty()) {
-        Node<Key> *node = _root;
-        bool isInserted = false;
-        while (!isInserted) {
-            if (Traits()(p.first, node->key.first)) {
-                if (node->leftThread) {
-                    appendToLeft(node, p);
-                    isInserted = true;
-                }
-                node = node->left;
-            } else if (allowCopy || p.first != node->key.first) {
-                if (node->rightThread) {
-                    appendToRight(node, p);
-                    isInserted = true;
-                }
-                node = node->right;
-            } else {
-                break;
-            }
-        }
-        _end->left = rightMost(_root);
-        // pair fill
-        ret.first = node;
-        ret.second = isInserted;
-    } else {
-        _root = new Node<Key>(p);
-        appendEndToNode(_root);
-        // pair fill
-        ret.first = _root;
-        ret.second = true;
-    }
-    return ret;
-}
-
-template <class Key, class Traits>
 inline void Tree<Key, Traits>::appendToLeft(Node<Key> *node, Key key) {
     Node<Key> *mem = node->left;
     node->left = new Node<Key>(key);
@@ -319,7 +282,7 @@ void Tree<Key, Traits>::erase(Node<Key> *node) {
     delete node;
 }
 
-template <class Key, class Traits>  // *** сделать через итераторы!!!
+template <class Key, class Traits>
 void Tree<Key, Traits>::prefixBypassCopy(Node<Key> *node) {
     insert(node->key, true);
     if (!node->leftThread) prefixBypassCopy(node->left);
@@ -354,28 +317,6 @@ template <class Key, class Traits>
 Node<Key> *Tree<Key, Traits>::findFrom(const Key &key, Node<Key> *node) const {
     while (node->key != key) {
         if (Traits()(key, node->key)) {
-            if (!node->leftThread) {
-                node = node->left;
-            } else {
-                return nullptr;
-            }
-        } else {
-            if (!node->rightThread) {
-                node = node->right;
-            } else {
-                return nullptr;
-            }
-        }
-    }
-    return node;
-}
-
-template <class Key, class Traits>
-Node<Key> *Tree<Key, Traits>::findPair(const Key &key) const {
-    if (empty()) return nullptr;
-    Node<Key> *node = _root;
-    while (node->key.first != key.first) {
-        if (Traits()(key.first, node->key.first)) {
             if (!node->leftThread) {
                 node = node->left;
             } else {
