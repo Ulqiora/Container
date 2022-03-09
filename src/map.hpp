@@ -35,6 +35,7 @@ class map : public SortedContainer<std::pair<const Key, T>, Traits> {
     std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);
     void merge(map& other);
     // Lookup
+    iterator find(const reference key) const = delete;
     bool contains(const Key& key);
 };
 

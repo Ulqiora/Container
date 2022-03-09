@@ -2,6 +2,13 @@
 
 namespace s21 {
 
+template <class Key>
+Node<Key>::Node() : left(nullptr), right(nullptr), leftThread(true), rightThread(true) {}
+
+template <class Key>
+Node<Key>::Node(Key k)
+    : key(k), left(nullptr), right(nullptr), parent(nullptr), leftThread(true), rightThread(true) {}
+
 template <class Key, class Traits>
 Tree<Key, Traits>::Tree() {
     initialize();
@@ -27,9 +34,6 @@ Tree<Key, Traits>::~Tree() {
 template <class Key, class Traits>
 inline void Tree<Key, Traits>::initialize() {
     _end = new Node<Key>;
-    _end->leftThread = true;
-    _end->rightThread = true;
-    _end->right = nullptr;
     _root = _end;
 }
 
@@ -38,18 +42,6 @@ void Tree<Key, Traits>::destroy(Node<Key> *node) {
     if (!node->leftThread) destroy(node->left);
     if (!node->rightThread) destroy(node->right);
     delete node;
-}
-
-template <class Key, class Traits>
-Node<Key> *Tree<Key, Traits>::createNode(Key key) {
-    Node<Key> *node = new Node<Key>;
-    node->key = key;
-    node->left = nullptr;
-    node->right = nullptr;
-    node->parent = nullptr;
-    node->leftThread = true;
-    node->rightThread = true;
-    return node;
 }
 
 template <class Key, class Traits>
@@ -86,7 +78,44 @@ std::pair<Node<Key> *, bool> Tree<Key, Traits>::insert(Key key, bool allowCopy) 
         ret.first = node;
         ret.second = isInserted;
     } else {
-        _root = createNode(key);
+        _root = new Node<Key>(key);
+        appendEndToNode(_root);
+        // pair fill
+        ret.first = _root;
+        ret.second = true;
+    }
+    return ret;
+}
+
+template <class Key, class Traits>
+std::pair<Node<Key> *, bool> Tree<Key, Traits>::insertPair(Key p, bool allowCopy) {
+    std::pair<Node<Key> *, bool> ret;
+    if (!empty()) {
+        Node<Key> *node = _root;
+        bool isInserted = false;
+        while (!isInserted) {
+            if (Traits()(p.first, node->key.first)) {
+                if (node->leftThread) {
+                    appendToLeft(node, p);
+                    isInserted = true;
+                }
+                node = node->left;
+            } else if (allowCopy || p.first != node->key.first) {
+                if (node->rightThread) {
+                    appendToRight(node, p);
+                    isInserted = true;
+                }
+                node = node->right;
+            } else {
+                break;
+            }
+        }
+        _end->left = rightMost(_root);
+        // pair fill
+        ret.first = node;
+        ret.second = isInserted;
+    } else {
+        _root = new Node<Key>(p);
         appendEndToNode(_root);
         // pair fill
         ret.first = _root;
@@ -98,7 +127,7 @@ std::pair<Node<Key> *, bool> Tree<Key, Traits>::insert(Key key, bool allowCopy) 
 template <class Key, class Traits>
 inline void Tree<Key, Traits>::appendToLeft(Node<Key> *node, Key key) {
     Node<Key> *mem = node->left;
-    node->left = createNode(key);
+    node->left = new Node<Key>(key);
     node->left->right = node;
     node->leftThread = false;
     node->left->left = mem;
@@ -108,7 +137,7 @@ inline void Tree<Key, Traits>::appendToLeft(Node<Key> *node, Key key) {
 template <class Key, class Traits>
 inline void Tree<Key, Traits>::appendToRight(Node<Key> *node, Key key) {
     Node<Key> *mem = node->right;
-    node->right = createNode(key);
+    node->right = new Node<Key>(key);
     node->right->left = node;
     node->rightThread = false;
     node->right->right = mem;
@@ -146,9 +175,10 @@ Node<Key> *Tree<Key, Traits>::end() const {
 template <class Key, class Traits>
 void Tree<Key, Traits>::nodeOut(Node<Key> *node) {
     if (node->left) {
-        std::cout << std::setw(4) << node->left->key;
+        std::cout << "[" << std::setw(4) << node->left->key.first << ", " << std::setw(12)
+                  << node->left->key.second << "]";
     } else {
-        std::cout << std::setw(4) << "null";
+        std::cout << std::setw(20) << "null";
     }
     if (node->leftThread) {
         std::cout << " <*** ";
@@ -156,9 +186,10 @@ void Tree<Key, Traits>::nodeOut(Node<Key> *node) {
         std::cout << " <--- ";
     }
     if (node != _end) {
-        std::cout << std::setw(3) << node->key;
+        std::cout << "[" << std::setw(4) << node->key.first << ", " << std::setw(12) << node->key.second
+                  << "]";
     } else {
-        std::cout << "end";
+        std::cout << std::setw(20) << "end";
     }
     if (node->rightThread) {
         std::cout << " ***> ";
@@ -167,16 +198,18 @@ void Tree<Key, Traits>::nodeOut(Node<Key> *node) {
     }
     if (node->right != _end) {
         if (node->right) {
-            std::cout << std::setw(4) << node->right->key;
+            std::cout << "[" << std::setw(4) << node->right->key.first << ", " << std::setw(12)
+                      << node->right->key.second << "]";
         } else {
-            std::cout << "null";
+            std::cout << std::setw(20) << "null";
         }
     } else {
-        std::cout << std::setw(4) << " end";
+        std::cout << std::setw(20) << "end";
     }
     std::cout << "\t| parent: ";
     if (node->parent) {
-        std::cout << std::setw(4) << node->parent->key;
+        std::cout << "[" << std::setw(4) << node->parent->key.first << ", " << std::setw(12)
+                  << node->parent->key.second << "]";
     } else {
         std::cout << "null";
     }
@@ -286,7 +319,7 @@ void Tree<Key, Traits>::erase(Node<Key> *node) {
     delete node;
 }
 
-template <class Key, class Traits>
+template <class Key, class Traits>  // *** сделать через итераторы!!!
 void Tree<Key, Traits>::prefixBypassCopy(Node<Key> *node) {
     insert(node->key, true);
     if (!node->leftThread) prefixBypassCopy(node->left);
@@ -335,6 +368,28 @@ Node<Key> *Tree<Key, Traits>::findFrom(const Key &key, Node<Key> *node) const {
         }
     }
     return node;
+}
+
+template<class Key, class Traits>
+bool Tree<Key, Traits>::containsPair(const Key &key) const {
+    if (empty()) return false;
+    Node<Key> *node = _root;
+    while (node->key.first != key.first) {
+        if (Traits()(key.first, node->key.first)) {
+            if (!node->leftThread) {
+                node = node->left;
+            } else {
+                return false;
+            }
+        } else {
+            if (!node->rightThread) {
+                node = node->right;
+            } else {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 }  // namespace s21
