@@ -26,32 +26,32 @@ pair<T1, T2>& pair<T1, T2>::operator=(pair<T1, T2>&& other) {
 // OVERLOADED COMPARISON OPERATORS
 
 template <class T1, class T2>
-constexpr bool pair<T1, T2>::operator<(const pair<T1, T2>& other) {
+bool pair<T1, T2>::operator<(const pair<T1, T2>& other) const {
     return std::pair<T1, T2>::first < other.first;
 }
 
 template <class T1, class T2>
-constexpr bool pair<T1, T2>::operator<=(const pair<T1, T2>& other) {
+bool pair<T1, T2>::operator<=(const pair<T1, T2>& other) const {
     return std::pair<T1, T2>::first <= other.first;
 }
 
 template <class T1, class T2>
-constexpr bool pair<T1, T2>::operator==(const pair<T1, T2>& other) {
+bool pair<T1, T2>::operator==(const pair<T1, T2>& other) const {
     return std::pair<T1, T2>::first == other.first;
 }
 
 template <class T1, class T2>
-constexpr bool pair<T1, T2>::operator!=(const pair<T1, T2>& other) {
+bool pair<T1, T2>::operator!=(const pair<T1, T2>& other) const {
     return std::pair<T1, T2>::first != other.first;
 }
 
 template <class T1, class T2>
-constexpr bool pair<T1, T2>::operator>=(const pair<T1, T2>& other) {
+bool pair<T1, T2>::operator>=(const pair<T1, T2>& other) const {
     return std::pair<T1, T2>::first >= other.first;
 }
 
 template <class T1, class T2>
-constexpr bool pair<T1, T2>::operator>(const pair<T1, T2>& other) {
+bool pair<T1, T2>::operator>(const pair<T1, T2>& other) const {
     return std::pair<T1, T2>::first > other.first;
 }
 
