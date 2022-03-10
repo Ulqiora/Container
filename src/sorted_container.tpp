@@ -160,9 +160,8 @@ void SortedContainer<Key, Traits>::erase(iterator pos) {
 
 template <class Key, class Traits>
 void SortedContainer<Key, Traits>::swap(SortedContainer& other) {
-    SortedContainer<Key, Traits> buf = *this;
-    *this = other;
-    other = buf;
+    std::swap(_tree, other._tree);
+    std::swap(_size, other._size);
 }
 
 // Lookup

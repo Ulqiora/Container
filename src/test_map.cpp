@@ -291,7 +291,52 @@ TEST(capacity_suit, max_size) {
     ASSERT_EQ(s.max_size(), real);
 }
 
-// *** ELEMENT ACCESS
+// ELEMENT ACCESS
+
+TEST(element_access_suit, at_1) {
+    s21::map<int, std::string> s21_map = MAP_INIT;
+    std::map<int, std::string> std_map = MAP_INIT;
+    ASSERT_THROW(s21_map.at(0), std::out_of_range);
+    ASSERT_EQ(s21_map.at(1), std_map.at(1));
+    ASSERT_EQ(s21_map.at(7), std_map.at(7));
+    ASSERT_THROW(s21_map.at(42), std::out_of_range);
+}
+
+TEST(element_access_suit, at_2) {
+    s21::map<int, std::string> s21_map = {std_pair_t(1, "One")};
+    std::map<int, std::string> std_map = {std_pair_t(1, "One")};
+    ASSERT_EQ(s21_map.at(1), std_map.at(1));
+    s21_map.erase(s21_map.begin());
+    ASSERT_THROW(s21_map.at(1), std::out_of_range);
+}
+
+TEST(modifiers_suit, operator_sqr_braces_1) {
+    s21::map<int, std::string> s21_map = MAP_INIT;
+    s21_map[6] = "Fire Princess";
+    s21_map[42] = "Ice King";
+    s21_map[100] = "Jeffry";
+    s21_map[4] = "Buble Gum";
+    std::map<int, std::string> std_map = MAP_INIT;
+    std_map[6] = "Fire Princess";
+    std_map[42] = "Ice King";
+    std_map[100] = "Jeffry";
+    std_map[4] = "Buble Gum";
+    ASSERT_TRUE(isSetEqual(std_map, s21_map));
+}
+
+TEST(modifiers_suit, operator_sqr_braces_2) {
+    s21::map<int, std::string> s21_map;
+    s21_map[6] = "Fire Princess";
+    s21_map[42] = "Ice King";
+    s21_map[100] = "Jeffry";
+    s21_map[42] = "Buble Gum";
+    std::map<int, std::string> std_map;
+    std_map[6] = "Fire Princess";
+    std_map[42] = "Ice King";
+    std_map[100] = "Jeffry";
+    std_map[42] = "Buble Gum";
+    ASSERT_TRUE(isSetEqual(std_map, s21_map));
+}
 
 // MODIFIERS
 

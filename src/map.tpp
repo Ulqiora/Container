@@ -35,8 +35,8 @@ map<Key, T, Traits>& map<Key, T, Traits>::operator=(const map& s) {
 
 template <class Key, class T, class Traits>
 T& map<Key, T, Traits>::at(const Key& key) {
-    value_type p(key, T());
-    Node<value_type>* node = SortedContainer<s21_value_type, Traits>::_tree->find(p);
+    s21_value_type p(key, T());
+    Node<s21_value_type>* node = SortedContainer<s21_value_type, Traits>::_tree->find(p);
     if (!node) {
         throw std::out_of_range("There is no such element in map!");
     }
@@ -45,7 +45,7 @@ T& map<Key, T, Traits>::at(const Key& key) {
 
 template <class Key, class T, class Traits>
 T& map<Key, T, Traits>::operator[](const Key& key) {
-    value_type p(key, T());
+    s21_value_type p(key, T());
     std::pair<iterator, bool> ret = insert(p);
     return ret.first._node->key.second;
 }
