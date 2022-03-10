@@ -25,6 +25,7 @@ class multiset : public SortedContainer<Key, Traits> {
     multiset(multiset&& s);
     ~multiset();
     multiset<Key, Traits>& operator=(const multiset& s);
+    multiset<Key, Traits>& operator=(multiset&& s);
     // Modifiers
     iterator insert(const value_type& value);
     void merge(multiset& other);

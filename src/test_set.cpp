@@ -123,7 +123,7 @@ TEST(constructors_suit, move_constructor_3) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, operator_assign_1) {
+TEST(constructors_suit, operator_assign_copy_1) {
     s21::set<double> s21_set1 = SET_INIT;
     s21::set<double> s21_set2 = {1, 2, 3};
     s21_set2 = s21_set1;
@@ -133,7 +133,7 @@ TEST(constructors_suit, operator_assign_1) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, operator_assign_2) {
+TEST(constructors_suit, operator_assign_copy_2) {
     s21::set<double> s21_set1 = {1};
     s21::set<double> s21_set2 = {1, 2, 3};
     s21_set2 = s21_set1;
@@ -143,7 +143,7 @@ TEST(constructors_suit, operator_assign_2) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, operator_assign_3) {
+TEST(constructors_suit, operator_assign_copy_3) {
     s21::set<double> s21_set1;
     s21::set<double> s21_set2 = {1, 2, 3};
     s21_set2 = s21_set1;
@@ -153,13 +153,52 @@ TEST(constructors_suit, operator_assign_3) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, operator_assign_4) {
+TEST(constructors_suit, operator_assign_copy_4) {
     s21::set<double> s21_set = SET_INIT;
     s21_set = s21_set;
     std::set<double> std_set = SET_INIT;
     std_set = std_set;
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
+
+TEST(constructors_suit, operator_assign_move_1) {
+    s21::set<double> s21_set1 = SET_INIT;
+    s21::set<double> s21_set2 = {1, 2, 3};
+    s21_set2 = std::move(s21_set1);
+    std::set<double> std_set1 = SET_INIT;
+    std::set<double> std_set2 = {1, 2, 3};
+    std_set2 = std::move(std_set1);
+    ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
+}
+
+TEST(constructors_suit, operator_assign_move_2) {
+    s21::set<double> s21_set1 = {1};
+    s21::set<double> s21_set2 = {1, 2, 3};
+    s21_set2 = std::move(s21_set1);
+    std::set<double> std_set1 = {1};
+    std::set<double> std_set2 = {1, 2, 3};
+    std_set2 = std::move(std_set1);
+    ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
+}
+
+TEST(constructors_suit, operator_assign_move_3) {
+    s21::set<double> s21_set1;
+    s21::set<double> s21_set2 = {1, 2, 3};
+    s21_set2 = std::move(s21_set1);
+    std::set<double> std_set1;
+    std::set<double> std_set2 = {1, 2, 3};
+    std_set2 = std::move(std_set1);
+    ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
+}
+
+TEST(constructors_suit, operator_assign_move_4) {
+    s21::set<double> s21_set = SET_INIT;
+    s21_set = std::move(s21_set);
+    std::set<double> std_set = SET_INIT;
+    std_set = std::move(std_set);
+    ASSERT_TRUE(isSetEqual(std_set, s21_set));
+}
+
 // ITERATORS
 
 TEST(iterators_suit, begin_1) {

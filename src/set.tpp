@@ -30,6 +30,12 @@ set<Key, Traits>& set<Key, Traits>::operator=(const set& s) {
     return *this;
 }
 
+template <class Key, class Traits>
+set<Key, Traits>& set<Key, Traits>::operator=(set&& s) {
+    SortedContainer<Key, Traits>::operator=(std::move(s));
+    return *this;
+}
+
 // Modifiers
 
 template <class Key, class Traits>

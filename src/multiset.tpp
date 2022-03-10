@@ -31,6 +31,12 @@ multiset<Key, Traits>& multiset<Key, Traits>::operator=(const multiset& s) {
     return *this;
 }
 
+template <class Key, class Traits>
+multiset<Key, Traits>& multiset<Key, Traits>::operator=(multiset&& s) {
+    SortedContainer<Key, Traits>::operator=(std::move(s));
+    return *this;
+}
+
 // Modifiers
 
 template <class Key, class Traits>

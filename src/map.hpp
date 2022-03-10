@@ -27,6 +27,7 @@ class map : public SortedContainer<s21::pair<const Key, T>, Traits> {
     map(map&& m);
     ~map();
     map<Key, T, Traits>& operator=(const map& m);
+    map<Key, T, Traits>& operator=(map&& m);
     // Element access
     T& at(const Key& key);
     T& operator[](const Key& key);

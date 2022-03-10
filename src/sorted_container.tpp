@@ -28,6 +28,20 @@ SortedContainer<Key, Traits>& SortedContainer<Key, Traits>::operator=(const Sort
 }
 
 template <class Key, class Traits>
+SortedContainer<Key, Traits>& SortedContainer<Key, Traits>::operator=(SortedContainer&& s) {
+    if (this != &s) {
+        delete _tree;
+        _tree = s._tree;
+        s._tree = nullptr;
+        _size = s._size;
+    } else {
+        // STL-like behavior
+        clear();
+    }
+    return *this;
+}
+
+template <class Key, class Traits>
 SortedContainer<Key, Traits>::~SortedContainer() {
     if (_tree) {
         delete _tree;

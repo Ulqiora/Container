@@ -25,6 +25,7 @@ class set : public SortedContainer<Key, Traits> {
     set(set&& s);
     ~set();
     set<Key, Traits>& operator=(const set& s);
+    set<Key, Traits>& operator=(set&& s);
     // Modifiers
     std::pair<iterator, bool> insert(const value_type& value);
     void merge(set& other);

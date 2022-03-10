@@ -31,6 +31,12 @@ map<Key, T, Traits>& map<Key, T, Traits>::operator=(const map& s) {
     return *this;
 }
 
+template <class Key, class T, class Traits>
+map<Key, T, Traits>& map<Key, T, Traits>::operator=(map&& s) {
+    SortedContainer<s21_value_type, Traits>::operator=(std::move(s));
+    return *this;
+}
+
 // Element access
 
 template <class Key, class T, class Traits>

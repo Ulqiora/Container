@@ -43,6 +43,7 @@ class SortedContainer {
     SortedContainer(SortedContainer&& s);
     ~SortedContainer();
     SortedContainer<Key, Traits>& operator=(const SortedContainer& s);
+    SortedContainer<Key, Traits>& operator=(SortedContainer&& s);
     // Iterators
     iterator begin() const;
     const_iterator cbegin() const;

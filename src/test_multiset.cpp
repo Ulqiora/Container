@@ -124,7 +124,7 @@ TEST(constructors_suit, move_constructor_3) {
     ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
-TEST(constructors_suit, operator_assign_1) {
+TEST(constructors_suit, operator_assign_copy_1) {
     s21::multiset<double> s21_mset1 = MULTISET_INIT;
     s21::multiset<double> s21_mset2 = {1, 2, 3};
     s21_mset2 = s21_mset1;
@@ -134,7 +134,7 @@ TEST(constructors_suit, operator_assign_1) {
     ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
-TEST(constructors_suit, operator_assign_2) {
+TEST(constructors_suit, operator_assign_copy_2) {
     s21::multiset<double> s21_mset1 = {1};
     s21::multiset<double> s21_mset2 = {1, 2, 3};
     s21_mset2 = s21_mset1;
@@ -144,7 +144,7 @@ TEST(constructors_suit, operator_assign_2) {
     ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
-TEST(constructors_suit, operator_assign_3) {
+TEST(constructors_suit, operator_assign_copy_3) {
     s21::multiset<double> s21_mset1;
     s21::multiset<double> s21_mset2 = {1, 2, 3};
     s21_mset2 = s21_mset1;
@@ -154,13 +154,52 @@ TEST(constructors_suit, operator_assign_3) {
     ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
 }
 
-TEST(constructors_suit, operator_assign_4) {
+TEST(constructors_suit, operator_assign_copy_4) {
     s21::multiset<double> s21_mset = MULTISET_INIT;
     s21_mset = s21_mset;
     std::multiset<double> std_mset = MULTISET_INIT;
     std_mset = std_mset;
     ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
 }
+
+TEST(constructors_suit, operator_assign_move_1) {
+    s21::multiset<double> s21_mset1 = MULTISET_INIT;
+    s21::multiset<double> s21_mset2 = {1, 2, 3};
+    s21_mset2 = std::move(s21_mset1);
+    std::multiset<double> std_mset1 = MULTISET_INIT;
+    std::multiset<double> std_mset2 = {1, 2, 3};
+    std_mset2 = std::move(std_mset1);
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
+}
+
+TEST(constructors_suit, operator_assign_move_2) {
+    s21::multiset<double> s21_mset1 = {1};
+    s21::multiset<double> s21_mset2 = {1, 2, 3};
+    s21_mset2 = std::move(s21_mset1);
+    std::multiset<double> std_mset1 = {1};
+    std::multiset<double> std_mset2 = {1, 2, 3};
+    std_mset2 = std::move(std_mset1);
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
+}
+
+TEST(constructors_suit, operator_assign_move_3) {
+    s21::multiset<double> s21_mset1;
+    s21::multiset<double> s21_mset2 = {1, 2, 3};
+    s21_mset2 = std::move(s21_mset1);
+    std::multiset<double> std_mset1;
+    std::multiset<double> std_mset2 = {1, 2, 3};
+    std_mset2 = std::move(std_mset1);
+    ASSERT_TRUE(isMultisetEqual(std_mset2, s21_mset2));
+}
+
+TEST(constructors_suit, operator_assign_move_4) {
+    s21::multiset<double> s21_mset = MULTISET_INIT;
+    s21_mset = std::move(s21_mset);
+    std::multiset<double> std_mset = MULTISET_INIT;
+    std_mset = std::move(std_mset);
+    ASSERT_TRUE(isMultisetEqual(std_mset, s21_mset));
+}
+
 // ITERATORS
 
 TEST(iterators_suit, begin_1) {
