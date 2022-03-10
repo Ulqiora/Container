@@ -230,7 +230,7 @@ void Tree<Key, Traits>::erase(Node<Key> *node) {
         } else {
             pred->right = node->right;
             node->parent->right = node->left;
-            if (node->right == _end) _end->left = node->parent;
+            if (node->right == _end) _end->left = node->left;
         }
         node->left->parent = node->parent;
         // If node has only right child

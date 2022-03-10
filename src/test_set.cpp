@@ -385,6 +385,14 @@ TEST(modifiers_suit, erase_4) {
 }
 
 TEST(modifiers_suit, erase_5) {
+    s21::set<int> s21_set = SET_INIT;
+    s21_set.erase(--s21_set.end());
+    std::set<int> std_set = SET_INIT;
+    std_set.erase(--std_set.end());
+    ASSERT_TRUE(isSetEqual(std_set, s21_set));
+}
+
+TEST(modifiers_suit, erase_6) {
     s21::set<int> s21_set = {42};
     s21_set.erase(s21_set.find(42));
     std::set<int> std_set = {42};
