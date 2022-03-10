@@ -8,7 +8,7 @@ class iterator_list {
 
  public:
     iterator_list(Node_list<Type_iterator_list>* v) { iter = v; }
-    Type_iterator_list& operator*() { return *(iter->data); }
+    Type_iterator_list& operator*() { return iter->data; }
     iterator_list operator++() {
         Node_list<Type_iterator_list>* nxt = this->iter->next;
         iter = nxt;
@@ -27,10 +27,9 @@ class iterator_list {
 template <class Type_const_iterator_list>
 class const_iterator_list {
     typename s21::Node_list<Type_const_iterator_list>* iter;
-
  public:
     const_iterator_list(Node_list<Type_const_iterator_list>* v) { iter = v; }
-    Type_const_iterator_list& operator*() { return *(iter->data); }
+    Type_const_iterator_list operator*() { return iter->data; }
     const_iterator_list operator++() {
         Node_list<Type_const_iterator_list>* nxt = this->iter->next;
         iter = nxt;

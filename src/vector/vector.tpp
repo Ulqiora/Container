@@ -90,12 +90,28 @@ Type_vector* s21::vector<Type_vector>::data() { return mass_; }
 
 //    методы для итерирования
 
+template <class Type_vector>
+iterator_vector<Type_vector> s21::vector<Type_vector>::begin() {
+    iterator ret(mass_);
+    return mass_;
+}
+
 template<class Type_vector>
-Type_vector* s21::vector<Type_vector>::begincbegin() { return mass_; }
+s21::vector<Type_vector>::const_iterator s21::vector<Type_vector>::cbegin() {
+    s21::vector<Type_vector>::const_iterator ret(mass_);
+    return ret;
+}
 
 template <class Type_vector>
-Type_vector* s21::vector<Type_vector>::endcend() {
-    return mass_ + size_;
+iterator_vector<Type_vector> s21::vector<Type_vector>::end() {
+    iterator_vector<Type_vector> ret(mass_ + size_);
+    return ret;
+}
+
+template <class Type_vector>
+s21::vector<Type_vector>::const_iterator s21::vector<Type_vector>::cend() {
+    s21::vector<Type_vector>::const_iterator ret(mass_ + size_);
+    return ret;
 }
 
 //    Методы для определения наполнености контейнера
@@ -144,23 +160,25 @@ void s21::vector<Type_vector>::clear() {
     mass_ = new Type_vector[capacity_]();
 }
 
-template<class Type_vector>
-Type_vector* s21::vector<Type_vector>::insert(iterator pos, const_reference value) {
-    if (capacity_ - 1 == size_) doublingCapacity();
-    for (auto i = endcend();; --i) {
-        *i = *(i - 1);
-        if (i != pos) {
-            *i = value;
-            break;
+template <class Type_vector>
+s21::vector<Type_vector>::iterator s21::vector<Type_vector>::insert(s21::vector<Type_vector>::iterator pos, const_reference value) {
+    iterator i = end();
+    if (pos != nullptr) {
+        while (i != pos && i != begin()) --i;
+        if (i != pos) throw std::out_of_range("Out of range, invalid argument");
+        if (capacity_ == size_ + 1) doublingCapacity();
+        for (i = end(); i != pos; --i) {
+            *i = *(i - 1);
         }
+        *i = value;
+        size_++;
     }
-    size_++;
-    return pos;
+    return i;
 }
 
 template<class Type_vector>
 void s21::vector<Type_vector>::erase(iterator pos) {
-    for (auto i = pos; i != endcend(); i++) {
+    for (auto i = pos; i != end(); i++) {
         *i = *(i + 1);
     }
     --size_;
@@ -168,7 +186,7 @@ void s21::vector<Type_vector>::erase(iterator pos) {
 
 template<class Type_vector>
 void s21::vector<Type_vector>::push_back(const_reference value) {
-    if (capacity_ - 1 == size_) doublingCapacity();
+    if (capacity_ == size_ + 1) doublingCapacity();
     mass_[size_] = value;
     size_++;
 }

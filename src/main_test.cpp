@@ -3,247 +3,303 @@
 // #include "vector/vector.tpp"
 #include <gtest/gtest.h>
 
-#include <queue>
+#include <vector>
 
-#include "singly-connect-list/queue/queue.tpp"
-#include "singly-connect-list/stack/stack.tpp"
+#include "vector/vector.tpp"
 
-TEST(stack, constructor1){
-    s21::stack<int> a;
-    ASSERT_EQ(a.size(),0);
+TEST(vector, constructor1) {
+    std::vector<int> a;
+    s21::vector<int> b;
+    ASSERT_EQ(a.size(), b.size());
 }
 
-TEST(stack, constructor2){
-    s21::stack<int> a(5);
-    ASSERT_EQ(a.size(),5);
-}
-
-TEST(stack, constructor3){
-    s21::stack<int> a{1,2,3,4,5};
-    int s=a.size();
-    ASSERT_EQ(s,5);
-    for (int i = 5; i <= 1; --i) {
-        ASSERT_EQ(a.front(), 1);
-        a.pop();
+TEST(vector, constructor2) {
+    std::vector<int> a(3);
+    s21::vector<int> b(3);
+    ASSERT_EQ(a.size(), b.size());
+    std::vector<int>::iterator i = a.begin();
+    s21::vector<int>::iterator j = b.begin();
+    while (i != a.end() && j != b.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
     }
 }
 
-TEST(stack, constructor4){
-    s21::stack<int> a{1,2,3,4,5};
-    s21::stack<int> b(a);
-    ASSERT_EQ(a.size(),b.size());
-    for (int i = 5; i <= 1; --i) {
-        ASSERT_EQ(a.front(), i);
-        (a.pop(), b.pop());
+TEST(vector, constructor3) {
+    s21::vector<int> a{1, 2, 3, 4, 5};
+    int init[] = {1, 2, 3, 4, 5};
+    ASSERT_EQ(a.size(), 5);
+    s21::vector<int>::iterator i = a.begin();
+    int* j = init;
+    while (i != a.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
     }
 }
 
-TEST(stack, constructor5){
-    s21::stack<int> a{1,2,3,4,5};
-    s21::stack<int> b(std::move(a));
-    ASSERT_EQ(a.size(),0);
-    ASSERT_EQ(b.size(),5);
-    for (int i = 5; i <= 1; --i) {
-        ASSERT_EQ(b.front(), i);
-        b.pop();
+TEST(vector, constructor4_1) {
+    s21::vector<int> a{1, 2, 3, 4, 5};
+    s21::vector<int> b(a);
+    ASSERT_EQ(a.size(), b.size());
+    s21::vector<int>::iterator i = a.begin();
+    s21::vector<int>::iterator j = b.begin();
+    while (i != a.end() && j != b.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
     }
 }
 
-TEST(stack, constructor6){
-    s21::stack<int> a{1,2,3,4,5};
-    s21::stack<int> b=std::move(a);
-    ASSERT_EQ(a.size(),0);
-    ASSERT_EQ(b.size(),5);
-    for (int i = 5; i <= 1; --i) {
-        ASSERT_EQ(b.front(), i);
-        b.pop();
+TEST(vector, constructor4_2) {
+    s21::vector<int> a;
+    s21::vector<int> b(a);
+    ASSERT_EQ(a.size(), b.size());
+    s21::vector<int>::iterator i = a.begin();
+    s21::vector<int>::iterator j = b.begin();
+    while (i != a.end() && j != b.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
     }
 }
 
-TEST(stack, front1){
-    s21::stack<int> a{1,2,3,4,5};
-    ASSERT_EQ(a.front(),5);
+TEST(vector, constructor5) {
+    s21::vector<int> a{1, 2, 3, 4, 5};
+    s21::vector<int> b(std::move(a));
+    ASSERT_EQ(b.size(), 5);
+    ASSERT_EQ(a.size(), 0);
+    s21::vector<int>::iterator i = b.begin();
+    int init[] = {1, 2, 3, 4, 5};
+    int* j = init;
+    while (i != b.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
 }
 
-TEST(stack, front2){
-    s21::stack<int> a;
+TEST(vector, constructor6) {
+    s21::vector<int> a{1, 2, 3, 4, 5};
+    s21::vector<int> b = std::move(a);
+    ASSERT_EQ(b.size(), 5);
+    ASSERT_EQ(a.size(), 0);
+    s21::vector<int>::iterator i = b.begin();
+    int init[] = {1, 2, 3, 4, 5};
+    int* j = init;
+    while (i != b.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+TEST(vector, front1) {
+    s21::vector<int> a{1, 2, 3, 4, 5};
+    std::vector<int> b{1, 2, 3, 4, 5};
+    ASSERT_EQ(a.front(), b.front());
+}
+
+TEST(vector, front2) {
+    s21::vector<int> a;
     ASSERT_ANY_THROW(a.front());
 }
 
-TEST(stack, back1){
-    s21::stack<int> a{1,2,3,4,5};
-    ASSERT_EQ(a.back(),1);
-}
-
-TEST(stack, back2){
-    s21::stack<int> a;
+TEST(vector, back1) {
+    s21::vector<int> a;
     ASSERT_ANY_THROW(a.back());
 }
 
-TEST(stack, empty1){
-    s21::stack<int> a;
-    ASSERT_EQ(a.empty(),true);
+TEST(vector, back2) {
+    s21::vector<int> a{1, 2, 3, 4, 5};
+    std::vector<int> b{1, 2, 3, 4, 5};
+    ASSERT_EQ(a.back(), b.back());
 }
 
-TEST(stack, empty2){
-    s21::stack<int> a{1,2,3,4,5};
-    ASSERT_EQ(a.empty(),false);
+TEST(vector, begin) {
+    s21::vector<int> a{1, 2, 3, 4, 5};
+    std::vector<int> b{1, 2, 3, 4, 5};
+    std::vector<int>::iterator j = b.begin();
+    s21::vector<int>::iterator i = a.begin();
+    ASSERT_EQ(*i, *j);
 }
 
-TEST(stack, push1){
-    s21::stack<int> a;
-    a.push(1);
-    ASSERT_EQ(a.front(),1);
+TEST(vector, end) {
+    s21::vector<int> a{1, 2, 3, 4, 0, 0};
+    std::vector<int> b{1, 2, 3, 4, 0, 0};
+    std::vector<int>::iterator j = b.end();
+    s21::vector<int>::iterator i = a.end();
+    (--j, --i);
+    ASSERT_EQ(*i, *j);
 }
 
-TEST(stack, push2){
-    s21::stack<int> a{1,2,3,4,5};
-    a.push(9);
-    ASSERT_EQ(a.front(),9);
+TEST(vector, empty1) {
+    s21::vector<int> a{1, 2, 3, 4, 0, 0};
+    std::vector<int> b{1, 2, 3, 4, 0, 0};
+    ASSERT_EQ(a.empty(), b.empty());
 }
 
-TEST(stack, pop1){
-    s21::stack<int> a;
-    ASSERT_NO_THROW(a.pop());
+TEST(vector, empt2) {
+    s21::vector<int> a;
+    std::vector<int> b;
+    ASSERT_EQ(a.empty(), b.empty());
 }
 
-TEST(stack, pop2){
-    s21::stack<int> a{1,2,3,4,5};
-    a.pop();
-    ASSERT_EQ(a.size(),4);
-    ASSERT_EQ(a.front(),4);
+TEST(vector, size1) {
+    s21::vector<int> a{1, 2, 3, 4, 0, 0};
+    std::vector<int> b{1, 2, 3, 4, 0, 0};
+    ASSERT_EQ(a.size(), b.size());
 }
 
-TEST(stack, swap){
-    s21::stack<int> a{1,2,3,4,5};
-    s21::stack<int> b;
+TEST(vector, size2) {
+    s21::vector<int> a;
+    std::vector<int> b;
+    ASSERT_EQ(a.size(), b.size());
+}
+
+TEST(vector, size3) {
+    s21::vector<int> a{1, 2, 3, 4, 0, 0};
+    std::vector<int> b{1, 2, 0};
+    ASSERT_NE(a.size(), b.size());
+}
+
+TEST(vector, clear1) {
+    s21::vector<int> a{1, 2, 3, 4, 0, 0};
+    std::vector<int> b{1, 2, 3, 4, 0, 0};
+    (a.clear(), b.clear());
+    ASSERT_EQ(a.size(), b.size());
+}
+
+TEST(vector, clear2) {
+    s21::vector<int> a;
+    std::vector<int> b;
+    (a.clear(), b.clear());
+    ASSERT_EQ(a.size(), b.size());
+}
+
+TEST(vector, insert1) {
+    s21::vector<int> a{1, 2, 3, 4, 0, 0};
+    std::vector<int> b{1, 2, 3, 4, 0, 0};
+    std::vector<int>::iterator j = b.begin();
+    s21::vector<int>::iterator i = a.begin();
+    // std::cout<<*i<<std::setw(6)<<*j<<std::endl;
+    s21::vector<int>::iterator i1 = a.insert(i, 5);
+    std::vector<int>::iterator j1 = b.insert(j, 5);
+    ASSERT_EQ(a.size(), b.size());
+    // std::cout<<*i<<std::setw(6)<<*j<<std::endl;
+    ASSERT_EQ(*i1, *j1);
+    j = b.begin();
+    i = a.begin();
+    while (i != a.end() && j != b.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+TEST(vector, insert2) {
+    s21::vector<int> a;
+    std::vector<int> b;
+    std::vector<int>::iterator j = b.begin();
+    s21::vector<int>::iterator i = a.begin();
+    s21::vector<int>::iterator i1 = a.insert(i, 5);
+    std::vector<int>::iterator j1 = b.insert(j, 5);
+    ASSERT_EQ(a.size(), b.size());
+    ASSERT_EQ(*i1, *j1);
+    j = b.begin();
+    i = a.begin();
+    while (i != a.end() && j != b.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+TEST(vector, insert3) {
+    s21::vector<int> a{1, 2, 3, 4, 0, 0};
+    std::vector<int> b{1, 2, 3, 4, 0, 0};
+    std::vector<int>::iterator j = b.begin();
+    s21::vector<int>::iterator i = a.begin();
+    (++i, ++j);
+    s21::vector<int>::iterator i1 = a.insert(i, 5);
+    std::vector<int>::iterator j1 = b.insert(j, 5);
+    ASSERT_EQ(a.size(), b.size());
+    ASSERT_EQ(*i1, *j1);
+    (i = a.begin(), j = b.begin());
+    while (i != a.end() && j != b.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+// TEST(vector, erase1) {
+//     s21::vector<int> a{1, 2, 3, 4, 0, 0};
+//     std::vector<int> b{1, 2, 3, 4, 0, 0};
+//     std::vector<int>::iterator j = b.begin();
+//     s21::vector<int>::iterator i = a.begin();
+//     (a.erase(i), b.erase(j));
+//     while (i != a.end() && j != b.end()) {
+//         ASSERT_EQ(*i, *j);
+//         (++i, ++j);
+//     }
+// }
+
+// TEST(vector, erase2) {
+//     s21::vector<int> a{1, 2, 3, 4, 0, 0};
+//     std::vector<int> b{1, 2, 3, 4, 0, 0};
+//     std::vector<int>::iterator j = b.end();
+//     s21::vector<int>::iterator i = a.end();
+//     (--i, --j);
+//     (a.erase(i), b.erase(j));
+//     (i = a.begin(), j = b.begin());
+//     while (i != a.end() && j != b.end()) {
+//         ASSERT_EQ(*i, *j);
+//         (++i, ++j);
+//     }
+// }
+
+TEST(vector, push_back1) {
+    s21::vector<int> a{1, 2, 3, 4, 0, 0};
+    a.push_back(9);
+    int init[] = {1, 2, 3, 4, 0, 0, 9};
+    s21::vector<int>::iterator i = a.begin();
+    int* j = init;
+    while (i != a.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+TEST(vector, push_back2) {
+    s21::vector<int> a;
+    a.push_back(9);
+    int init[] = {9};
+    s21::vector<int>::iterator i = a.begin();
+    int* j = init;
+    while (i != a.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+TEST(vector, pop_back1) {
+    s21::vector<int> a{1, 2, 3, 4, 5};
+    a.pop_back();
+    int init[] = {1, 2, 3, 4};
+    s21::vector<int>::iterator i = a.begin();
+    int* j = init;
+    while (i != a.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+TEST(vector, swap) {
+    s21::vector<int> a{1, 2, 3, 4, 5};
+    s21::vector<int> b;
     b.swap(a);
     ASSERT_EQ(a.size(), 0);
-    ASSERT_EQ(b.size(), 5);
-    for (int i = 5; i <= 1; --i) {
-        ASSERT_EQ(a.front(), i);
-        a.pop();
+    int init[] = {1, 2, 3, 4, 5};
+    s21::vector<int>::iterator i = b.begin();
+    int* j = init;
+    while (i != b.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
     }
 }
-
-TEST(queue, constructor1){
-    s21::queue<int> a;
-    ASSERT_EQ(a.size(),0);
-}
-
-TEST(queue, constructor2){
-    s21::queue<int> a(5);
-    ASSERT_EQ(a.size(),5);
-}
-
-TEST(queue, constructor3){
-    s21::queue<int> a{1,2,3,4,5};
-    int s=a.size();
-    ASSERT_EQ(s,5);
-    for (int i = 5; i <= 1; --i) {
-        ASSERT_EQ(a.front(), 1);
-        a.pop();
-    }
-}
-
-TEST(queue, constructor4){
-    s21::queue<int> a{1,2,3,4,5};
-    s21::queue<int> b(a);
-    ASSERT_EQ(a.size(),b.size());
-    for (int i = 1; i <= 5; ++i) {
-        ASSERT_EQ(b.front(), a.front());
-        (a.pop(), b.pop());
-    }
-}
-
-TEST(queue, constructor5){
-    s21::queue<int> a{1,2,3,4,5};
-    s21::queue<int> b(std::move(a));
-    ASSERT_EQ(a.size(),0);
-    ASSERT_EQ(b.size(),5);
-    for (int i = 5; i <= 1; --i) {
-        ASSERT_EQ(b.front(), i);
-        b.pop();
-    }
-}
-
-TEST(queue, constructor6){
-    s21::queue<int> a{1,2,3,4,5};
-    s21::queue<int> b=std::move(a);
-    ASSERT_EQ(a.size(),0);
-    ASSERT_EQ(b.size(),5);
-    for (int i = 5; i <= 1; --i) {
-        ASSERT_EQ(b.front(), i);
-        b.pop();
-    }
-}
-
-TEST(queue, front1){
-    s21::queue<int> a{1,2,3,4,5};
-    ASSERT_EQ(a.front(),1);
-}
-
-TEST(queue, front2){
-    s21::queue<int> a;
-    ASSERT_ANY_THROW(a.front());
-}
-
-TEST(queue, back1){
-    s21::queue<int> a{1,2,3,4,5};
-    ASSERT_EQ(a.back(),5);
-}
-
-TEST(queue, back2){
-    s21::queue<int> a;
-    ASSERT_ANY_THROW(a.back());
-}
-
-TEST(queue, empty1){
-    s21::queue<int> a;
-    ASSERT_EQ(a.empty(),true);
-}
-
-TEST(queue, empty2){
-    s21::queue<int> a{1,2,3,4,5};
-    ASSERT_EQ(a.empty(),false);
-}
-
-TEST(queue, push1){
-    s21::queue<int> a;
-    a.push(1);
-    ASSERT_EQ(a.front(),1);
-}
-
-TEST(queue, push2){
-    s21::queue<int> a{1,2,3,4,5};
-    a.push(9);
-    ASSERT_EQ(a.front(),1);
-}
-
-TEST(queue, pop1){
-    s21::queue<int> a;
-    ASSERT_NO_THROW(a.pop());
-}
-
-TEST(queue, pop2){
-    s21::queue<int> a{1,2,3,4,5};
-    a.pop();
-    ASSERT_EQ(a.size(),4);
-    ASSERT_EQ(a.front(),2);
-}
-
-TEST(queue, swap){
-    s21::queue<int> a{1,2,3,4,5};
-    s21::queue<int> b;
-    b.swap(a);
-    ASSERT_EQ(a.size(), 0);
-    ASSERT_EQ(b.size(), 5);
-    for (int i = 5; i <= 1; --i) {
-        ASSERT_EQ(a.front(), i);
-        a.pop();
-    }
-}
-
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
