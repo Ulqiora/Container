@@ -5,11 +5,11 @@ namespace s21 {
 // Constructors, destructor and operator=
 
 template <class Key, class T, class Traits>
-map<Key, T, Traits>::map() : SortedContainer<value_type, Traits>() {}
+map<Key, T, Traits>::map() : SortedContainer<s21_value_type, Traits>() {}
 
 template <class Key, class T, class Traits>
 map<Key, T, Traits>::map(std::initializer_list<value_type> const& items)
-    : SortedContainer<value_type, Traits>() {
+    : SortedContainer<s21_value_type, Traits>() {
     typename std::initializer_list<value_type>::const_iterator it;
     for (it = items.begin(); it != items.end(); ++it) {
         insert(*it);
@@ -17,17 +17,17 @@ map<Key, T, Traits>::map(std::initializer_list<value_type> const& items)
 }
 
 template <class Key, class T, class Traits>
-map<Key, T, Traits>::map(const map& s) : SortedContainer<value_type, Traits>(s) {}
+map<Key, T, Traits>::map(const map& s) : SortedContainer<s21_value_type, Traits>(s) {}
 
 template <class Key, class T, class Traits>
-map<Key, T, Traits>::map(map&& s) : SortedContainer<value_type, Traits>(std::move(s)) {}
+map<Key, T, Traits>::map(map&& s) : SortedContainer<s21_value_type, Traits>(std::move(s)) {}
 
 template <class Key, class T, class Traits>
 map<Key, T, Traits>::~map() {}
 
 template <class Key, class T, class Traits>
 map<Key, T, Traits>& map<Key, T, Traits>::operator=(const map& s) {
-    SortedContainer<value_type, Traits>::operator=(s);
+    SortedContainer<s21_value_type, Traits>::operator=(s);
     return *this;
 }
 
@@ -36,7 +36,7 @@ map<Key, T, Traits>& map<Key, T, Traits>::operator=(const map& s) {
 template <class Key, class T, class Traits>
 T& map<Key, T, Traits>::at(const Key& key) {
     value_type p(key, T());
-    Node<value_type>* node = SortedContainer<value_type, Traits>::_tree->find(p);
+    Node<value_type>* node = SortedContainer<s21_value_type, Traits>::_tree->find(p);
     if (!node) {
         throw std::out_of_range("There is no such element in map!");
     }
@@ -55,9 +55,10 @@ T& map<Key, T, Traits>::operator[](const Key& key) {
 template <class Key, class T, class Traits>
 std::pair<typename map<Key, T, Traits>::iterator, bool> map<Key, T, Traits>::insert(
     const value_type& value) {
-    std::pair<Node<value_type>*, bool> p =
-        SortedContainer<value_type, Traits>::_tree->insert(value, false);
-    if (p.second) SortedContainer<value_type, Traits>::_size++;
+    s21_value_type s21_val = value;
+    std::pair<Node<s21_value_type>*, bool> p =
+        SortedContainer<s21_value_type, Traits>::_tree->insert(s21_val, false);
+    if (p.second) SortedContainer<s21_value_type, Traits>::_size++;
     return std::pair<iterator, bool>(iterator(p.first), p.second);
 }
 
@@ -90,7 +91,7 @@ void map<Key, T, Traits>::merge(map& other) {
 template <class Key, class T, class Traits>
 bool map<Key, T, Traits>::contains(const Key& key) {
     value_type p(key, T());
-    Node<value_type>* node = SortedContainer<value_type, Traits>::_tree->find(p);
+    Node<s21_value_type>* node = SortedContainer<s21_value_type, Traits>::_tree->find(p);
     if (!node) {
         return false;
     }

@@ -13,11 +13,12 @@ class map : public SortedContainer<s21::pair<const Key, T>, Traits> {
     // Type definitions
     typedef Key key_type;
     typedef T mapped_type;
-    typedef s21::pair<const key_type, mapped_type> value_type;
+    typedef std::pair<const key_type, mapped_type> value_type;
+    typedef s21::pair<const key_type, mapped_type> s21_value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
-    typedef typename SortedContainer<value_type, Traits>::iterator iterator;
-    typedef typename SortedContainer<value_type, Traits>::const_iterator const_iterator;
+    typedef typename SortedContainer<s21_value_type, Traits>::iterator iterator;
+    typedef typename SortedContainer<s21_value_type, Traits>::const_iterator const_iterator;
     typedef size_t size_type;
     // Member Functions
     map();
