@@ -1,3 +1,5 @@
+#pragma once
+
 #include "sorted_container.h"
 
 namespace s21 {

@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 
-#include "map.tpp"
+#include "../map.tpp"
 
 typedef std::pair<int, std::string> std_pair_t;
 
@@ -54,25 +54,25 @@ bool isMapEqual(const std::map<Key, T>& std_map, const s21::map<Key, T>& s21_map
 
 // CONSTRUCTORS
 
-TEST(constructors_suit, default_constructor) {
+TEST(MAP_constructors_suit, default_constructor) {
     s21::map<int, std::string> s21_map;
     std::map<int, std::string> std_map;
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(constructors_suit, init_constructor_1) {
+TEST(MAP_constructors_suit, init_constructor_1) {
     s21::map<int, std::string> s21_map = MAP_INIT;
     std::map<int, std::string> std_map = MAP_INIT;
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(constructors_suit, init_constructor_2) {
+TEST(MAP_constructors_suit, init_constructor_2) {
     s21::map<int, std::string> s21_map = {std_pair_t(1, "One")};
     std::map<int, std::string> std_map = {std_pair_t(1, "One")};
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(constructors_suit, init_constructor_3) {
+TEST(MAP_constructors_suit, init_constructor_3) {
     s21::map<double, std::string> s21_map = {std::pair<double, std::string>(1.0, "Scooby"),
                                              std::pair<double, std::string>(0.42, "Doo")};
     std::map<double, std::string> std_map = {std::pair<double, std::string>(1.0, "Scooby"),
@@ -80,13 +80,13 @@ TEST(constructors_suit, init_constructor_3) {
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(constructors_suit, init_constructor_4) {
+TEST(MAP_constructors_suit, init_constructor_4) {
     s21::map<int, std::string> s21_map = {};
     std::map<int, std::string> std_map = {};
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(constructors_suit, copy_constructor_1) {
+TEST(MAP_constructors_suit, copy_constructor_1) {
     s21::map<int, std::string> s21_map1 = MAP_INIT;
     s21::map<int, std::string> s21_map2 = s21_map1;
     std::map<int, std::string> std_map1 = MAP_INIT;
@@ -94,7 +94,7 @@ TEST(constructors_suit, copy_constructor_1) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(constructors_suit, copy_constructor_2) {
+TEST(MAP_constructors_suit, copy_constructor_2) {
     s21::map<int, std::string> s21_map1 = {std_pair_t(1, "One")};
     s21::map<int, std::string> s21_map2 = s21_map1;
     std::map<int, std::string> std_map1 = {std_pair_t(1, "One")};
@@ -102,7 +102,7 @@ TEST(constructors_suit, copy_constructor_2) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(constructors_suit, copy_constructor_3) {
+TEST(MAP_constructors_suit, copy_constructor_3) {
     s21::map<int, std::string> s21_map1;
     s21::map<int, std::string> s21_map2 = s21_map1;
     std::map<int, std::string> std_map1;
@@ -110,7 +110,7 @@ TEST(constructors_suit, copy_constructor_3) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(constructors_suit, move_constructor_1) {
+TEST(MAP_constructors_suit, move_constructor_1) {
     s21::map<long int, std::string> s21_map1 = {std_pair_t(1, "One")};
     s21::map<long int, std::string> s21_map2 = std::move(s21_map1);
     std::map<long int, std::string> std_map1 = {std_pair_t(1, "One")};
@@ -118,7 +118,7 @@ TEST(constructors_suit, move_constructor_1) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(constructors_suit, move_constructor_2) {
+TEST(MAP_constructors_suit, move_constructor_2) {
     s21::map<long int, std::string> s21_map1;
     s21::map<long int, std::string> s21_map2 = std::move(s21_map1);
     std::map<long int, std::string> std_map1;
@@ -126,7 +126,7 @@ TEST(constructors_suit, move_constructor_2) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(constructors_suit, operator_assign_copy_1) {
+TEST(MAP_constructors_suit, operator_assign_copy_1) {
     s21::map<int, std::string> s21_map1 = MAP_INIT;
     s21::map<int, std::string> s21_map2 = MAP_INIT_2;
     s21_map2 = s21_map1;
@@ -136,7 +136,7 @@ TEST(constructors_suit, operator_assign_copy_1) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(constructors_suit, operator_assign_copy_2) {
+TEST(MAP_constructors_suit, operator_assign_copy_2) {
     s21::map<int, std::string> s21_map1 = {std_pair_t(1, "One")};
     s21::map<int, std::string> s21_map2 = MAP_INIT_2;
     s21_map2 = s21_map1;
@@ -146,7 +146,7 @@ TEST(constructors_suit, operator_assign_copy_2) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(constructors_suit, operator_assign_copy_3) {
+TEST(MAP_constructors_suit, operator_assign_copy_3) {
     s21::map<int, std::string> s21_map1;
     s21::map<int, std::string> s21_map2 = MAP_INIT_2;
     s21_map2 = s21_map1;
@@ -156,7 +156,7 @@ TEST(constructors_suit, operator_assign_copy_3) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(constructors_suit, operator_assign_copy_4) {
+TEST(MAP_constructors_suit, operator_assign_copy_4) {
     s21::map<int, std::string> s21_map = MAP_INIT;
     s21_map = s21_map;
     std::map<int, std::string> std_map = MAP_INIT;
@@ -164,7 +164,7 @@ TEST(constructors_suit, operator_assign_copy_4) {
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(constructors_suit, operator_assign_move_1) {
+TEST(MAP_constructors_suit, operator_assign_move_1) {
     s21::map<int, std::string> s21_map1 = MAP_INIT;
     s21::map<int, std::string> s21_map2 = MAP_INIT_2;
     s21_map2 = std::move(s21_map1);
@@ -174,7 +174,7 @@ TEST(constructors_suit, operator_assign_move_1) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(constructors_suit, operator_assign_move_2) {
+TEST(MAP_constructors_suit, operator_assign_move_2) {
     s21::map<int, std::string> s21_map1 = {std_pair_t(1, "One")};
     s21::map<int, std::string> s21_map2 = MAP_INIT_2;
     s21_map2 = std::move(s21_map1);
@@ -184,7 +184,7 @@ TEST(constructors_suit, operator_assign_move_2) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(constructors_suit, operator_assign_move_3) {
+TEST(MAP_constructors_suit, operator_assign_move_3) {
     s21::map<int, std::string> s21_map1;
     s21::map<int, std::string> s21_map2 = MAP_INIT_2;
     s21_map2 = std::move(s21_map1);
@@ -194,7 +194,7 @@ TEST(constructors_suit, operator_assign_move_3) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(constructors_suit, operator_assign_move_4) {
+TEST(MAP_constructors_suit, operator_assign_move_4) {
     s21::map<int, std::string> s21_map = MAP_INIT;
     s21_map = std::move(s21_map);
     std::map<int, std::string> std_map = MAP_INIT;
@@ -204,79 +204,79 @@ TEST(constructors_suit, operator_assign_move_4) {
 
 // ITERATORS
 
-TEST(iterators_suit, begin_1) {
+TEST(MAP_iterators_suit, begin_1) {
     s21::map<int, std::string> s = MAP_INIT;
     s21::map<int, std::string>::iterator it = s.begin();
     ASSERT_EQ((*it).first, 1);
     ASSERT_EQ((*++it).first, 2);
 }
 
-TEST(iterators_suit, begin_2) {
+TEST(MAP_iterators_suit, begin_2) {
     s21::map<int, std::string> s = {std_pair_t(1, "One")};
     s21::map<int, std::string>::iterator it = s.begin();
     ASSERT_EQ((*it).first, 1);
     ASSERT_EQ(++it, s.end());
 }
 
-TEST(iterators_suit, begin_3) {
+TEST(MAP_iterators_suit, begin_3) {
     s21::map<int, std::string> s;
     s21::map<int, std::string>::iterator it = s.begin();
     ASSERT_EQ(it, s.end());
 }
 
-TEST(iterators_suit, cbegin_1) {
+TEST(MAP_iterators_suit, cbegin_1) {
     s21::map<int, std::string> s = MAP_INIT;
     s21::map<int, std::string>::const_iterator it = s.cbegin();
     ASSERT_EQ((*it).first, 1);
     ASSERT_EQ((*++it).first, 2);
 }
 
-TEST(iterators_suit, cbegin_2) {
+TEST(MAP_iterators_suit, cbegin_2) {
     s21::map<int, std::string> s = {std_pair_t(1, "One")};
     s21::map<int, std::string>::const_iterator it = s.cbegin();
     ASSERT_EQ((*it).first, 1);
     ASSERT_EQ(++it, s.end());
 }
 
-TEST(iterators_suit, cbegin_3) {
+TEST(MAP_iterators_suit, cbegin_3) {
     s21::map<int, std::string> s;
     s21::map<int, std::string>::const_iterator it = s.cbegin();
     ASSERT_EQ(it, s.end());
 }
 
-TEST(iterators_suit, end_1) {
+TEST(MAP_iterators_suit, end_1) {
     s21::map<int, std::string> s = MAP_INIT;
     s21::map<int, std::string>::iterator it = s.end();
     ASSERT_EQ((*--it).first, 14);
     ASSERT_EQ((*--it).first, 13);
 }
 
-TEST(iterators_suit, end_2) {
+TEST(MAP_iterators_suit, end_2) {
     s21::map<int, std::string> s = {std_pair_t(1, "One")};
     s21::map<int, std::string>::iterator it = s.end();
     ASSERT_EQ((*--it).first, 1);
 }
 
-TEST(iterators_suit, end_3) {
+TEST(MAP_iterators_suit, end_3) {
     s21::map<int, std::string> s;
     s21::map<int, std::string>::iterator it = s.end();
     ASSERT_EQ(it, s.begin());
 }
 
-TEST(iterators_suit, cend_1) {
+TEST(MAP_iterators_suit, cend_1) {
     s21::map<int, std::string> s = MAP_INIT;
     s21::map<int, std::string>::const_iterator it = s.cend();
     ASSERT_EQ((*--it).first, 14);
     ASSERT_EQ((*--it).first, 13);
 }
 
-TEST(iterators_suit, cend_2) {
+TEST(MAP_iterators_suit, cend_2) {
     s21::map<int, std::string> s = {std_pair_t(1, "One")};
     s21::map<int, std::string>::const_iterator it = s.cend();
     ASSERT_EQ((*--it).first, 1);
 }
 
-TEST(iterators_suit, cend_3) {
+TEST(MAP_iterators_suit, cend_3) {
     s21::map<int, std::string> s;
     s21::map<int, std::string>::const_iterator it = s.cend();
     ASSERT_EQ(it, s.begin());
@@ -284,24 +284,24 @@ TEST(iterators_suit, cend_3) {
 
 // CAPACITY
 
-TEST(capacity_suit, empty_1) {
+TEST(MAP_capacity_suit, empty_1) {
     s21::map<int, std::string> s = MAP_INIT;
     ASSERT_FALSE(s.empty());
 }
 
-TEST(capacity_suit, empty_2) {
+TEST(MAP_capacity_suit, empty_2) {
     s21::map<int, std::string> s = {std_pair_t(1, "One")};
     ASSERT_FALSE(s.empty());
     s.erase(s.begin());
     ASSERT_TRUE(s.empty());
 }
 
-TEST(capacity_suit, empty_3) {
+TEST(MAP_capacity_suit, empty_3) {
     s21::map<int, std::string> s;
     ASSERT_TRUE(s.empty());
 }
 
-TEST(capacity_suit, size_1) {
+TEST(MAP_capacity_suit, size_1) {
     s21::map<int, std::string> s = MAP_INIT;
     ASSERT_EQ(s.size(), 11);
     s.erase(s.begin());
@@ -312,7 +312,7 @@ TEST(capacity_suit, size_1) {
     ASSERT_EQ(s.size(), 11);
 }
 
-TEST(capacity_suit, size_2) {
+TEST(MAP_capacity_suit, size_2) {
     s21::map<int, std::string> s = {std_pair_t(1, "One")};
     ASSERT_EQ(s.size(), 1);
     s.erase(s.begin());
@@ -322,7 +322,7 @@ TEST(capacity_suit, size_2) {
     ASSERT_EQ(s.size(), 2);
 }
 
-TEST(capacity_suit, max_size) {
+TEST(MAP_capacity_suit, max_size) {
     s21::map<int, std::string> s = MAP_INIT;
     size_t real = static_cast<size_t>(pow(2, sizeof(void*) * 8) / (sizeof(std::pair<int, std::string>) +
                                                                    3 * sizeof(void*) + 2 * sizeof(bool)) -
@@ -332,7 +332,7 @@ TEST(capacity_suit, max_size) {
 
 // ELEMENT ACCESS
 
-TEST(element_access_suit, at_1) {
+TEST(MAP_element_access_suit, at_1) {
     s21::map<int, std::string> s21_map = MAP_INIT;
     std::map<int, std::string> std_map = MAP_INIT;
     ASSERT_THROW(s21_map.at(0), std::out_of_range);
@@ -341,7 +341,7 @@ TEST(element_access_suit, at_1) {
     ASSERT_THROW(s21_map.at(42), std::out_of_range);
 }
 
-TEST(element_access_suit, at_2) {
+TEST(MAP_element_access_suit, at_2) {
     s21::map<int, std::string> s21_map = {std_pair_t(1, "One")};
     std::map<int, std::string> std_map = {std_pair_t(1, "One")};
     ASSERT_EQ(s21_map.at(1), std_map.at(1));
@@ -349,7 +349,7 @@ TEST(element_access_suit, at_2) {
     ASSERT_THROW(s21_map.at(1), std::out_of_range);
 }
 
-TEST(modifiers_suit, operator_sqr_braces_1) {
+TEST(MAP_modifiers_suit, operator_sqr_braces_1) {
     s21::map<int, std::string> s21_map = MAP_INIT;
     s21_map[6] = "Fire Princess";
     s21_map[42] = "Ice King";
@@ -363,7 +363,7 @@ TEST(modifiers_suit, operator_sqr_braces_1) {
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(modifiers_suit, operator_sqr_braces_2) {
+TEST(MAP_modifiers_suit, operator_sqr_braces_2) {
     s21::map<int, std::string> s21_map;
     s21_map[6] = "Fire Princess";
     s21_map[42] = "Ice King";
@@ -379,7 +379,7 @@ TEST(modifiers_suit, operator_sqr_braces_2) {
 
 // MODIFIERS
 
-TEST(modifiers_suit, clear_1) {
+TEST(MAP_modifiers_suit, clear_1) {
     s21::map<int, std::string> s21_map = MAP_INIT;
     s21_map.clear();
     std::map<int, std::string> std_map = MAP_INIT;
@@ -387,7 +387,7 @@ TEST(modifiers_suit, clear_1) {
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(modifiers_suit, clear_2) {
+TEST(MAP_modifiers_suit, clear_2) {
     s21::map<int, std::string> s21_map = {std_pair_t(1, "One")};
     s21_map.clear();
     std::map<int, std::string> std_map = {std_pair_t(1, "One")};
@@ -395,7 +395,7 @@ TEST(modifiers_suit, clear_2) {
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(modifiers_suit, clear_3) {
+TEST(MAP_modifiers_suit, clear_3) {
     s21::map<int, std::string> s21_map;
     s21_map.clear();
     std::map<int, std::string> std_map;
@@ -403,7 +403,7 @@ TEST(modifiers_suit, clear_3) {
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(modifiers_suit, insert_1) {
+TEST(MAP_modifiers_suit, insert_1) {
     s21::map<int, std::string> s21_map = MAP_INIT;
     std::pair<s21::map<int, std::string>::iterator, bool> p;
     p = s21_map.insert(std_pair_t(6, "Fire Princess"));
@@ -430,7 +430,7 @@ TEST(modifiers_suit, insert_1) {
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(modifiers_suit, insert_2) {
+TEST(MAP_modifiers_suit, insert_2) {
     s21::map<int, std::string> s21_map = MAP_INIT;
     std::pair<s21::map<int, std::string>::iterator, bool> p;
     p = s21_map.insert(6, "Fire Princess");
@@ -457,7 +457,7 @@ TEST(modifiers_suit, insert_2) {
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(modifiers_suit, insert_3) {
+TEST(MAP_modifiers_suit, insert_3) {
     s21::map<int, std::string> s21_map = MAP_INIT;
     std::pair<s21::map<int, std::string>::iterator, bool> p;
     p = s21_map.insert_or_assign(6, "Fire Princess");
@@ -478,7 +478,7 @@ TEST(modifiers_suit, insert_3) {
     ASSERT_FALSE(p.second);
 }
 
-TEST(modifiers_suit, erase) {
+TEST(MAP_modifiers_suit, erase) {
     s21::map<int, std::string> s21_map = MAP_INIT;
     s21_map.erase(s21_map.begin());
     s21_map.erase(--(s21_map.end()));
@@ -490,7 +490,7 @@ TEST(modifiers_suit, erase) {
     ASSERT_TRUE(isMapEqual(std_map, s21_map));
 }
 
-TEST(modifiers_suit, swap_1) {
+TEST(MAP_modifiers_suit, swap_1) {
     s21::map<int, std::string> s21_map1 = MAP_INIT;
     s21::map<int, std::string> s21_map2 = MAP_INIT_2;
     s21_map1.swap(s21_map2);
@@ -501,7 +501,7 @@ TEST(modifiers_suit, swap_1) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(modifiers_suit, swap_2) {
+TEST(MAP_modifiers_suit, swap_2) {
     s21::map<int, std::string> s21_map1 = MAP_INIT;
     s21::map<int, std::string> s21_map2;
     s21_map1.swap(s21_map2);
@@ -512,7 +512,7 @@ TEST(modifiers_suit, swap_2) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(modifiers_suit, swap_3) {
+TEST(MAP_modifiers_suit, swap_3) {
     s21::map<int, std::string> s21_map1;
     s21::map<int, std::string> s21_map2;
     s21_map1.swap(s21_map2);
@@ -523,7 +523,7 @@ TEST(modifiers_suit, swap_3) {
     ASSERT_TRUE(isMapEqual(std_map2, s21_map2));
 }
 
-TEST(modifiers_suit, merge_1) {
+TEST(MAP_modifiers_suit, merge_1) {
     s21::map<int, std::string> s21_map1 = MAP_INIT;
     s21::map<int, std::string> s21_map2 = MAP_INIT_2;
     s21_map1.merge(s21_map2);
@@ -534,7 +534,7 @@ TEST(modifiers_suit, merge_1) {
     ASSERT_TRUE(isMapEqual(std_map, s21_map1));
 }
 
-TEST(modifiers_suit, merge_2) {
+TEST(MAP_modifiers_suit, merge_2) {
     s21::map<int, std::string> s21_map1 = MAP_INIT;
     s21::map<int, std::string> s21_map2;
     s21_map1.merge(s21_map2);
@@ -542,7 +542,7 @@ TEST(modifiers_suit, merge_2) {
     ASSERT_TRUE(isMapEqual(std_map, s21_map1));
 }
 
-TEST(modifiers_suit, merge_3) {
+TEST(MAP_modifiers_suit, merge_3) {
     s21::map<int, std::string> s21_map1;
     s21::map<int, std::string> s21_map2 = MAP_INIT;
     s21_map1.merge(s21_map2);
@@ -552,7 +552,7 @@ TEST(modifiers_suit, merge_3) {
 
 // LOOKUP
 
-TEST(lookup_suit, contains_1) {
+TEST(MAP_lookup_suit, contains_1) {
     s21::map<int, std::string> s = MAP_INIT;
     ASSERT_TRUE(s.contains(1));
     ASSERT_FALSE(s.contains(42));
@@ -562,12 +562,7 @@ TEST(lookup_suit, contains_1) {
     ASSERT_TRUE(s.contains(42));
 }
 
-TEST(lookup_suit, contains_2) {
+TEST(MAP_lookup_suit, contains_2) {
     s21::map<int, std::string> s;
     ASSERT_FALSE(s.contains(0));
-}
-
-int main(int argc, char* argv[]) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
 }

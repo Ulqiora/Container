@@ -5,9 +5,8 @@ LDFLAGS=#-Wall -Wextra -Werror
 LCOVFLAGS=-fprofile-arcs -ftest-coverage
 GTESTFLAGS=-lgtest
 SRC=main.cpp
-TESTS=test_map.cpp
+TESTS=tests/
 OBJECTS=$(addprefix $(BD),$(SRC:.cpp=.o))
-OBJ_TESTS=$(addprefix $(BD),$(TESTS:.cpp=.o))
 CC=g++
 
 all: clean test
@@ -19,7 +18,7 @@ main: $(BD)main_exe
 ./$(BD)main_exe: $(OBJECTS)
 	$(CC) $(LDFLAGS) $^ -o $@
 
-debug: test_map.cpp
+debug: test_array.cpp
 	$(CC) -g $(LDFLAGS) $^ -o $(BD)main_exe $(GTESTFLAGS) -I./ -L./
 
 s21_matrix_oop.a: $(OBJECTS)
@@ -31,10 +30,13 @@ s21_matrix_oop.a: $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 #### TEST #####
+./$(BD)%.o: $(TESTS)%.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
 test: $(BD)main_test_exe
 	./$^
 
-./$(BD)main_test_exe: $(OBJ_TESTS)
+./$(BD)main_test_exe: $(BD)main_test.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(GTESTFLAGS) -I./ -L./
 
 #### GCOV #####

@@ -1,11 +1,7 @@
-#include "array.tpp"
+#include <iostream>
+#include <set>
+#include <string>
 
-// #include <iostream>
-#include <array>
+#include "set.tpp"
 
-int main() {
-    s21::array<int, 5> a = {1, 2, 3, 4};
-    s21::array<int, 5> b = std::move(a);
-
-    return 0;
-}
+int main() { return 0; }

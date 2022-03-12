@@ -3,7 +3,7 @@
 #include <set>
 #include <string>
 
-#include "set.tpp"
+#include "../set.tpp"
 
 #define SET_INIT {8, 10, 3, 14, 1, 6, 7, 4, 2, 13, 9, 7};
 
@@ -39,43 +39,43 @@ bool isSetEqual(const std::set<Key, Traits>& std_set, const s21::set<Key, Traits
 
 // CONSTRUCTORS
 
-TEST(constructors_suit, default_constructor) {
+TEST(SET_constructors_suit, default_constructor) {
     s21::set<int> s21_set;
     std::set<int> std_set;
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(constructors_suit, init_constructor_1) {
+TEST(SET_constructors_suit, init_constructor_1) {
     s21::set<int> s21_set = SET_INIT;
     std::set<int> std_set = SET_INIT;
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(constructors_suit, init_constructor_2) {
+TEST(SET_constructors_suit, init_constructor_2) {
     s21::set<int> s21_set = {1};
     std::set<int> std_set = {1};
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(constructors_suit, init_constructor_3) {
+TEST(SET_constructors_suit, init_constructor_3) {
     s21::set<std::string> s21_set = {"Jack", "Scooby", "Rose", "Doo", "Rachel", "Dick"};
     std::set<std::string> std_set = {"Jack", "Scooby", "Rose", "Doo", "Rachel", "Dick"};
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(constructors_suit, init_constructor_4) {
+TEST(SET_constructors_suit, init_constructor_4) {
     s21::set<int> s21_set = {};
     std::set<int> std_set = {};
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(constructors_suit, init_constructor_5) {
+TEST(SET_constructors_suit, init_constructor_5) {
     s21::set<int, std::greater<int>> s21_set SET_INIT;
     std::set<int, std::greater<int>> std_set SET_INIT;
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(constructors_suit, copy_constructor_1) {
+TEST(SET_constructors_suit, copy_constructor_1) {
     s21::set<int> s21_set1 = SET_INIT;
     s21::set<int> s21_set2 = s21_set1;
     std::set<int> std_set1 = SET_INIT;
@@ -83,7 +83,7 @@ TEST(constructors_suit, copy_constructor_1) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, copy_constructor_2) {
+TEST(SET_constructors_suit, copy_constructor_2) {
     s21::set<int> s21_set1 = {1};
     s21::set<int> s21_set2 = s21_set1;
     std::set<int> std_set1 = {1};
@@ -91,7 +91,7 @@ TEST(constructors_suit, copy_constructor_2) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, copy_constructor_3) {
+TEST(SET_constructors_suit, copy_constructor_3) {
     s21::set<int> s21_set1;
     s21::set<int> s21_set2 = s21_set1;
     std::set<int> std_set1;
@@ -99,7 +99,7 @@ TEST(constructors_suit, copy_constructor_3) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, move_constructor_1) {
+TEST(SET_constructors_suit, move_constructor_1) {
     s21::set<long int> s21_set1 = SET_INIT;
     s21::set<long int> s21_set2 = std::move(s21_set1);
     std::set<long int> std_set1 = SET_INIT;
@@ -107,7 +107,7 @@ TEST(constructors_suit, move_constructor_1) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, move_constructor_2) {
+TEST(SET_constructors_suit, move_constructor_2) {
     s21::set<long int> s21_set1 = {1};
     s21::set<long int> s21_set2 = std::move(s21_set1);
     std::set<long int> std_set1 = {1};
@@ -115,7 +115,7 @@ TEST(constructors_suit, move_constructor_2) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, move_constructor_3) {
+TEST(SET_constructors_suit, move_constructor_3) {
     s21::set<long int> s21_set1;
     s21::set<long int> s21_set2 = std::move(s21_set1);
     std::set<long int> std_set1;
@@ -123,7 +123,7 @@ TEST(constructors_suit, move_constructor_3) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, operator_assign_copy_1) {
+TEST(SET_constructors_suit, operator_assign_copy_1) {
     s21::set<double> s21_set1 = SET_INIT;
     s21::set<double> s21_set2 = {1, 2, 3};
     s21_set2 = s21_set1;
@@ -133,7 +133,7 @@ TEST(constructors_suit, operator_assign_copy_1) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, operator_assign_copy_2) {
+TEST(SET_constructors_suit, operator_assign_copy_2) {
     s21::set<double> s21_set1 = {1};
     s21::set<double> s21_set2 = {1, 2, 3};
     s21_set2 = s21_set1;
@@ -143,7 +143,7 @@ TEST(constructors_suit, operator_assign_copy_2) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, operator_assign_copy_3) {
+TEST(SET_constructors_suit, operator_assign_copy_3) {
     s21::set<double> s21_set1;
     s21::set<double> s21_set2 = {1, 2, 3};
     s21_set2 = s21_set1;
@@ -153,7 +153,7 @@ TEST(constructors_suit, operator_assign_copy_3) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, operator_assign_copy_4) {
+TEST(SET_constructors_suit, operator_assign_copy_4) {
     s21::set<double> s21_set = SET_INIT;
     s21_set = s21_set;
     std::set<double> std_set = SET_INIT;
@@ -161,7 +161,7 @@ TEST(constructors_suit, operator_assign_copy_4) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(constructors_suit, operator_assign_move_1) {
+TEST(SET_constructors_suit, operator_assign_move_1) {
     s21::set<double> s21_set1 = SET_INIT;
     s21::set<double> s21_set2 = {1, 2, 3};
     s21_set2 = std::move(s21_set1);
@@ -171,7 +171,7 @@ TEST(constructors_suit, operator_assign_move_1) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, operator_assign_move_2) {
+TEST(SET_constructors_suit, operator_assign_move_2) {
     s21::set<double> s21_set1 = {1};
     s21::set<double> s21_set2 = {1, 2, 3};
     s21_set2 = std::move(s21_set1);
@@ -181,7 +181,7 @@ TEST(constructors_suit, operator_assign_move_2) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, operator_assign_move_3) {
+TEST(SET_constructors_suit, operator_assign_move_3) {
     s21::set<double> s21_set1;
     s21::set<double> s21_set2 = {1, 2, 3};
     s21_set2 = std::move(s21_set1);
@@ -191,7 +191,7 @@ TEST(constructors_suit, operator_assign_move_3) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(constructors_suit, operator_assign_move_4) {
+TEST(SET_constructors_suit, operator_assign_move_4) {
     s21::set<double> s21_set = SET_INIT;
     s21_set = std::move(s21_set);
     std::set<double> std_set = SET_INIT;
@@ -201,79 +201,79 @@ TEST(constructors_suit, operator_assign_move_4) {
 
 // ITERATORS
 
-TEST(iterators_suit, begin_1) {
+TEST(SET_iterators_suit, begin_1) {
     s21::set<int> s = SET_INIT;
     s21::set<int>::iterator it = s.begin();
     ASSERT_EQ(*it, 1);
     ASSERT_EQ(*++it, 2);
 }
 
-TEST(iterators_suit, begin_2) {
+TEST(SET_iterators_suit, begin_2) {
     s21::set<int> s = {42};
     s21::set<int>::iterator it = s.begin();
     ASSERT_EQ(*it, 42);
     ASSERT_EQ(++it, s.end());
 }
 
-TEST(iterators_suit, begin_3) {
+TEST(SET_iterators_suit, begin_3) {
     s21::set<int> s;
     s21::set<int>::iterator it = s.begin();
     ASSERT_EQ(it, s.end());
 }
 
-TEST(iterators_suit, cbegin_1) {
+TEST(SET_iterators_suit, cbegin_1) {
     s21::set<int> s = SET_INIT;
     s21::set<int>::const_iterator it = s.cbegin();
     ASSERT_EQ(*it, 1);
     ASSERT_EQ(*++it, 2);
 }
 
-TEST(iterators_suit, cbegin_2) {
+TEST(SET_iterators_suit, cbegin_2) {
     s21::set<int> s = {42};
     s21::set<int>::const_iterator it = s.cbegin();
     ASSERT_EQ(*it, 42);
     ASSERT_EQ(++it, s.end());
 }
 
-TEST(iterators_suit, cbegin_3) {
+TEST(SET_iterators_suit, cbegin_3) {
     s21::set<int> s;
     s21::set<int>::const_iterator it = s.cbegin();
     ASSERT_EQ(it, s.end());
 }
 
-TEST(iterators_suit, end_1) {
+TEST(SET_iterators_suit, end_1) {
     s21::set<int> s = SET_INIT;
     s21::set<int>::iterator it = s.end();
     ASSERT_EQ(*--it, 14);
     ASSERT_EQ(*--it, 13);
 }
 
-TEST(iterators_suit, end_2) {
+TEST(SET_iterators_suit, end_2) {
     s21::set<int> s = {42};
     s21::set<int>::iterator it = s.end();
     ASSERT_EQ(*--it, 42);
 }
 
-TEST(iterators_suit, end_3) {
+TEST(SET_iterators_suit, end_3) {
     s21::set<int> s;
     s21::set<int>::iterator it = s.end();
     ASSERT_EQ(it, s.begin());
 }
 
-TEST(iterators_suit, cend_1) {
+TEST(SET_iterators_suit, cend_1) {
     s21::set<int> s = SET_INIT;
     s21::set<int>::const_iterator it = s.cend();
     ASSERT_EQ(*--it, 14);
     ASSERT_EQ(*--it, 13);
 }
 
-TEST(iterators_suit, cend_2) {
+TEST(SET_iterators_suit, cend_2) {
     s21::set<int> s = {42};
     s21::set<int>::const_iterator it = s.cend();
     ASSERT_EQ(*--it, 42);
 }
 
-TEST(iterators_suit, cend_3) {
+TEST(SET_iterators_suit, cend_3) {
     s21::set<int> s;
     s21::set<int>::const_iterator it = s.cend();
     ASSERT_EQ(it, s.begin());
@@ -281,24 +281,24 @@ TEST(iterators_suit, cend_3) {
 
 // CAPACITY
 
-TEST(capacity_suit, empty_1) {
+TEST(SET_capacity_suit, empty_1) {
     s21::set<int> s = SET_INIT;
     ASSERT_FALSE(s.empty());
 }
 
-TEST(capacity_suit, empty_2) {
+TEST(SET_capacity_suit, empty_2) {
     s21::set<int> s = {42};
     ASSERT_FALSE(s.empty());
     s.erase(s.begin());
     ASSERT_TRUE(s.empty());
 }
 
-TEST(capacity_suit, empty_3) {
+TEST(SET_capacity_suit, empty_3) {
     s21::set<int> s;
     ASSERT_TRUE(s.empty());
 }
 
-TEST(capacity_suit, size_1) {
+TEST(SET_capacity_suit, size_1) {
     s21::set<int> s = SET_INIT;
     ASSERT_EQ(s.size(), 11);
     s.erase(s.begin());
@@ -309,7 +309,7 @@ TEST(capacity_suit, size_1) {
     ASSERT_EQ(s.size(), 11);
 }
 
-TEST(capacity_suit, size_2) {
+TEST(SET_capacity_suit, size_2) {
     s21::set<int> s = {42};
     ASSERT_EQ(s.size(), 1);
     s.erase(s.begin());
@@ -319,7 +319,7 @@ TEST(capacity_suit, size_2) {
     ASSERT_EQ(s.size(), 2);
 }
 
-TEST(capacity_suit, max_size) {
+TEST(SET_capacity_suit, max_size) {
     s21::set<double> s = SET_INIT;
     size_t real = static_cast<size_t>(
         pow(2, sizeof(void*) * 8) / (sizeof(double) + 3 * sizeof(void*) + 2 * sizeof(bool)) - 1);
@@ -328,7 +328,7 @@ TEST(capacity_suit, max_size) {
 
 // MODIFIERS
 
-TEST(modifiers_suit, clear_1) {
+TEST(SET_modifiers_suit, clear_1) {
     s21::set<int> s21_set = SET_INIT;
     s21_set.clear();
     std::set<int> std_set = SET_INIT;
@@ -336,7 +336,7 @@ TEST(modifiers_suit, clear_1) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(modifiers_suit, clear_2) {
+TEST(SET_modifiers_suit, clear_2) {
     s21::set<int> s21_set = {42};
     s21_set.clear();
     std::set<int> std_set = {42};
@@ -344,7 +344,7 @@ TEST(modifiers_suit, clear_2) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(modifiers_suit, clear_3) {
+TEST(SET_modifiers_suit, clear_3) {
     s21::set<int> s21_set;
     s21_set.clear();
     std::set<int> std_set;
@@ -352,7 +352,7 @@ TEST(modifiers_suit, clear_3) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(modifiers_suit, insert) {
+TEST(SET_modifiers_suit, insert) {
     s21::set<int> s21_set = SET_INIT;
     std::pair<s21::set<int>::iterator, bool> p;
     p = s21_set.insert(6);
@@ -375,7 +375,7 @@ TEST(modifiers_suit, insert) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(modifiers_suit, erase_1) {
+TEST(SET_modifiers_suit, erase_1) {
     s21::set<int> s21_set = {8, 3, 10};
     s21_set.erase(s21_set.find(3));
     s21_set.erase(s21_set.find(10));
@@ -387,7 +387,7 @@ TEST(modifiers_suit, erase_1) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(modifiers_suit, erase_2) {
+TEST(SET_modifiers_suit, erase_2) {
     s21::set<int> s21_set = {8, 3, 6, 1, 0, 4, 5};
     s21_set.erase(s21_set.find(1));
     s21_set.erase(s21_set.find(6));
@@ -399,7 +399,7 @@ TEST(modifiers_suit, erase_2) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(modifiers_suit, erase_3) {
+TEST(SET_modifiers_suit, erase_3) {
     s21::set<int> s21_set = {8, 13, 10, 14, 11, 15, 2};
     s21_set.erase(s21_set.find(10));
     s21_set.erase(s21_set.find(14));
@@ -411,7 +411,7 @@ TEST(modifiers_suit, erase_3) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(modifiers_suit, erase_4) {
+TEST(SET_modifiers_suit, erase_4) {
     s21::set<int> s21_set = SET_INIT;
     s21_set.erase(s21_set.find(3));
     s21_set.erase(s21_set.find(10));
@@ -423,7 +423,7 @@ TEST(modifiers_suit, erase_4) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(modifiers_suit, erase_5) {
+TEST(SET_modifiers_suit, erase_5) {
     s21::set<int> s21_set = SET_INIT;
     s21_set.erase(--s21_set.end());
     std::set<int> std_set = SET_INIT;
@@ -431,7 +431,7 @@ TEST(modifiers_suit, erase_5) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(modifiers_suit, erase_6) {
+TEST(SET_modifiers_suit, erase_6) {
     s21::set<int> s21_set = {42};
     s21_set.erase(s21_set.find(42));
     std::set<int> std_set = {42};
@@ -439,7 +439,7 @@ TEST(modifiers_suit, erase_6) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set));
 }
 
-TEST(modifiers_suit, swap_1) {
+TEST(SET_modifiers_suit, swap_1) {
     s21::set<int> s21_set1 = SET_INIT;
     s21::set<int> s21_set2 = {1, 2, 3};
     s21_set1.swap(s21_set2);
@@ -450,7 +450,7 @@ TEST(modifiers_suit, swap_1) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(modifiers_suit, swap_2) {
+TEST(SET_modifiers_suit, swap_2) {
     s21::set<int> s21_set1 = SET_INIT;
     s21::set<int> s21_set2;
     s21_set1.swap(s21_set2);
@@ -461,7 +461,7 @@ TEST(modifiers_suit, swap_2) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(modifiers_suit, swap_3) {
+TEST(SET_modifiers_suit, swap_3) {
     s21::set<int> s21_set1;
     s21::set<int> s21_set2;
     s21_set1.swap(s21_set2);
@@ -472,7 +472,7 @@ TEST(modifiers_suit, swap_3) {
     ASSERT_TRUE(isSetEqual(std_set2, s21_set2));
 }
 
-TEST(modifiers_suit, merge_1) {
+TEST(SET_modifiers_suit, merge_1) {
     s21::set<int> s21_set1 = SET_INIT;
     s21::set<int> s21_set2 = {42, 2, 20, 0, 10};
     s21_set1.merge(s21_set2);
@@ -485,7 +485,7 @@ TEST(modifiers_suit, merge_1) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set1));
 }
 
-TEST(modifiers_suit, merge_2) {
+TEST(SET_modifiers_suit, merge_2) {
     s21::set<int> s21_set1 = SET_INIT;
     s21::set<int> s21_set2;
     s21_set1.merge(s21_set2);
@@ -493,7 +493,7 @@ TEST(modifiers_suit, merge_2) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set1));
 }
 
-TEST(modifiers_suit, merge_3) {
+TEST(SET_modifiers_suit, merge_3) {
     s21::set<int> s21_set1;
     s21::set<int> s21_set2 = SET_INIT;
     s21_set1.merge(s21_set2);
@@ -503,18 +503,18 @@ TEST(modifiers_suit, merge_3) {
 
 // LOOKUP
 
-TEST(lookup_suit, find_1) {
+TEST(SET_lookup_suit, find_1) {
     s21::set<int> s = SET_INIT;
     ASSERT_EQ(*s.find(7), 7);
     ASSERT_EQ(s.find(42), s.end());
 }
 
-TEST(lookup_suit, find_2) {
+TEST(SET_lookup_suit, find_2) {
     s21::set<int> s;
     ASSERT_EQ(s.find(42), s.end());
 }
 
-TEST(lookup_suit, contains_1) {
+TEST(SET_lookup_suit, contains_1) {
     s21::set<int> s = SET_INIT;
     ASSERT_TRUE(s.contains(7));
     ASSERT_FALSE(s.contains(42));
@@ -524,12 +524,7 @@ TEST(lookup_suit, contains_1) {
     ASSERT_TRUE(s.contains(42));
 }
 
-TEST(lookup_suit, contains_2) {
+TEST(SET_lookup_suit, contains_2) {
     s21::set<int> s;
     ASSERT_FALSE(s.contains(0));
-}
-
-int main(int argc, char* argv[]) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
 }
