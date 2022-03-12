@@ -1,11 +1,10 @@
 BD=../build/
-TD=#../tests/
+TESTS=tests/
 CFLAGS=-c# -Wall -Wextra -Werror
 LDFLAGS=#-Wall -Wextra -Werror
 LCOVFLAGS=-fprofile-arcs -ftest-coverage
 GTESTFLAGS=-lgtest
 SRC=main.cpp
-TESTS=tests/
 OBJECTS=$(addprefix $(BD),$(SRC:.cpp=.o))
 CC=g++
 
@@ -56,10 +55,15 @@ del-lib:
 	rm -f *.a
 
 cppcheck:
-	cppcheck --enable=all --suppress=missingIncludeSystem ../src/
+	cppcheck --enable=all --suppress=missingIncludeSystem --suppress=noExplicitConstructor --suppress=redundantInitialization \
+	--suppress=containerOutOfBounds --suppress=selfAssignment --suppress=negativeIndex ../src/
 
 cpplint:
 	cp ../materials/linters/CPPLINT.cfg . && python3 ../materials/linters/cpplint.py --extensions=tpp --filter=-runtime/explicit *.tpp *.h; rm -f CPPLINT.cfg
 
 leaks:
 	leaks --atExit -- ./$(BD)main_test_exe
+
+valgrind:
+	valgrind --undef-value-errors=no --log-file=valgrind-out.txt ../build/main_test_exe || \
+	echo "valgrind isn't installed!"
