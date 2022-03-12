@@ -21,7 +21,7 @@ array<T, N>::array(std::initializer_list<value_type> const& items) {
 
 template <class T, std::size_t N>
 array<T, N>::array(const array& a) {
-    copyFromArr(a);
+    std::copy(a._arr, a._arr + N, _arr);
 }
 
 template <class T, std::size_t N>
@@ -34,7 +34,7 @@ array<T, N>::~array() {}
 
 template <class T, std::size_t N>
 array<T, N>& array<T, N>::operator=(const array& a) {
-    copyFromArr(a);
+    std::copy(a._arr, a._arr + N, _arr);
     return *this;
 }
 
@@ -124,15 +124,6 @@ template <class T, std::size_t N>
 void array<T, N>::fill(const_reference value) {
     for (size_type i = 0; i < N; i++) {
         _arr[i] = value;
-    }
-}
-
-// Other
-
-template <class T, std::size_t N>
-inline void array<T, N>::array::copyFromArr(const array& a) {
-    for (size_type i = 0; i < N; i++) {
-        _arr[i] = a._arr[i];
     }
 }
 

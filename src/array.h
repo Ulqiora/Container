@@ -45,9 +45,6 @@ class array {
     // Modifiers
     void swap(array& other);
     void fill(const_reference value);
-    // Other
- private:
-    inline void copyFromArr(const array& a);
 };
 
 }  // namespace s21
