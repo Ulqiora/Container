@@ -5,7 +5,7 @@ LDFLAGS=#-Wall -Wextra -Werror
 LCOVFLAGS=-fprofile-arcs -ftest-coverage
 GTESTFLAGS=-lgtest
 SRC=main.cpp
-TESTS=test_multiset.cpp
+TESTS=test_map.cpp
 OBJECTS=$(addprefix $(BD),$(SRC:.cpp=.o))
 OBJ_TESTS=$(addprefix $(BD),$(TESTS:.cpp=.o))
 CC=g++
@@ -57,8 +57,7 @@ cppcheck:
 	cppcheck --enable=all --suppress=missingIncludeSystem ../src/
 
 cpplint:
-	cp ../materials/linters/CPPLINT.cfg . && python3 ../materials/linters/cpplint.py --extensions=tpp *.tpp *.h
-	rm -f CPPLINT.cfg
+	cp ../materials/linters/CPPLINT.cfg . && python3 ../materials/linters/cpplint.py --extensions=tpp --filter=-runtime/explicit *.tpp *.h; rm -f CPPLINT.cfg
 
 leaks:
 	leaks --atExit -- ./$(BD)main_test_exe
