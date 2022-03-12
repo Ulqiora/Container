@@ -19,7 +19,7 @@ main: $(BD)main_exe
 ./$(BD)main_exe: $(OBJECTS)
 	$(CC) $(LDFLAGS) $^ -o $@
 
-debug: test_set.cpp
+debug: test_map.cpp
 	$(CC) -g $(LDFLAGS) $^ -o $(BD)main_exe $(GTESTFLAGS) -I./ -L./
 
 s21_matrix_oop.a: $(OBJECTS)
@@ -57,7 +57,7 @@ cppcheck:
 	cppcheck --enable=all --suppress=missingIncludeSystem ../src/
 
 cpplint:
-	cp ../materials/linters/CPPLINT.cfg . && python3 ../materials/linters/cpplint.py --extensions=cpp *.cpp *.h
+	cp ../materials/linters/CPPLINT.cfg . && python3 ../materials/linters/cpplint.py --extensions=tpp *.tpp *.h
 	rm -f CPPLINT.cfg
 
 leaks:

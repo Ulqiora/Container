@@ -1,4 +1,4 @@
-#include "multiset.hpp"
+#include "multiset.h"
 
 namespace s21 {
 
@@ -47,7 +47,7 @@ typename multiset<Key, Traits>::iterator multiset<Key, Traits>::insert(const val
 }
 
 template <class Key, class Traits>
-void multiset<Key, Traits>::merge(multiset& other) {
+void multiset<Key, Traits>::merge(const multiset& other) {
     for (iterator it = other.begin(); it != other.end(); ++it) {
         insert(*it);
     }

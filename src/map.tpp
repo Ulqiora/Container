@@ -1,4 +1,4 @@
-#include "map.hpp"
+#include "map.h"
 
 namespace s21 {
 
@@ -86,7 +86,7 @@ std::pair<typename map<Key, T, Traits>::iterator, bool> map<Key, T, Traits>::ins
 }
 
 template <class Key, class T, class Traits>
-void map<Key, T, Traits>::merge(map& other) {
+void map<Key, T, Traits>::merge(const map& other) {
     for (iterator it = other.begin(); it != other.end(); ++it) {
         insert(*it);
     }

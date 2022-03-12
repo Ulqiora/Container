@@ -1,5 +1,4 @@
-#ifndef SRC_SORTED_CONTAINER_HPP_
-#define SRC_SORTED_CONTAINER_HPP_
+#pragma once
 
 #include <cmath>
 
@@ -20,7 +19,7 @@ class SortedContainer {
         Node<Key>* _node;
 
         iterator();
-        iterator(Node<Key>* node);
+        explicit iterator(Node<Key>* node);
         iterator(const iterator& it);
         ~iterator();
         iterator& operator=(const iterator& it);
@@ -64,5 +63,3 @@ class SortedContainer {
 };
 
 }  // namespace s21
-
-#endif  // SRC_SORTED_CONTAINER_HPP_

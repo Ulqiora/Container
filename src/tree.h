@@ -1,5 +1,4 @@
-#ifndef SRC_TREE_HPP_
-#define SRC_TREE_HPP_
+#pragma once
 
 #include <functional>
 #include <iomanip>   // *** DEBUG
@@ -17,7 +16,7 @@ struct Node {
     Node<Key> *parent;
     bool leftThread, rightThread;
     Node();
-    Node(Key k);
+    explicit Node(Key k);
 };
 
 template <class Key, class Traits>
@@ -36,7 +35,7 @@ class Tree {
     void erase(Node<Key> *node);
     void destroy(Node<Key> *node);
     void clear();
-    void merge(Tree &other);
+    void merge(const Tree &other);
     // Lookup
     void display();  // *** DEBUG
     Node<Key> *begin() const;
@@ -61,5 +60,3 @@ template <class Key>
 Node<Key> *rightMost(Node<Key> *node);
 
 }  // namespace s21
-
-#endif  // SRC_TREE_HPP_

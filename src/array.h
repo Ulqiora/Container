@@ -1,5 +1,4 @@
-#ifndef SRC_ARRAY_HPP_
-#define SRC_ARRAY_HPP_
+#pragma once
 
 #include <cmath>
 #include <initializer_list>
@@ -52,5 +51,3 @@ class array {
 };
 
 }  // namespace s21
-
-#endif  // SRC_ARRAY_HPP_

@@ -1,5 +1,4 @@
-#ifndef SRC_MAP_HPP_
-#define SRC_MAP_HPP_
+#pragma once
 
 #include <initializer_list>
 
@@ -35,12 +34,10 @@ class map : public SortedContainer<s21::pair<const Key, T>, Traits> {
     std::pair<iterator, bool> insert(const value_type& value);
     std::pair<iterator, bool> insert(const Key& key, const T& obj);
     std::pair<iterator, bool> insert_or_assign(const Key& key, const T& obj);
-    void merge(map& other);
+    void merge(const map& other);
     // Lookup
     iterator find(const reference key) const = delete;
     bool contains(const Key& key);
 };
 
 }  // namespace s21
-
-#endif  // SRC_MAP_HPP_

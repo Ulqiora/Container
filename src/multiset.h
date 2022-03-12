@@ -1,5 +1,4 @@
-#ifndef SRC_SET_HPP_
-#define SRC_SET_HPP_
+#pragma once
 
 #include <initializer_list>
 
@@ -28,7 +27,7 @@ class multiset : public SortedContainer<Key, Traits> {
     multiset<Key, Traits>& operator=(multiset&& s);
     // Modifiers
     iterator insert(const value_type& value);
-    void merge(multiset& other);
+    void merge(const multiset& other);
     // Lookup
     size_type count(const Key& key);
     iterator lower_bound(const Key& key);
@@ -37,5 +36,3 @@ class multiset : public SortedContainer<Key, Traits> {
 };
 
 }  // namespace s21
-
-#endif  // SRC_SET_HPP_

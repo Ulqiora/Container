@@ -1,4 +1,4 @@
-#include "array.hpp"
+#include "array.h"
 
 namespace s21 {
 

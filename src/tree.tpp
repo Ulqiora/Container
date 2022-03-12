@@ -1,4 +1,4 @@
-#include "tree.hpp"
+#include "tree.h"
 
 namespace s21 {
 
@@ -301,7 +301,7 @@ void Tree<Key, Traits>::clear() {
 }
 
 template <class Key, class Traits>
-void Tree<Key, Traits>::merge(Tree &other) {
+void Tree<Key, Traits>::merge(const Tree &other) {
     if (!other.empty()) {
         prefixBypassCopy(other._root);
     }

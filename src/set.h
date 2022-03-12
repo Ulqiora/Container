@@ -1,5 +1,4 @@
-#ifndef SRC_SET_HPP_
-#define SRC_SET_HPP_
+#pragma once
 
 #include <initializer_list>
 
@@ -28,9 +27,7 @@ class set : public SortedContainer<Key, Traits> {
     set<Key, Traits>& operator=(set&& s);
     // Modifiers
     std::pair<iterator, bool> insert(const value_type& value);
-    void merge(set& other);
+    void merge(const set& other);
 };
 
 }  // namespace s21
-
-#endif  // SRC_SET_HPP_

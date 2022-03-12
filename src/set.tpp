@@ -1,4 +1,4 @@
-#include "set.hpp"
+#include "set.h"
 
 namespace s21 {
 
@@ -46,7 +46,7 @@ std::pair<typename set<Key, Traits>::iterator, bool> set<Key, Traits>::insert(co
 }
 
 template <class Key, class Traits>
-void set<Key, Traits>::merge(set& other) {
+void set<Key, Traits>::merge(const set& other) {
     for (iterator it = other.begin(); it != other.end(); ++it) {
         insert(*it);
     }
