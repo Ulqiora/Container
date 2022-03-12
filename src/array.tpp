@@ -26,7 +26,7 @@ array<T, N>::array(const array& a) {
 
 template <class T, std::size_t N>
 array<T, N>::array(array&& a) {
-    std::swap(_arr, a._arr);
+    std::move(a._arr, a._arr + N, _arr);
 }
 
 template <class T, std::size_t N>
@@ -40,7 +40,7 @@ array<T, N>& array<T, N>::operator=(const array& a) {
 
 template <class T, std::size_t N>
 array<T, N>& array<T, N>::operator=(array&& a) {
-    std::swap(_arr, a._arr);
+    std::move(a._arr, a._arr + N, _arr);
     return *this;
 }
 
@@ -48,7 +48,7 @@ array<T, N>& array<T, N>::operator=(array&& a) {
 
 template <class T, std::size_t N>
 typename array<T, N>::reference array<T, N>::at(size_type pos) {
-    if (pos < 0 || pos >= N) {
+    if (pos >= N) {
         throw std::out_of_range("Index out of array bounds!");
     }
     return _arr[pos];
@@ -100,7 +100,7 @@ typename array<T, N>::const_iterator array<T, N>::cend() const {
 
 template <class T, std::size_t N>
 bool array<T, N>::empty() const {
-    return begin() == end();
+    return cbegin() == cend();
 }
 
 template <class T, std::size_t N>
@@ -117,7 +117,7 @@ typename array<T, N>::size_type array<T, N>::max_size() const {
 
 template <class T, std::size_t N>
 void array<T, N>::swap(array& other) {
-    std::swap(_arr, other._arr);
+    std::swap_ranges(_arr, _arr + N, other._arr);
 }
 
 template <class T, std::size_t N>
