@@ -3,7 +3,7 @@
 #include <initializer_list>
 #include <iostream>
 
-#include "Node.hpp"
+#include "Node.h"
 
 namespace s21 {
 template <class Type>
@@ -24,7 +24,7 @@ class single_linked_list {
 
     const_reference back() {
         if (size_ == 0) throw std::invalid_argument("Invalid argument, stack size equal 0");
-        Node<Type>* current = head_;
+        Node_<Type>* current = head_;
         while (current->next_ != nullptr) current = current->next_;
         return (current->value_);
     }
@@ -32,20 +32,20 @@ class single_linked_list {
     virtual void push(const_reference value) = 0;
     void pop(){
         if (size_ > 0) {
-            Node<Type>* current = head_;
+            Node_<Type>* current = head_;
             head_ = head_->next_;
             delete current;
             --size_;
         }
     }
     void swap(single_linked_list &other) noexcept{
-        Node<Type>* swap_hade = other.head_;
+        Node_<Type>* swap_hade = other.head_;
         size_type swap_size = other.size_;
         (other.head_ = head_, head_ = swap_hade);
         (other.size_ = size_, size_ = swap_size);
     }
  protected:
-    Node<Type>* head_;
+    Node_<Type>* head_;
     size_type size_;
 };
 }  // namespace s21

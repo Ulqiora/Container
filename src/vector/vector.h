@@ -2,8 +2,6 @@
 #include <initializer_list>
 #include <iostream>
 
-#include "iterator_vector.hpp"
-
 namespace s21 {
 template <class Type_vector>
 class vector {
@@ -11,8 +9,8 @@ class vector {
     typedef Type_vector value_type;
     typedef Type_vector& reference;
     typedef const Type_vector& const_reference;
-    typedef iterator_vector<Type_vector> iterator;
-    typedef const_iterator_vector<Type_vector> const_iterator;
+    typedef Type_vector* iterator;
+    typedef const Type_vector* const_iterator;
     typedef size_t size_type;
     //    Основные методы взаиможействия
     vector();
@@ -31,8 +29,8 @@ class vector {
     Type_vector* data();
 
     //    методы для итерирования
-    iterator_vector<Type_vector> begin();
-    iterator_vector<Type_vector> end();
+    iterator begin();
+    iterator end();
     const_iterator cbegin();
     const_iterator cend();
 
@@ -51,6 +49,14 @@ class vector {
     void push_back(const_reference value);
     void pop_back();
     void swap(vector& other);
+    
+    void emplace_back() {}
+    template <class T, class... Args>
+    void emplace_back(T n, Args... args);
+
+    void emplace(iterator it) {}
+    template <class T, class... Args>
+    void emplace(iterator it, T n, Args... args);
 
  private:
     size_type size_;

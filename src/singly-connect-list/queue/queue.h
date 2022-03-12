@@ -1,7 +1,7 @@
 #pragma once
 #include <initializer_list>
 #include <iostream>
-#include "../singly_list.hpp"
+#include "../singly_list.h"
 
 namespace s21 {
 template <class Type>
@@ -20,5 +20,9 @@ class queue : public single_linked_list<Type>{
     ~queue();
     reference operator=(queue&& q);
     void push(const_reference value);
+
+    void emplace_back(){}
+    template<class T,class ...Args>
+    void emplace_back(T n,Args... args);
 };
 }  // namespace s21

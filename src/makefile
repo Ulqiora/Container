@@ -1,5 +1,5 @@
 BD=#../build/
-TD=#../tests/
+TS=tests/
 CFLAGS=-c #-Wall -Wextra -Werror
 LDFLAGS=#-Wall -Wextra -Werror
 GTESTFLAGS=-lgtest -lpthread -lm
@@ -8,7 +8,7 @@ CC=g++
 
 all: clean main
 
-main: $(BD)main_exe
+main: clean $(BD)main_exe
 	./$(BD)main_exe
 
 ./$(BD)main_exe: $(BD)main.o
@@ -19,16 +19,17 @@ debug: main.cpp
 
 ./$(BD)%.o: %.cpp
 	$(CC) $(CFLAGS) $< -o $@
-
+./$(TS)%.o: %.cpp
+	$(CC) $(CFLAGS) $< -o $@
 #### TEST #####
 test: clean $(BD)main_test_exe
 	./$(BD)main_test_exe
 
-./$(BD)main_test_exe: $(BD)main_test.o
+./$(BD)main_test_exe: $(BD)main_test.o $(TS)test_list.o $(TS)test_queue.o $(TS)test_stack.o $(TS)test_vector.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(GTESTFLAGS) -I./ -L./
 
 clean:
-	rm -rf ./$(BD)*.o ./$(BD)*_exe ./$(BD)*.dSYM
+	rm -rf ./$(BD)*.o ./$(BD)*_exe ./$(BD)*.dSYM ./debug* ./$(TS)/*.o
 
 cppcheck:
 	cppcheck --enable=all --suppress=missingIncludeSystem --suppress=unusedFunction ../src/

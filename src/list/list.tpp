@@ -1,4 +1,5 @@
-#include "list.hpp"
+#pragma once
+#include "list.h"
 
 namespace s21 {
 
@@ -311,5 +312,26 @@ void list<Type_list>::sort() {
             }
         }
     }
+}
+
+template <class Type_list>
+template<class T,class ...Args>
+void list<Type_list>::emplace_back(T n,Args... args) {
+    push_back(n);
+    emplace_back(args...);
+}
+
+template <class Type_list>
+template<class T,class ...Args>
+void list<Type_list>::emplace_front(T n,Args... args) {
+    push_front(n);
+    emplace_front(args...);
+}
+
+template <class Type_list>
+template<class T,class ...Args>
+void list<Type_list>::emplace(iterator it,T n,Args... args) {
+    insert(it,n);
+    emplace(it, args...);
 }
 }  // namespace s21

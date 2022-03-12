@@ -3,7 +3,7 @@
 #include <exception>
 #include <iostream>
 // #include "cstddef"
-#include "iterator_list.hpp"
+#include "iterator_list.h"
 namespace s21 {
 
 template <class Type_list>
@@ -55,6 +55,17 @@ class list {
     void unique();
     void sort();
 
+    void emplace_back(){}
+    template<class T,class ...Args>
+    void emplace_back(T n,Args... args);
+
+    void emplace_front(){}
+    template<class T,class ...Args>
+    void emplace_front(T n,Args... args);
+
+    void emplace(iterator it){}
+    template<class T,class ...Args>
+    void emplace(iterator it,T n,Args... args);
  private:
     size_type size_;
     Node_list<Type_list>* head_;

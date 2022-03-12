@@ -1,4 +1,6 @@
-#include "queue.hpp"
+#pragma once
+
+#include "queue.h"
 namespace s21 {
 template <class Type>
 queue<Type>::queue() {
@@ -9,10 +11,10 @@ queue<Type>::queue() {
 template <class Type>
 queue<Type>::queue(size_type n) {
     single_linked_list<Type>::size_ = n;
-    single_linked_list<Type>::head_ = new Node<Type>(nullptr);
-    Node<Type> *current = single_linked_list<Type>::head_;
+    single_linked_list<Type>::head_ = new Node_<Type>(nullptr);
+    Node_<Type> *current = single_linked_list<Type>::head_;
     for (size_type i = 1; i < single_linked_list<Type>::size_; ++i) {
-        current->next_ = new Node<Type>(nullptr);
+        current->next_ = new Node_<Type>(nullptr);
         current = current->next_;
     }
 }
@@ -31,7 +33,7 @@ queue<Type>::queue(const queue &q) {
     if (q.head_ != nullptr) {
         push(q.head_->value_);
         if (q.head_->next_ != nullptr) {
-            Node<Type> *current = (q.head_)->next_;
+            Node_<Type> *current = (q.head_)->next_;
             while (current != nullptr) {
                 push(current->value_);
                 current = current->next_;
@@ -59,12 +61,19 @@ typename s21::queue<Type>::reference queue<Type>::operator=(queue &&q) {
 template <class Type>
 void queue<Type>::push(const_reference value) {
     if (single_linked_list<Type>::size_ == 0) {
-        single_linked_list<Type>::head_ = new Node<Type>(nullptr, value);
+        single_linked_list<Type>::head_ = new Node_<Type>(nullptr, value);
     } else {
-        Node<Type> *current = single_linked_list<Type>::head_;
+        Node_<Type> *current = single_linked_list<Type>::head_;
         while (current->next_ != nullptr) current = current->next_;
-        current->next_ = new Node<Type>(nullptr, value);
+        current->next_ = new Node_<Type>(nullptr, value);
     }
     ++single_linked_list<Type>::size_;
+}
+
+template <class Type>
+template<class T,class ...Args>
+void queue<Type>::emplace_back(T n,Args... args) {
+    push_back(n);
+    emplace_back(args...);
 }
 }  // namespace s21

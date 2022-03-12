@@ -1,4 +1,6 @@
-#include "stack.hpp"
+#pragma once
+
+#include "stack.h"
 namespace s21 {
 template <class Type>
 stack<Type>::stack() {
@@ -9,10 +11,10 @@ stack<Type>::stack() {
 template <class Type>
 stack<Type>::stack(size_type n) {
     single_linked_list<Type>::size_=n;
-    single_linked_list<Type>::head_ = new Node<Type>(nullptr);
-    Node<Type> *current = single_linked_list<Type>::head_;
+    single_linked_list<Type>::head_ = new Node_<Type>(nullptr);
+    Node_<Type> *current = single_linked_list<Type>::head_;
     for (size_type i = 1; i < single_linked_list<Type>::size_; ++i) {
-        current->next_ = new Node<Type>(nullptr);
+        current->next_ = new Node_<Type>(nullptr);
         current = current->next_;
     }
 }
@@ -29,7 +31,7 @@ stack<Type>::stack(const stack &q) {
     single_linked_list<Type>::size_ = 0;
     single_linked_list<Type>::head_ = nullptr;
     stack<Type> a;
-    Node<Type> *current = q.head_;
+    Node_<Type> *current = q.head_;
     while (current != nullptr) {
         a.push(current->value_);
         current = current->next_;
@@ -60,11 +62,18 @@ typename s21::stack<Type>::reference stack<Type>::operator=(stack &&q) {
 template <class Type>
 void stack<Type>::push(const_reference value) {
     if (single_linked_list<Type>::size_ == 0) {
-        single_linked_list<Type>::head_ = new Node<Type>(nullptr, value);
+        single_linked_list<Type>::head_ = new Node_<Type>(nullptr, value);
     } else {
-        Node<Type> *current = new Node<Type>(single_linked_list<Type>::head_, value);;
+        Node_<Type> *current = new Node_<Type>(single_linked_list<Type>::head_, value);;
         single_linked_list<Type>::head_ = current;
     }
     ++single_linked_list<Type>::size_;
+}
+
+template <class Type>
+template<class T,class ...Args>
+void stack<Type>::emplace_front(T n,Args... args) {
+    push_front(n);
+    emplace_front(args...);
 }
 }  // namespace s21
