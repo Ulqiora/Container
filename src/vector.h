@@ -73,17 +73,16 @@ void s21::vector<Type_vector>::doublingCapacity() {
     mass_ = (Type_vector*)realloc(mass_, capacity_ * sizeof(Type_vector));
 }
 
-template <class Type_vector>
-s21::vector<Type_vector>::vector() : capacity_(1), size_(0), mass_(new value_type[capacity_]()) {}
+template<class Type_vector>
+s21::vector<Type_vector>::vector() : capacity_(1), size_(0), mass_((Type_vector*)malloc(capacity_*sizeof(Type_vector))) {}
 
-template <class Type_vector>
-s21::vector<Type_vector>::vector(size_type n)
-    : capacity_(n + 1), size_(n), mass_(new value_type[capacity_]()) {}
+template<class Type_vector>
+s21::vector<Type_vector>::vector(size_type n) : capacity_(n + 1), size_(n), mass_((Type_vector*)malloc(capacity_*sizeof(Type_vector))) {}
 
 template <class Type_vector>
 s21::vector<Type_vector>::vector(std::initializer_list<value_type> const& items)
-    : capacity_(items.size() + 1), size_(items.size()), mass_(new value_type[capacity_]()) {
-    int j = 0;
+    : capacity_(items.size() + 1), size_(items.size()), mass_((Type_vector*)malloc(capacity_*sizeof(Type_vector))) {
+    int j=0;
     for (auto i = items.begin(); i != items.end(); i++) {
         mass_[j] = *i;
         j++;
@@ -95,7 +94,7 @@ s21::vector<Type_vector>::vector(const vector& v) {
     if (this != &v) {
         capacity_ = v.size_ + 1;
         size_ = v.size_;
-        mass_ = new value_type[capacity_]();
+        mass_ = (Type_vector*)malloc(capacity_*sizeof(Type_vector));
         for (int i = 0; i < size_; i++) mass_[i] = v.mass_[i];
     }
 }
@@ -105,17 +104,15 @@ s21::vector<Type_vector>::vector(vector&& v) noexcept {
     if (this != &v) {
         capacity_ = v.capacity_;
         size_ = v.size_;
-        mass_ = new value_type[capacity_]();
+        mass_ = (Type_vector*)malloc(capacity_*sizeof(Type_vector));
         for (int i = 0; i < size_; i++) mass_[i] = v.mass_[i];
         v.mass_ = nullptr;
         v.size_ = v.capacity_ = 0;
     }
 }
 
-template <class Type_vector>
-s21::vector<Type_vector>::~vector() {
-    delete[] mass_;
-}
+template<class Type_vector>
+s21::vector<Type_vector>::~vector() { free(mass_); }
 
 template <class Type_vector>
 s21::vector<Type_vector> s21::vector<Type_vector>::operator=(vector&& v) {
@@ -219,7 +216,7 @@ void s21::vector<Type_vector>::shrink_to_fit() {
         capacity = size + 1;
         Type_vector* copy = (Type_vector*)realloc(mass_, capacity_ * sizeof(Type_vector));
         for (int i = 0; i < size_; i++) copy[i] = mass_[i];
-        delete[] mass_;
+        free(mass_);
         mass_ = copy;
     }
 }
@@ -230,14 +227,16 @@ void s21::vector<Type_vector>::clear() {
     if (capacity_ != 0) free(mass_);
     size_ = 0;
     capacity_ = 1;
-    mass_ = new value_type[capacity_]();
+    mass_ = (Type_vector*)malloc(capacity_*sizeof(Type_vector));
 }
 
 template <class Type_vector>
 typename s21::vector<Type_vector>::iterator s21::vector<Type_vector>::insert(
     s21::vector<Type_vector>::iterator pos, const_reference value) {
     iterator i = end();
-    if (pos != nullptr) {
+    if(){
+
+    }if (pos != nullptr) {
         while (i != pos && i != begin()) --i;
         if (i != pos) throw std::out_of_range("Out of range, invalid argument");
         if (capacity_ == size_ + 1) doublingCapacity();
