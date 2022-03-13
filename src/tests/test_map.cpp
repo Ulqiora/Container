@@ -550,6 +550,43 @@ TEST(MAP_modifiers_suit, merge_3) {
     ASSERT_TRUE(isMapEqual(std_map, s21_map1));
 }
 
+TEST(MAP_modifiers_suit, emplace_1) {
+    s21::map<int, std::string> m = MAP_INIT;
+    auto p = m.emplace(std_pair_t(6, "Fire Princess"), std_pair_t(42, "Ice King"),
+                       std_pair_t(100, "Fire Princess"), std_pair_t(4, "Buble Gum"));
+
+    ASSERT_EQ((*p[0].first).first, 6);
+    ASSERT_EQ((*p[0].first).second, "Marseline");
+    ASSERT_FALSE(p[0].second);
+
+    ASSERT_EQ((*p[1].first).first, 42);
+    ASSERT_EQ((*p[1].first).second, "Ice King");
+    ASSERT_TRUE(p[1].second);
+
+    ASSERT_EQ((*p[2].first).first, 100);
+    ASSERT_EQ((*p[2].first).second, "Fire Princess");
+    ASSERT_TRUE(p[2].second);
+
+    ASSERT_EQ((*p[3].first).first, 4);
+    ASSERT_EQ((*p[3].first).second, "Jimmy");
+    ASSERT_FALSE(p[3].second);
+}
+
+TEST(MAP_modifiers_suit, emplace_2) {
+    s21::map<int, std::string> m;
+    auto p = m.emplace(std_pair_t(6, "Fire Princess"));
+
+    ASSERT_EQ((*p[0].first).first, 6);
+    ASSERT_EQ((*p[0].first).second, "Fire Princess");
+    ASSERT_TRUE(p[0].second);
+}
+
+TEST(MAP_modifiers_suit, emplace_3) {
+    s21::map<int, std::string> m = MAP_INIT;
+    auto p = m.emplace();
+    ASSERT_EQ(p.size(), 0);
+}
+
 // LOOKUP
 
 TEST(MAP_lookup_suit, contains_1) {

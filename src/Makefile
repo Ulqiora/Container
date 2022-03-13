@@ -4,26 +4,11 @@ CFLAGS=-c# -Wall -Wextra -Werror
 LDFLAGS=#-Wall -Wextra -Werror
 LCOVFLAGS=-fprofile-arcs -ftest-coverage
 GTESTFLAGS=-lgtest
-SRC=main.cpp
+SRC=tests/main_test.cpp
 OBJECTS=$(addprefix $(BD),$(SRC:.cpp=.o))
 CC=g++
 
 all: clean test
-# all: clean main
-
-main: $(BD)main_exe
-	./$(BD)main_exe
-
-./$(BD)main_exe: $(OBJECTS)
-	$(CC) $(LDFLAGS) $^ -o $@
-
-debug: test_array.cpp
-	$(CC) -g $(LDFLAGS) $^ -o $(BD)main_exe $(GTESTFLAGS) -I./ -L./
-
-s21_matrix_oop.a: $(OBJECTS)
-	ar rcs s21_matrix_oop.a $^
-	ranlib s21_matrix_oop.a
-	cp s21_matrix_oop.a libs21_matrix_oop.a
 
 ./$(BD)%.o: %.cpp
 	$(CC) $(CFLAGS) $< -o $@
@@ -59,7 +44,7 @@ cppcheck:
 	--suppress=containerOutOfBounds --suppress=selfAssignment --suppress=negativeIndex ../src/
 
 cpplint:
-	cp ../materials/linters/CPPLINT.cfg . && python3 ../materials/linters/cpplint.py --extensions=tpp --filter=-runtime/explicit *.tpp *.h; rm -f CPPLINT.cfg
+	cp ../materials/linters/CPPLINT.cfg . && python3 ../materials/linters/cpplint.py --extensions=cpp --filter=-runtime/explicit *.cpp *.h; rm -f CPPLINT.cfg
 
 leaks:
 	leaks --atExit -- ./$(BD)main_test_exe

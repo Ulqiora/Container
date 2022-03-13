@@ -501,6 +501,37 @@ TEST(SET_modifiers_suit, merge_3) {
     ASSERT_TRUE(isSetEqual(std_set, s21_set1));
 }
 
+TEST(SET_modifiers_suit, emplace_1) {
+    s21::set<int> m = SET_INIT;
+    auto p = m.emplace(6, 42, 100, 4);
+
+    ASSERT_EQ(*p[0].first, 6);
+    ASSERT_FALSE(p[0].second);
+
+    ASSERT_EQ(*p[1].first, 42);
+    ASSERT_TRUE(p[1].second);
+
+    ASSERT_EQ(*p[2].first, 100);
+    ASSERT_TRUE(p[2].second);
+
+    ASSERT_EQ(*p[3].first, 4);
+    ASSERT_FALSE(p[3].second);
+}
+
+TEST(SET_modifiers_suit, emplace_2) {
+    s21::set<int> m;
+    auto p = m.emplace(6);
+
+    ASSERT_EQ(*p[0].first, 6);
+    ASSERT_TRUE(p[0].second);
+}
+
+TEST(SET_modifiers_suit, emplace_3) {
+    s21::set<int> m = SET_INIT;
+    auto p = m.emplace();
+    ASSERT_EQ(p.size(), 0);
+}
+
 // LOOKUP
 
 TEST(SET_lookup_suit, find_1) {
