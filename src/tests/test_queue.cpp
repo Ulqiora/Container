@@ -1,6 +1,6 @@
 #include <queue>
 #include <gtest/gtest.h>
-#include "../singly-connect-list/queue/queue.tpp"
+#include "../singly_list.h"
 
 TEST(queue, constructor1){
     s21::queue<int> a;

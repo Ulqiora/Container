@@ -1,6 +1,6 @@
 #include <list>
 #include <gtest/gtest.h>
-#include "../list/list.tpp"
+#include "../list.h"
 
 TEST(list, constructor1) {
     std::list<int> a;

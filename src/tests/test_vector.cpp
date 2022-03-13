@@ -1,6 +1,6 @@
 #include <vector>
 #include <gtest/gtest.h>
-#include "../vector/vector.tpp"
+#include "../vector.h"
 
 TEST(vector, constructor1) {
     std::vector<int> a;

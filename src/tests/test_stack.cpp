@@ -1,6 +1,6 @@
 #include <stack>
 #include <gtest/gtest.h>
-#include "../singly-connect-list/stack/stack.tpp"
+#include "../singly_list.h"
 
 TEST(stack, constructor1){
     s21::stack<int> a;
