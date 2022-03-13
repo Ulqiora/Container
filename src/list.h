@@ -1,21 +1,21 @@
 #pragma once
-#include <initializer_list>
 #include <exception>
+#include <initializer_list>
 #include <iostream>
 // #include "cstddef"
 namespace s21 {
 template <class Type_node>
 class Node_list {
-   public:
+ public:
     Node_list* next;
     Node_list* prev;
     Type_node data;
     Node_list(Node_list* next_new, Node_list* prev_new, Type_node const& data_add = Type_node()) {
-        next = next_new;    
+        next = next_new;
         prev = prev_new;
         data = data_add;
     }
-    ~Node_list(){}
+    ~Node_list() {}
 };
 
 template <class Type_iterator_list>
@@ -43,6 +43,7 @@ class iterator_list {
 template <class Type_const_iterator_list>
 class const_iterator_list {
     typename s21::Node_list<Type_const_iterator_list>* iter;
+
  public:
     const_iterator_list(Node_list<Type_const_iterator_list>* v) { iter = v; }
     Type_const_iterator_list operator*() { return iter->data; }
@@ -57,8 +58,12 @@ class const_iterator_list {
         return (*this);
     }
     s21::Node_list<Type_const_iterator_list>* get() { return iter; }
-    bool operator!=(const const_iterator_list<Type_const_iterator_list>& v) { return (this->iter) != (v.iter); }
-    bool operator==(const const_iterator_list<Type_const_iterator_list>& v) { return (this->iter) == (v.iter); }
+    bool operator!=(const const_iterator_list<Type_const_iterator_list>& v) {
+        return (this->iter) != (v.iter);
+    }
+    bool operator==(const const_iterator_list<Type_const_iterator_list>& v) {
+        return (this->iter) == (v.iter);
+    }
 };
 
 template <class Type_list>
@@ -110,17 +115,18 @@ class list {
     void unique();
     void sort();
 
-    void emplace_back(){}
-    template<class T,class ...Args>
-    void emplace_back(T n,Args... args);
+    void emplace_back() {}
+    template <class T, class... Args>
+    void emplace_back(T n, Args... args);
 
-    void emplace_front(){}
-    template<class T,class ...Args>
-    void emplace_front(T n,Args... args);
+    void emplace_front() {}
+    template <class T, class... Args>
+    void emplace_front(T n, Args... args);
 
-    void emplace(iterator it){}
-    template<class T,class ...Args>
-    void emplace(iterator it,T n,Args... args);
+    void emplace(iterator it) {}
+    template <class T, class... Args>
+    void emplace(iterator it, T n, Args... args);
+
  private:
     size_type size_;
     Node_list<Type_list>* head_;
@@ -161,7 +167,7 @@ list<Type_list>::list(list<Type_list> const& v) : size_(0) {
 }
 
 template <class Type_list>
-list<Type_list>::list(list<Type_list>&& v) : size_(0), head_(new Node_list<Type_list>(nullptr, nullptr)){
+list<Type_list>::list(list<Type_list>&& v) : size_(0), head_(new Node_list<Type_list>(nullptr, nullptr)) {
     if (this != &v) {
         Node_list<Type_list>* swap_node = head_;
         size_type swap_size = size_;
@@ -295,9 +301,9 @@ typename list<Type_list>::iterator list<Type_list>::insert(iterator pos, const_r
 template <class Type_list>
 void list<Type_list>::erase(iterator pos) {
     if (pos == end()) throw std::out_of_range("Out of range in erase");
-    if (pos == begin()&&size_>0) {
+    if (pos == begin() && size_ > 0) {
         Node_list<Type_list>* del = head_;
-        head_=head_->next;
+        head_ = head_->next;
         delete del;
         --size_;
     } else if (pos != nullptr) {
@@ -447,23 +453,23 @@ void list<Type_list>::sort() {
 }
 
 template <class Type_list>
-template<class T,class ...Args>
-void list<Type_list>::emplace_back(T n,Args... args) {
+template <class T, class... Args>
+void list<Type_list>::emplace_back(T n, Args... args) {
     push_back(n);
     emplace_back(args...);
 }
 
 template <class Type_list>
-template<class T,class ...Args>
-void list<Type_list>::emplace_front(T n,Args... args) {
+template <class T, class... Args>
+void list<Type_list>::emplace_front(T n, Args... args) {
     push_front(n);
     emplace_front(args...);
 }
 
 template <class Type_list>
-template<class T,class ...Args>
-void list<Type_list>::emplace(iterator it,T n,Args... args) {
-    it=insert(it,n);
+template <class T, class... Args>
+void list<Type_list>::emplace(iterator it, T n, Args... args) {
+    it = insert(it, n);
     emplace(it, args...);
 }
 }  // namespace s21

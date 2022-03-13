@@ -44,7 +44,7 @@ cppcheck:
 	--suppress=containerOutOfBounds --suppress=selfAssignment --suppress=negativeIndex ../src/
 
 cpplint:
-	cp ../materials/linters/CPPLINT.cfg . && python3 ../materials/linters/cpplint.py --extensions=cpp --filter=-runtime/explicit *.cpp *.h; rm -f CPPLINT.cfg
+	cp ../materials/linters/CPPLINT.cfg . && python3 ../materials/linters/cpplint.py --extensions=cpp --filter=-runtime/explicit,-runtime/references *.cpp *.h; rm -f CPPLINT.cfg
 
 leaks:
 	leaks --atExit -- ./$(BD)main_test_exe
