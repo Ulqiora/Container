@@ -463,7 +463,7 @@ void list<Type_list>::emplace_front(T n,Args... args) {
 template <class Type_list>
 template<class T,class ...Args>
 void list<Type_list>::emplace(iterator it,T n,Args... args) {
-    insert(it,n);
+    it=insert(it,n);
     emplace(it, args...);
 }
 }  // namespace s21

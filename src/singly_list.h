@@ -172,7 +172,7 @@ void queue<Type>::push(const_reference value) {
 template <class Type>
 template<class T,class ...Args>
 void queue<Type>::emplace_back(T n,Args... args) {
-    push_back(n);
+    push(n);
     emplace_back(args...);
 }
 
@@ -247,7 +247,7 @@ void stack<Type>::push(const_reference value) {
 template <class Type>
 template<class T,class ...Args>
 void stack<Type>::emplace_front(T n,Args... args) {
-    push_front(n);
+    push(n);
     emplace_front(args...);
 }
 }  // namespace s21

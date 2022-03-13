@@ -289,3 +289,81 @@ TEST(vector, swap) {
         (++i, ++j);
     }
 }
+
+TEST(vector, emplace_back1) {
+    s21::vector<int> a;
+    a.emplace_back(1,2,3,4,5);
+    ASSERT_EQ(a.size(), 5);
+    int init[] = {1, 2, 3, 4, 5};
+    s21::vector<int>::iterator i = a.begin();
+    int* j = init;
+    while (i != a.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+TEST(vector, emplace_back2) {
+    s21::vector<int> a{1,2,3};
+    a.emplace_back();
+    ASSERT_EQ(a.size(), 3);
+    int init[] = {1, 2, 3};
+    s21::vector<int>::iterator i = a.begin();
+    int* j = init;
+    while (i != a.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+TEST(vector, emplace_back3) {
+    s21::vector<int> a{1,2,3};
+    a.emplace_back(4,5);
+    ASSERT_EQ(a.size(), 5);
+    int init[] = {1, 2, 3, 4, 5};
+    s21::vector<int>::iterator i = a.begin();
+    int* j = init;
+    while (i != a.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+TEST(vector, emplace1) {
+    s21::vector<int> a;
+    a.emplace(a.begin(),5,4,3,2,1);
+    ASSERT_EQ(a.size(), 5);
+    int init[] = {1, 2, 3, 4, 5};
+    s21::vector<int>::iterator i = a.begin();
+    int* j = init;
+    while (i != a.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+TEST(vector, emplace2) {
+    s21::vector<int> a{1,2,3};
+    a.emplace(a.begin());
+    ASSERT_EQ(a.size(), 3);
+    int init[] = {1, 2, 3};
+    s21::vector<int>::iterator i = a.begin();
+    int* j = init;
+    while (i != a.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+TEST(vector, emplace3) {
+    s21::vector<int> a{1,2,3};
+    a.emplace(a.begin(),4,5);
+    ASSERT_EQ(a.size(), 5);
+    int init[] = {5, 4, 1, 2, 3};
+    s21::vector<int>::iterator i = a.begin();
+    int* j = init;
+    while (i != a.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}

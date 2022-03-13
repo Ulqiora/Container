@@ -119,3 +119,39 @@ TEST(queue, swap){
         a.pop();
     }
 }
+
+TEST(queue, emplace_back1){
+    s21::queue<int> a{1,2,3,4,5};
+    a.emplace_back(1,2,3);
+    ASSERT_EQ(a.size(), 8);
+    int init[] = {1,2,3,4,5,1,2,3};
+    int* j = init;
+    while (a.size() != 0) {
+        ASSERT_EQ(a.front(), *j);
+        (a.pop(), ++j);
+    }
+}
+
+TEST(queue, emplace_back2){
+    s21::queue<int> a{1,2,3,4,5};
+    a.emplace_back();
+    ASSERT_EQ(a.size(), 5);
+    int init[] = {1,2,3,4,5};
+    int* j = init;
+    while (a.size() != 0) {
+        ASSERT_EQ(a.front(), *j);
+        (a.pop(), ++j);
+    }
+}
+
+TEST(queue, emplace_back3){
+    s21::queue<int> a;
+    a.emplace_back(1,2,3);
+    ASSERT_EQ(a.size(), 3);
+    int init[] = {1,2,3};
+    int* j = init;
+    while (a.size() != 0) {
+        ASSERT_EQ(a.front(), *j);
+        (a.pop(), ++j);
+    }
+}
