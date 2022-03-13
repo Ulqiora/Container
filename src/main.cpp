@@ -1,17 +1,21 @@
 #include <iostream>
 // #include <stack>
-#include <list>
-#include "list/list.tpp"
+#include <vector>
+#include "vector/vector.tpp"
 
 int main(){
-    s21::list<int> b{1, 2, 3, 4, 5, 6};
-    s21::list<int>::iterator j = b.begin();
-    ++j;
-    b.emplace_front(3,4,5);
+    using namespace std;
+    s21::vector<int> b{1, 2, 3, 4, 5, 6};
+    s21::vector<int>::iterator j = b.begin();
+    j++;j++;
+    s21::vector<int>::iterator j1 = b.insert(j, 5);
+    cout<<*j1<<endl;
     j = b.begin();
-    while (j != b.end()) {
-        std::cout<<*j<<"\n";
-        ++j;
+    s21::vector<int> a{1, 2, 5, 3, 4, 5, 6};
+    s21::vector<int>::iterator i = a.begin();
+    while (j != b.end()&&i!=a.end()) {
+        cout<<*i<<*j<<endl;
+        (++i,++j);
     }
     return 0;
 }

@@ -175,7 +175,7 @@ TEST(vector, insert1) {
     j = b.begin();
     s21::vector<int> a{5, 1, 2, 3, 4, 5, 6};
     s21::vector<int>::iterator i = a.begin();
-    while (j != b.end()) {
+    while (j != b.end()&&i!=a.end()) {
         ASSERT_EQ(*i,*j);
         (++i,++j);
     }

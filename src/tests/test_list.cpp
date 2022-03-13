@@ -216,10 +216,11 @@ TEST(list, insert3) {
 
 TEST(list, erase1) {
     s21::list<int> a{1, 2, 3, 4, 0, 0};
-    std::list<int> b{1, 2, 3, 4, 0, 0};
-    std::list<int>::iterator j = b.begin();
+    s21::list<int> b{2, 3, 4, 0, 0};
+    s21::list<int>::iterator j = b.begin();
     s21::list<int>::iterator i = a.begin();
-    (a.erase(i), b.erase(j));
+    a.erase(i);
+    i = a.begin();
     while (i != a.end() && j != b.end()) {
         ASSERT_EQ(*i, *j);
         (++i, ++j);

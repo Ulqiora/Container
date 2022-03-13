@@ -27,22 +27,26 @@ list<Type_list>::list(const std::initializer_list<Type_list>& items) : size_(0) 
 template <class Type_list>
 list<Type_list>::list(list<Type_list> const& v) : size_(0) {
     // clear();
-    head_ = new Node_list<Type_list>(nullptr, nullptr);
-    Node_list<Type_list>* current = v.head_;
-    for (size_type i = 0; i != v.size_; ++i) {
-        push_back(current->data);
-        current = current->next;
+    if (this != &v) {
+        head_ = new Node_list<Type_list>(nullptr, nullptr);
+        Node_list<Type_list>* current = v.head_;
+        for (size_type i = 0; i != v.size_; ++i) {
+            push_back(current->data);
+            current = current->next;
+        }
     }
 }
 
 template <class Type_list>
 list<Type_list>::list(list<Type_list>&& v) : size_(0), head_(new Node_list<Type_list>(nullptr, nullptr)){
-    Node_list<Type_list>* swap_node = head_;
-    size_type swap_size = size_;
-    head_ = v.head_;
-    size_ = v.size_;
-    v.size_ = swap_size;
-    v.head_ = swap_node;
+    if (this != &v) {
+        Node_list<Type_list>* swap_node = head_;
+        size_type swap_size = size_;
+        head_ = v.head_;
+        size_ = v.size_;
+        v.size_ = swap_size;
+        v.head_ = swap_node;
+    }
 }
 
 template <class Type_list>
@@ -56,12 +60,14 @@ list<Type_list>::~list() {
 
 template <class Type_list>
 typename s21::list<Type_list>& list<Type_list>::operator=(list&& v) {
-    Node_list<Type_list>* swap_node = head_;
-    size_type swap_size = size_;
-    head_ = v.head_;
-    size_ = v.size_;
-    v.head_ = swap_node;
-    v.size_ = swap_size;
+    if (this != &v) {
+        Node_list<Type_list>* swap_node = head_;
+        size_type swap_size = size_;
+        head_ = v.head_;
+        size_ = v.size_;
+        v.head_ = swap_node;
+        v.size_ = swap_size;
+    }
     return *this;
 }
 
@@ -166,8 +172,11 @@ typename list<Type_list>::iterator list<Type_list>::insert(iterator pos, const_r
 template <class Type_list>
 void list<Type_list>::erase(iterator pos) {
     if (pos == end()) throw std::out_of_range("Out of range in erase");
-    if (pos == begin()) {
-        return;
+    if (pos == begin()&&size_>0) {
+        Node_list<Type_list>* del = head_;
+        head_=head_->next;
+        delete del;
+        --size_;
     } else if (pos != nullptr) {
         for (iterator i = begin(); i != end(); ++i) {
             if (i == pos) {
