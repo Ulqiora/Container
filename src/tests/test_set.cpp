@@ -3,7 +3,7 @@
 #include <set>
 #include <string>
 
-#include "../set.tpp"
+#include "../set.h"
 
 #define SET_INIT {8, 10, 3, 14, 1, 6, 7, 4, 2, 13, 9, 7};
 
