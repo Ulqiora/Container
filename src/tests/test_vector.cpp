@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../vector.h"
+#include "../s21_vector.h"
 
 TEST(vector, constructor1) {
     std::vector<int> a;

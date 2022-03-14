@@ -3,7 +3,7 @@
 #include <array>
 #include <string>
 
-#include "../array.h"
+#include "../s21_array.h"
 
 #define ARRAY_INIT {8, 10, 3, 14, 1, 6, 7, 4, 2, 13, 9, 7};
 #define ARRAY_INIT_2 {0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89};

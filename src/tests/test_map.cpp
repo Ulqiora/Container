@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 
-#include "../map.h"
+#include "../s21_map.h"
 
 typedef std::pair<int, std::string> std_pair_t;
 

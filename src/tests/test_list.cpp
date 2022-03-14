@@ -2,7 +2,7 @@
 
 #include <list>
 
-#include "../list.h"
+#include "../s21_list.h"
 
 TEST(list, constructor1) {
     std::list<int> a;

@@ -2,7 +2,7 @@
 
 #include <stack>
 
-#include "../singly_list.h"
+#include "../s21_stack.h"
 
 TEST(stack, constructor1) {
     s21::stack<int> a;

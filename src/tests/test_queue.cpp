@@ -2,7 +2,7 @@
 
 #include <queue>
 
-#include "../singly_list.h"
+#include "../s21_queue.h"
 
 TEST(queue, constructor1) {
     s21::queue<int> a;
