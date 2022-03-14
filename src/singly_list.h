@@ -1,7 +1,8 @@
 #pragma once
 
+#include <algorithm>
 #include <initializer_list>
-#include <iostream>
+#include <stdexcept>
 
 namespace s21 {
 
@@ -16,11 +17,19 @@ class Node_ {
 
 template <class Type>
 class single_linked_list {
+    // type definitions
  public:
     typedef size_t size_type;
     typedef Type value_type;
     typedef value_type& reference;
     typedef const value_type& const_reference;
+
+ protected:
+    Node_<Type>* head_;
+    size_type size_;
+
+ public:
+    single_linked_list(Node_<Type>* head = nullptr, size_type size = 0) : head_(head), size_(size) {}
 
     bool empty() { return size_ == 0; }
     size_type size() { return size_; }
@@ -46,16 +55,11 @@ class single_linked_list {
             --size_;
         }
     }
-    void swap(single_linked_list& other) noexcept {
-        Node_<Type>* swap_hade = other.head_;
-        size_type swap_size = other.size_;
-        (other.head_ = head_, head_ = swap_hade);
-        (other.size_ = size_, size_ = swap_size);
-    }
 
- protected:
-    Node_<Type>* head_;
-    size_type size_;
+    void swap(single_linked_list& other) noexcept {
+        std::swap(head_, other.head_);
+        std::swap(size_, other.size_);
+    }
 };
 
 template <class Type>
@@ -73,7 +77,7 @@ class stack : public single_linked_list<Type> {
     stack(stack&& q);
     ~stack();
     reference operator=(stack&& q);
-    void push(const_reference value);
+    void push(const_reference value) override;
 
     void emplace_front() {}
     template <class T, class... Args>
@@ -95,7 +99,7 @@ class queue : public single_linked_list<Type> {
     queue(queue&& q);
     ~queue();
     reference operator=(queue&& q);
-    void push(const_reference value);
+    void push(const_reference value) override;
 
     void emplace_back() {}
     template <class T, class... Args>
@@ -103,15 +107,10 @@ class queue : public single_linked_list<Type> {
 };
 
 template <class Type>
-queue<Type>::queue() {
-    single_linked_list<Type>::size_ = 0;
-    single_linked_list<Type>::head_ = nullptr;
-}
+queue<Type>::queue() : single_linked_list<Type>::single_linked_list() {}
 
 template <class Type>
-queue<Type>::queue(size_type n) {
-    single_linked_list<Type>::size_ = n;
-    single_linked_list<Type>::head_ = new Node_<Type>(nullptr);
+queue<Type>::queue(size_type n) : single_linked_list<Type>::single_linked_list(new Node_<Type>(nullptr), n) {
     Node_<Type>* current = single_linked_list<Type>::head_;
     for (size_type i = 1; i < single_linked_list<Type>::size_; ++i) {
         current->next_ = new Node_<Type>(nullptr);
@@ -120,16 +119,13 @@ queue<Type>::queue(size_type n) {
 }
 
 template <class Type>
-queue<Type>::queue(std::initializer_list<value_type> const& items) {
-    single_linked_list<Type>::size_ = 0;
-    single_linked_list<Type>::head_ = nullptr;
+queue<Type>::queue(std::initializer_list<value_type> const& items)
+    : single_linked_list<Type>::single_linked_list() {
     for (auto i = items.begin(); i != items.end(); ++i) push(*i);
 }
 
 template <class Type>
-queue<Type>::queue(const queue& q) {
-    single_linked_list<Type>::size_ = 0;
-    single_linked_list<Type>::head_ = nullptr;
+queue<Type>::queue(const queue& q) : single_linked_list<Type>::single_linked_list() {
     if (q.head_ != nullptr) {
         push(q.head_->value_);
         if (q.head_->next_ != nullptr) {
@@ -143,9 +139,9 @@ queue<Type>::queue(const queue& q) {
 }
 
 template <class Type>
-queue<Type>::queue(queue&& q) {
-    (single_linked_list<Type>::head_ = q.head_, single_linked_list<Type>::size_ = q.size_, q.head_ = nullptr,
-     q.size_ = 0);
+queue<Type>::queue(queue&& q) : single_linked_list<Type>::single_linked_list(q.head_, q.size_) {
+    q.head_ = nullptr;
+    q.size_ = 0;
 }
 
 template <class Type>
@@ -155,8 +151,11 @@ queue<Type>::~queue() {
 
 template <class Type>
 typename s21::queue<Type>::reference queue<Type>::operator=(queue&& q) {
-    (single_linked_list<Type>::head_ = q.head_, single_linked_list<Type>::size_ = q.size_, q.head_ = nullptr,
-     q.size_ = 0);
+    single_linked_list<Type>::head_ = q.head_;
+    single_linked_list<Type>::size_ = q.size_;
+    q.head_ = nullptr;
+    q.size_ = 0;
+    return *this;
 }
 
 template <class Type>
@@ -179,15 +178,10 @@ void queue<Type>::emplace_back(T n, Args... args) {
 }
 
 template <class Type>
-stack<Type>::stack() {
-    single_linked_list<Type>::size_ = 0;
-    single_linked_list<Type>::head_ = nullptr;
-}
+stack<Type>::stack() : single_linked_list<Type>::single_linked_list() {}
 
 template <class Type>
-stack<Type>::stack(size_type n) {
-    single_linked_list<Type>::size_ = n;
-    single_linked_list<Type>::head_ = new Node_<Type>(nullptr);
+stack<Type>::stack(size_type n) : single_linked_list<Type>::single_linked_list(new Node_<Type>(nullptr), n) {
     Node_<Type>* current = single_linked_list<Type>::head_;
     for (size_type i = 1; i < single_linked_list<Type>::size_; ++i) {
         current->next_ = new Node_<Type>(nullptr);
@@ -196,16 +190,13 @@ stack<Type>::stack(size_type n) {
 }
 
 template <class Type>
-stack<Type>::stack(std::initializer_list<value_type> const& items) {
-    single_linked_list<Type>::size_ = 0;
-    single_linked_list<Type>::head_ = nullptr;
+stack<Type>::stack(std::initializer_list<value_type> const& items)
+    : single_linked_list<Type>::single_linked_list() {
     for (auto i = items.begin(); i != items.end(); ++i) push(*i);
 }
 
 template <class Type>
-stack<Type>::stack(const stack& q) {
-    single_linked_list<Type>::size_ = 0;
-    single_linked_list<Type>::head_ = nullptr;
+stack<Type>::stack(const stack& q) : single_linked_list<Type>::single_linked_list() {
     stack<Type> a;
     Node_<Type>* current = q.head_;
     while (current != nullptr) {
@@ -219,9 +210,9 @@ stack<Type>::stack(const stack& q) {
 }
 
 template <class Type>
-stack<Type>::stack(stack&& q) {
-    (single_linked_list<Type>::head_ = q.head_, single_linked_list<Type>::size_ = q.size_, q.head_ = nullptr,
-     q.size_ = 0);
+stack<Type>::stack(stack&& q) : single_linked_list<Type>::single_linked_list(q.head_, q.size_) {
+    q.head_ = nullptr;
+    q.size_ = 0;
 }
 
 template <class Type>

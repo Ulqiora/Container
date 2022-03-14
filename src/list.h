@@ -109,7 +109,7 @@ class list {
     void push_front(const_reference value);
     void pop_front();
     void swap(list& other);
-    void merge(list& other);
+    void merge(const list& other);
     void splice(const_iterator pos, list& other);
     void reverse();
     void unique();
@@ -373,7 +373,7 @@ void list<Type_list>::swap(list& other) {
 }
 
 template <class Type_list>
-void list<Type_list>::merge(list& other) {
+void list<Type_list>::merge(const list& other) {
     Node_list<Type_list>* first = head_;
     Node_list<Type_list>* second = other.head_;
     while (first->next != nullptr && second->next != nullptr) {
@@ -406,13 +406,10 @@ void list<Type_list>::reverse() {
     if (size_ > 1) {
         Node_list<Type_list>* first = head_;
         Node_list<Type_list>* last = head_;
-        Type_list swap_data = Type_list();
         while (last->next->next != nullptr) last = last->next;
         int num_i = size_ / 2;
         for (int i = 0; i < num_i; i++) {
-            swap_data = first->data;
-            first->data = last->data;
-            last->data = swap_data;
+            std::swap(first->data, last->data);
             first = first->next;
             last = last->prev;
         }

@@ -240,6 +240,7 @@ TEST(vector, erase1) {
     std::vector<int>::iterator j = b.begin();
     s21::vector<int>::iterator i = a.begin();
     (a.erase(i), b.erase(j));
+    (i = a.begin(), j = b.begin());
     while (i != a.end() && j != b.end()) {
         ASSERT_EQ(*i, *j);
         (++i, ++j);

@@ -35,6 +35,10 @@ gcov_report: $(SRC)
 	genhtml -o $(BD)report $(BD)gcov_report.info
 	open $(BD)report/index.html
 
+clean:
+	rm -rf ./$(BD)*.o ./$(BD)*_exe ./$(BD)*.dSYM ./$(BD)report
+	rm -rf ./$(BD)*.gcno ./$(BD)*.gcda ./$(BD)*.info report/
+
 cppcheck:
 	cppcheck --enable=all --suppress=missingIncludeSystem --suppress=noExplicitConstructor --suppress=redundantInitialization \
 	--suppress=containerOutOfBounds --suppress=selfAssignment --suppress=negativeIndex ../src/
