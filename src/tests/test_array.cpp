@@ -246,7 +246,7 @@ TEST(ARRAY_element_access_suit, data_1) {
 TEST(ARRAY_element_access_suit, data_2) {
     s21::array<int, 1> s21_arr = {42};
     std::array<int, 1> std_arr = {42};
-    ASSERT_EQ(*std_arr.data(), *s21_arr.data()); 
+    ASSERT_EQ(*std_arr.data(), *s21_arr.data());
 }
 
 // ITERATORS

@@ -1,6 +1,9 @@
 #pragma once
+
+#include <algorithm>
+#include <cmath>
 #include <initializer_list>
-#include <iostream>
+#include <stdexcept>
 
 namespace s21 {
 template <class Type_vector>
@@ -17,7 +20,7 @@ class vector {
     vector(size_type n);
     vector(std::initializer_list<value_type> const& items);
     vector(const vector& v);
-    vector(vector&& v) noexcept;
+    vector(vector&& v);
     ~vector();
     vector operator=(vector&& v);
 
@@ -62,74 +65,84 @@ class vector {
     size_type size_;
     size_type capacity_;
     Type_vector* mass_;
-    void doublingCapacity();
+
+    inline void deleteMass();
+    inline void reallocMass();
 };
 
 // METHODS IMPLEMENTATION
 
 template <class Type_vector>
-void s21::vector<Type_vector>::doublingCapacity() {
-    capacity_ *= 2;
-    mass_ = (Type_vector*)realloc(mass_, capacity_ * sizeof(Type_vector));
+inline void s21::vector<Type_vector>::deleteMass() {
+    if (mass_) {
+        delete[] mass_;
+        mass_ = nullptr;
+    }
 }
 
-template<class Type_vector>
-s21::vector<Type_vector>::vector() : capacity_(1), size_(0), mass_((Type_vector*)malloc(capacity_*sizeof(Type_vector))) {}
+template <class Type_vector>
+inline void s21::vector<Type_vector>::reallocMass() {
+    if (capacity_) {
+        Type_vector* temp = new Type_vector[capacity_]();
+        std::move(mass_, mass_ + size_, temp);
+        deleteMass();
+        std::swap(mass_, temp);
+    } else {
+        deleteMass();
+    }
+}
 
-template<class Type_vector>
-s21::vector<Type_vector>::vector(size_type n) : capacity_(n + 1), size_(n), mass_((Type_vector*)malloc(capacity_*sizeof(Type_vector))) {}
+template <class Type_vector>
+s21::vector<Type_vector>::vector() : capacity_(0), size_(0), mass_(nullptr) {}
+
+template <class Type_vector>
+s21::vector<Type_vector>::vector(size_type n) : capacity_(n), size_(n) {
+    mass_ = new Type_vector[capacity_]();
+}
 
 template <class Type_vector>
 s21::vector<Type_vector>::vector(std::initializer_list<value_type> const& items)
-    : capacity_(items.size() + 1), size_(items.size()), mass_((Type_vector*)malloc(capacity_*sizeof(Type_vector))) {
-    int j=0;
-    for (auto i = items.begin(); i != items.end(); i++) {
+    : capacity_(items.size()), size_(items.size()) {
+    mass_ = new Type_vector[capacity_]();
+    int j = 0;
+    for (auto i = items.begin(); i != items.end(); ++i, ++j) {
         mass_[j] = *i;
-        j++;
     }
 }
 
 template <class Type_vector>
-s21::vector<Type_vector>::vector(const vector& v) {
-    if (this != &v) {
-        capacity_ = v.size_ + 1;
-        size_ = v.size_;
-        mass_ = (Type_vector*)malloc(capacity_*sizeof(Type_vector));
-        for (int i = 0; i < size_; i++) mass_[i] = v.mass_[i];
-    }
+s21::vector<Type_vector>::vector(const vector& v) : capacity_(v.capacity_), size_(v.size_) {
+    mass_ = new Type_vector[capacity_]();
+    std::copy(v.mass_, v.mass_ + v.size_, mass_);
 }
 
 template <class Type_vector>
-s21::vector<Type_vector>::vector(vector&& v) noexcept {
-    if (this != &v) {
-        capacity_ = v.capacity_;
-        size_ = v.size_;
-        mass_ = (Type_vector*)malloc(capacity_*sizeof(Type_vector));
-        for (int i = 0; i < size_; i++) mass_[i] = v.mass_[i];
-        v.mass_ = nullptr;
-        v.size_ = v.capacity_ = 0;
-    }
+s21::vector<Type_vector>::vector(vector&& v) : capacity_(v.capacity_), size_(v.size_) {
+    mass_ = nullptr;
+    std::swap(mass_, v.mass_);
 }
 
-template<class Type_vector>
-s21::vector<Type_vector>::~vector() { free(mass_); }
+template <class Type_vector>
+s21::vector<Type_vector>::~vector() {
+    deleteMass();
+}
 
 template <class Type_vector>
 s21::vector<Type_vector> s21::vector<Type_vector>::operator=(vector&& v) {
     if (this != &v) {
-        (this->size_ = v.size_, this->capacity_ = v.capacity_);
-        free(mass_);
-        mass_ = v.mass_;
-        v.size_ = v.capacity_ = 0;
-        v.mass_ = nullptr;
+        deleteMass();
+        capacity_ = v.capacity_;
+        size_ = v.size_;
+        mass_ = nullptr;
+        std::swap(mass_, v.mass_);
     }
-    return (*this);
+    return *this;
 }
 
 //    Методы для доступа к элементам класса
 template <class Type_vector>
 Type_vector& s21::vector<Type_vector>::at(size_type pos) {
-    if (pos < 0 || pos >= size_) throw std::out_of_range("index<0 or index>=size of vector");
+    if (pos >= size_) throw std::out_of_range("index is out of container bounds!");
     return mass_[pos];
 }
 
@@ -140,13 +153,13 @@ Type_vector& s21::vector<Type_vector>::operator[](size_type pos) {
 
 template <class Type_vector>
 const Type_vector& s21::vector<Type_vector>::front() {
-    if (size_ == 0) throw std::out_of_range("size==0 of vector");
+    if (size_ == 0) throw std::out_of_range("vector has zero elements!");
     return mass_[0];
 }
 
 template <class Type_vector>
 const Type_vector& s21::vector<Type_vector>::back() {
-    if (size_ == 0) throw std::out_of_range("size==0 of vector");
+    if (size_ == 0) throw std::out_of_range("vector has zero elements!");
     return mass_[size_ - 1];
 }
 
@@ -159,7 +172,6 @@ Type_vector* s21::vector<Type_vector>::data() {
 
 template <class Type_vector>
 typename s21::vector<Type_vector>::iterator s21::vector<Type_vector>::begin() {
-    iterator ret(mass_);
     return mass_;
 }
 
@@ -191,17 +203,14 @@ size_t s21::vector<Type_vector>::size() {
 
 template <class Type_vector>
 size_t s21::vector<Type_vector>::max_size() {
-    return size_;
+    return static_cast<size_type>(pow(2, sizeof(void*) * 8) / sizeof(Type_vector) - 1);
 }
 
 template <class Type_vector>
 void s21::vector<Type_vector>::reserve(size_type new_cap) {
     if (capacity_ < new_cap) {
         capacity_ = new_cap;
-        Type_vector* copy = (Type_vector*)realloc(mass_, capacity_ * sizeof(Type_vector));
-        for (int i = 0; i < size; i++) copy[i] = mass_[i];
-        free(mass_);
-        mass_ = copy;
+        reallocMass();
     }
 }
 
@@ -212,71 +221,64 @@ size_t s21::vector<Type_vector>::capacity() {
 
 template <class Type_vector>
 void s21::vector<Type_vector>::shrink_to_fit() {
-    if (capacity_ > (size_ + 1)) {
-        capacity = size + 1;
-        Type_vector* copy = (Type_vector*)realloc(mass_, capacity_ * sizeof(Type_vector));
-        for (int i = 0; i < size_; i++) copy[i] = mass_[i];
-        free(mass_);
-        mass_ = copy;
+    if (capacity_ > size_) {
+        capacity_ = size_;
+        reallocMass();
     }
 }
 
 //    Методы для изменения контейнера
 template <class Type_vector>
 void s21::vector<Type_vector>::clear() {
-    if (capacity_ != 0) free(mass_);
+    deleteMass();
     size_ = 0;
-    capacity_ = 1;
-    mass_ = (Type_vector*)malloc(capacity_*sizeof(Type_vector));
+    capacity_ = 0;
 }
 
 template <class Type_vector>
-typename s21::vector<Type_vector>::iterator s21::vector<Type_vector>::insert(
-    s21::vector<Type_vector>::iterator pos, const_reference value) {
-    iterator i = end();
-    if(){
-
-    }if (pos != nullptr) {
-        while (i != pos && i != begin()) --i;
-        if (i != pos) throw std::out_of_range("Out of range, invalid argument");
-        if (capacity_ == size_ + 1) doublingCapacity();
-        i = begin();
-        for (i = end(); i != pos; --i) {
-            *i = *(i - 1);
-        }
-        *i = value;
-        size_++;
+typename s21::vector<Type_vector>::iterator s21::vector<Type_vector>::insert(iterator pos,
+                                                                             const_reference value) {
+    if (capacity_ <= size_) {
+        size_type delta = pos - mass_;
+        ++capacity_;
+        reallocMass();
+        pos = mass_ + delta;
     }
-    return i;
+    iterator ret = mass_;
+    if (size_) {
+        std::move_backward(pos, mass_ + size_, mass_ + size_ + 1);
+        *pos = value;
+        ret = pos;
+    } else {
+        *mass_ = value;
+    }
+    ++size_;
+    return ret;
 }
 
 template <class Type_vector>
 void s21::vector<Type_vector>::erase(iterator pos) {
-    for (auto i = pos; i != end(); i++) {
-        *i = *(i + 1);
+    if (size_) {
+        std::move(pos + 1, mass_ + size_, pos);
+        --size_;
     }
-    --size_;
 }
 
 template <class Type_vector>
 void s21::vector<Type_vector>::push_back(const_reference value) {
-    if (capacity_ == size_ + 1) doublingCapacity();
-    mass_[size_] = value;
-    size_++;
+    insert(mass_ + size_, value);
 }
 
 template <class Type_vector>
 void s21::vector<Type_vector>::pop_back() {
-    if (size_ > 0) size_--;
+    if (size_) --size_;
 }
 
 template <class Type_vector>
 void s21::vector<Type_vector>::swap(vector& other) {
-    iterator val = other.mass_;
-    size_type si = other.size_;
-    size_type cap = other.capacity_;
-    (other.mass_ = this->mass_, other.size_ = this->size_, other.capacity_ = this->capacity_);
-    (this->mass_ = val, this->size_ = si, this->capacity_ = cap);
+    std::swap(size_, other.size_);
+    std::swap(capacity_, other.capacity_);
+    std::swap(mass_, other.mass_);
 }
 
 template <class Type_vector>
@@ -289,7 +291,8 @@ void vector<Type_vector>::emplace_back(T n, Args... args) {
 template <class Type_vector>
 template <class T, class... Args>
 void vector<Type_vector>::emplace(iterator it, T n, Args... args) {
-    insert(it, n);
+    it = insert(it, n);
     emplace(it, args...);
 }
+
 }  // namespace s21

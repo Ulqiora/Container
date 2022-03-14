@@ -13,6 +13,9 @@ all: clean test
 ./$(BD)%.o: %.cpp
 	$(CC) $(CFLAGS) $< -o $@
 
+debug:
+	$(CC) -g $(LDFLAGS) $(SRC) -o $(BD)main_test_exe $(GTESTFLAGS) -I./ -L./
+
 #### TEST #####
 ./$(BD)%.o: $(TESTS)%.cpp
 	$(CC) $(CFLAGS) $< -o $@
@@ -32,23 +35,15 @@ gcov_report: $(SRC)
 	genhtml -o $(BD)report $(BD)gcov_report.info
 	open $(BD)report/index.html
 
-clean: del-lib
-	rm -rf ./$(BD)*.o ./$(BD)*_exe ./$(BD)*.dSYM ./$(BD)report
-	rm -rf ./$(BD)*.gcno ./$(BD)*.gcda ./$(BD)*.info report/
-
-del-lib:
-	rm -f *.a
-
 cppcheck:
 	cppcheck --enable=all --suppress=missingIncludeSystem --suppress=noExplicitConstructor --suppress=redundantInitialization \
 	--suppress=containerOutOfBounds --suppress=selfAssignment --suppress=negativeIndex ../src/
 
 cpplint:
-	cp ../materials/linters/CPPLINT.cfg . && python3 ../materials/linters/cpplint.py --extensions=cpp --filter=-runtime/explicit,-runtime/references *.cpp *.h; rm -f CPPLINT.cfg
+	cp ../materials/linters/CPPLINT.cfg . && python3 ../materials/linters/cpplint.py --extensions=cpp --filter=-runtime/explicit,-runtime/references */*.cpp *.h; rm -f CPPLINT.cfg
 
 leaks:
 	leaks --atExit -- ./$(BD)main_test_exe
 
 valgrind:
-	valgrind --undef-value-errors=no --log-file=valgrind-out.txt ../build/main_test_exe || \
-	echo "valgrind isn't installed!"
+	valgrind --undef-value-errors=no --log-file=valgrind-out.txt ../build/main_test_exe

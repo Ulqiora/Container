@@ -1,5 +1,7 @@
-#include <list>
 #include <gtest/gtest.h>
+
+#include <list>
+
 #include "../list.h"
 
 TEST(list, constructor1) {
@@ -62,7 +64,7 @@ TEST(list, constructor5) {
     ASSERT_EQ(b.size(), 5);
     ASSERT_EQ(a.size(), 0);
     s21::list<int>::iterator i = b.begin();
-    int init[] = {1, 2, 3, 4, 5,0};
+    int init[] = {1, 2, 3, 4, 5, 0};
     int* j = init;
     while (i != b.end()) {
         ASSERT_EQ(*i, *j);
@@ -406,7 +408,7 @@ TEST(list, sort) {
 
 TEST(list, emplace1) {
     s21::list<int> a;
-    a.emplace(a.begin(),5,4,3,2,1);
+    a.emplace(a.begin(), 5, 4, 3, 2, 1);
     ASSERT_EQ(a.size(), 5);
     int init[] = {1, 2, 3, 4, 5};
     s21::list<int>::iterator i = a.begin();
@@ -418,7 +420,7 @@ TEST(list, emplace1) {
 }
 
 TEST(list, emplace2) {
-    s21::list<int> a{1,2,3};
+    s21::list<int> a{1, 2, 3};
     a.emplace(a.begin());
     ASSERT_EQ(a.size(), 3);
     int init[] = {1, 2, 3};
@@ -431,8 +433,8 @@ TEST(list, emplace2) {
 }
 
 TEST(list, emplace3) {
-    s21::list<int> a{1,2,3};
-    a.emplace(a.begin(),4,5);
+    s21::list<int> a{1, 2, 3};
+    a.emplace(a.begin(), 4, 5);
     ASSERT_EQ(a.size(), 5);
     int init[] = {5, 4, 1, 2, 3};
     s21::list<int>::iterator i = a.begin();
@@ -445,9 +447,9 @@ TEST(list, emplace3) {
 
 TEST(list, emplace_back1) {
     s21::list<int> a;
-    a.emplace_back(5,4,3,2,1);
+    a.emplace_back(5, 4, 3, 2, 1);
     ASSERT_EQ(a.size(), 5);
-    int init[] = {5,4,3,2,1};
+    int init[] = {5, 4, 3, 2, 1};
     s21::list<int>::iterator i = a.begin();
     int* j = init;
     while (i != a.end()) {
@@ -457,7 +459,7 @@ TEST(list, emplace_back1) {
 }
 
 TEST(list, emplace_back2) {
-    s21::list<int> a{1,2,3};
+    s21::list<int> a{1, 2, 3};
     a.emplace_back();
     ASSERT_EQ(a.size(), 3);
     int init[] = {1, 2, 3};
@@ -470,8 +472,8 @@ TEST(list, emplace_back2) {
 }
 
 TEST(list, emplace_back3) {
-    s21::list<int> a{1,2,3};
-    a.emplace_back(4,5);
+    s21::list<int> a{1, 2, 3};
+    a.emplace_back(4, 5);
     ASSERT_EQ(a.size(), 5);
     int init[] = {1, 2, 3, 4, 5};
     s21::list<int>::iterator i = a.begin();
@@ -484,9 +486,9 @@ TEST(list, emplace_back3) {
 
 TEST(list, emplace_front1) {
     s21::list<int> a;
-    a.emplace_front(5,4,3,2,1);
+    a.emplace_front(5, 4, 3, 2, 1);
     ASSERT_EQ(a.size(), 5);
-    int init[] = {1,2,3,4,5};
+    int init[] = {1, 2, 3, 4, 5};
     s21::list<int>::iterator i = a.begin();
     int* j = init;
     while (i != a.end()) {
@@ -496,7 +498,7 @@ TEST(list, emplace_front1) {
 }
 
 TEST(list, emplace_front2) {
-    s21::list<int> a{1,2,3};
+    s21::list<int> a{1, 2, 3};
     a.emplace_front();
     ASSERT_EQ(a.size(), 3);
     int init[] = {1, 2, 3};
@@ -509,8 +511,8 @@ TEST(list, emplace_front2) {
 }
 
 TEST(list, emplace_front3) {
-    s21::list<int> a{1,2,3};
-    a.emplace_front(4,5);
+    s21::list<int> a{1, 2, 3};
+    a.emplace_front(4, 5);
     ASSERT_EQ(a.size(), 5);
     int init[] = {5, 4, 1, 2, 3};
     s21::list<int>::iterator i = a.begin();

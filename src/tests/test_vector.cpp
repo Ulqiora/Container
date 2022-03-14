@@ -1,17 +1,21 @@
-#include <vector>
 #include <gtest/gtest.h>
+
+#include <vector>
+
 #include "../vector.h"
 
 TEST(vector, constructor1) {
     std::vector<int> a;
     s21::vector<int> b;
     ASSERT_EQ(a.size(), b.size());
+    ASSERT_EQ(a.capacity(), b.capacity());
 }
 
 TEST(vector, constructor2) {
     std::vector<int> a(3);
     s21::vector<int> b(3);
     ASSERT_EQ(a.size(), b.size());
+    ASSERT_EQ(a.size(), b.capacity());
     std::vector<int>::iterator i = a.begin();
     s21::vector<int>::iterator j = b.begin();
     while (i != a.end() && j != b.end()) {
@@ -60,7 +64,6 @@ TEST(vector, constructor5) {
     s21::vector<int> a{1, 2, 3, 4, 5};
     s21::vector<int> b(std::move(a));
     ASSERT_EQ(b.size(), 5);
-    ASSERT_EQ(a.size(), 0);
     s21::vector<int>::iterator i = b.begin();
     int init[] = {1, 2, 3, 4, 5};
     int* j = init;
@@ -74,7 +77,6 @@ TEST(vector, constructor6) {
     s21::vector<int> a{1, 2, 3, 4, 5};
     s21::vector<int> b = std::move(a);
     ASSERT_EQ(b.size(), 5);
-    ASSERT_EQ(a.size(), 0);
     s21::vector<int>::iterator i = b.begin();
     int init[] = {1, 2, 3, 4, 5};
     int* j = init;
@@ -171,13 +173,15 @@ TEST(vector, insert1) {
     s21::vector<int> b{1, 2, 3, 4, 5, 6};
     s21::vector<int>::iterator j = b.begin();
     s21::vector<int>::iterator j1 = b.insert(j, 5);
-    ASSERT_EQ(*j1,5);
+    ASSERT_EQ(*j1, 5);
     j = b.begin();
-    s21::vector<int> a{5, 1, 2, 3, 4, 5, 6};
+    s21::vector<int> a{1, 2, 3, 4, 5, 6};
     s21::vector<int>::iterator i = a.begin();
-    while (j != b.end()&&i!=a.end()) {
-        ASSERT_EQ(*i,*j);
-        (++i,++j);
+    s21::vector<int>::iterator j2 = a.insert(i, 5);
+    i = a.begin();
+    while (j != b.end() && i != a.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
     }
 }
 
@@ -199,16 +203,32 @@ TEST(vector, insert2) {
 }
 
 TEST(vector, insert3) {
-    s21::vector<int> a{1, 2, 3, 4, 5, 6};
-    s21::vector<int>::iterator i = a.begin();
+    s21::vector<double> a = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    s21::vector<double>::iterator i = a.begin();
     ++i;
-    s21::vector<int>::iterator i1 = a.insert(i, 5);
-    ASSERT_EQ(a.size(),7);
-    ASSERT_EQ(*i1, 5);
+    s21::vector<double>::iterator i1 = a.insert(i, 11);
+    ASSERT_EQ(a.size(), 11);
+    ASSERT_EQ(*i1, 11);
     i = a.begin();
-    s21::vector<int> b{1, 5, 2, 3, 4, 5, 6};
-    s21::vector<int>::iterator j = b.begin();
+    s21::vector<double> b = {1, 11, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    s21::vector<double>::iterator j = b.begin();
     while (i != a.end() && j != b.end()) {
+        ASSERT_EQ(*i, *j);
+        (++i, ++j);
+    }
+}
+
+TEST(vector, insert4) {
+    s21::vector<int> b{1, 2, 3, 4, 5, 6};
+    s21::vector<int>::iterator j = b.end();
+    s21::vector<int>::iterator j1 = b.insert(j, 5);
+    ASSERT_EQ(*j1, 5);
+    j = b.begin();
+    s21::vector<int> a{1, 2, 3, 4, 5, 6};
+    s21::vector<int>::iterator i = a.end();
+    s21::vector<int>::iterator j2 = a.insert(i, 5);
+    i = a.begin();
+    while (j != b.end() && i != a.end()) {
         ASSERT_EQ(*i, *j);
         (++i, ++j);
     }
@@ -292,7 +312,7 @@ TEST(vector, swap) {
 
 TEST(vector, emplace_back1) {
     s21::vector<int> a;
-    a.emplace_back(1,2,3,4,5);
+    a.emplace_back(1, 2, 3, 4, 5);
     ASSERT_EQ(a.size(), 5);
     int init[] = {1, 2, 3, 4, 5};
     s21::vector<int>::iterator i = a.begin();
@@ -304,7 +324,7 @@ TEST(vector, emplace_back1) {
 }
 
 TEST(vector, emplace_back2) {
-    s21::vector<int> a{1,2,3};
+    s21::vector<int> a{1, 2, 3};
     a.emplace_back();
     ASSERT_EQ(a.size(), 3);
     int init[] = {1, 2, 3};
@@ -317,8 +337,8 @@ TEST(vector, emplace_back2) {
 }
 
 TEST(vector, emplace_back3) {
-    s21::vector<int> a{1,2,3};
-    a.emplace_back(4,5);
+    s21::vector<int> a{1, 2, 3};
+    a.emplace_back(4, 5);
     ASSERT_EQ(a.size(), 5);
     int init[] = {1, 2, 3, 4, 5};
     s21::vector<int>::iterator i = a.begin();
@@ -331,7 +351,7 @@ TEST(vector, emplace_back3) {
 
 TEST(vector, emplace1) {
     s21::vector<int> a;
-    a.emplace(a.begin(),5,4,3,2,1);
+    a.emplace(a.begin(), 5, 4, 3, 2, 1);
     ASSERT_EQ(a.size(), 5);
     int init[] = {1, 2, 3, 4, 5};
     s21::vector<int>::iterator i = a.begin();
@@ -343,7 +363,7 @@ TEST(vector, emplace1) {
 }
 
 TEST(vector, emplace2) {
-    s21::vector<int> a{1,2,3};
+    s21::vector<int> a{1, 2, 3};
     a.emplace(a.begin());
     ASSERT_EQ(a.size(), 3);
     int init[] = {1, 2, 3};
@@ -356,8 +376,8 @@ TEST(vector, emplace2) {
 }
 
 TEST(vector, emplace3) {
-    s21::vector<int> a{1,2,3};
-    a.emplace(a.begin(),4,5);
+    s21::vector<int> a{1, 2, 3};
+    a.emplace(a.begin(), 4, 5);
     ASSERT_EQ(a.size(), 5);
     int init[] = {5, 4, 1, 2, 3};
     s21::vector<int>::iterator i = a.begin();
